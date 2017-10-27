@@ -1,0 +1,155 @@
+<div class="block-center nowbeautyLogin  ng-zoomBackDown ng-fluid" ng-controller="RegisterController as reg">
+   <!-- START panel-->
+     <nav class="navbar topnavbar" role="navigation">
+        <!-- START navbar header-->
+        <a ng-click="mCtrl.loginRedirect()" >
+            <img src="app/img/SVG/logo_white.svg" style="padding: 15px 0;" alt="App Logo" width="125px" class="block-center img-responsive img-logo" />
+        </a>
+    </nav>
+    <section>
+       <!-- Page content-->
+       <div class="content-wrapper">
+         <div class="row col-lg-12 col-sm-12 col-md-12 col-xs-12">
+          <h3 class="pageH3 p-0 m-t-30 m-b-20 text-center">Get started absolutely free</h3>
+          <h4 class="text-center">No credit card needed</h4>
+          <div class="p-0 p-t-40 col-lg-12 col-sm-12 col-md-12 col-xs-12">
+            <!-- <div class="orDiv col-lg-12 col-sm-12 col-md-12 col-xs-12 p-0 m-t-30"></div> -->
+            <hr />
+            <div class="col-lg-6 col-sm-8 col-md-6 col-xs-12 col-lg-offset-3  col-md-offset-3  col-sm-offset-2 iconDiv" >
+              <div class="col-lg-3 col-sm-3 col-md-3 col-xs-3 text-center">
+                <img src="app/img/SVG/more_patients.svg" />
+                <label class="iconLabel">More Patients</label>
+              </div>
+              <div class="col-lg-3 col-sm-3 col-md-3 col-xs-3 text-center">
+                <img src="app/img/SVG/increased_revenue.svg" />
+                <label class="iconLabel">Increased Revenue</label>
+              </div>
+              <div class="col-lg-3 col-sm-3 col-md-3 col-xs-3 text-center">
+                <img src="app/img/SVG/hassle_free.svg" />
+                <label class="iconLabel">Hassle Free Financing</label>
+              </div>
+              <div class="col-lg-3 col-sm-3 col-md-3 col-xs-3 text-center">
+                <img src="app/img/SVG/gua_pay_icon.svg" />
+                <label class="iconLabel">Guaranteed Payments</label>
+              </div>
+            </div>
+          </div>
+          <div class="p-40 col-lg-6 col-sm-8 col-md-6 col-xs-12 col-lg-offset-3  col-md-offset-3  col-sm-offset-2">
+            <form role="form" class="mb-lg" name="reg.registerForm" ng-submit="reg.registerFn() && reg.registerForm.$submitted">
+              <div class="form-group has-feedback col-lg-12 col-sm-12 col-md-12 col-xs-12 m-b-0">
+                <div class="p-l-0 col-lg-6 col-sm-6 col-md-6 col-xs-12">
+                  <label>First Name</label>
+                  <input type="text"  maxlength=25 style="text-transform:capitalize" ng-model="reg.register.first_name" class="form-control" required/>
+                </div>
+                <div class="form-group col-lg-6 col-sm-6 col-md-6 col-xs-12">
+                  <label>Last Name</label>
+                  <input type="text"  maxlength=25 style="text-transform:capitalize" ng-model="reg.register.last_name" class="form-control" required/>
+                </div>
+              </div>
+              <div class="form-group has-feedback col-lg-12 col-sm-12 col-md-12 col-xs-12 m-b-0">
+                <div class="form-group">
+                  <label>Phone Number</label>
+                  <div class="input-group">
+                     <span class="input-group-addon">+1</span>
+                     <input type="text" ng-blur="mCtrl.check_mobile(0,reg.register.phone)" maxlength=15 minlength=9 onkeypress="return isNumberKey(event)" masked="" data-inputmask="'mask': '(999) 999-9999'" ng-model="reg.register.phone" class="form-control" required name="registerPhone" />
+                  </div>
+                </div>
+              </div>
+              <div class="form-group has-feedback col-lg-12 col-sm-12 col-md-12 col-xs-12 m-b-0">
+                <div class="form-group">
+                  <label>Email</label>
+                  <input type="email" autocomplete="new-password"  name="registerEmail" ng-blur="mCtrl.check_email(0,reg.register.email)" ng-pattern="emailPattern" ng-model="reg.register.email" class="form-control" required/>
+                </div>
+              </div>
+              <div class="form-group has-feedback col-lg-12 col-sm-12 col-md-12 col-xs-12 m-b-0">
+                <div class="p-l-0 col-lg-6 col-sm-6 col-md-6 col-xs-12">
+                  <label>Password</label>
+                  <input type="password" autocomplete="new-password" minlength="6" ng-model="reg.register.password" class="form-control" required aria-label=""/>
+                </div>
+
+                <div class="form-group col-lg-6 col-sm-6 col-md-6 col-xs-12">
+                  <label>Partner ID (Optional)</label>
+                  <input type="text" ng-model="reg.register.referral_code" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group col-lg-12 ">
+                <!-- specialitySelect -->
+                <label>Speciality</label>
+                <select ng-model="reg.register.speciality_type" class="form-control" ng-change="reg.specialitySelect(reg.register.speciality_type)" style="height:40px;">
+                  <option value="">Select your speciality</option>
+
+                  <option ng-value="speciality_type.admin_speciality" ng-repeat="speciality_type in reg.specialityList" ng-selected="{{ $index==0 }}">{{speciality_type.speciality_name}}
+                  </option>
+                </select>
+              </div>
+              <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12  form-group m-t-30 m-b-30" style="clear: both;text-align:center">
+                <button type="submit" class="btn btn-block btn-primary mt-lg loginBtn" ng-disabled="EmailAvailable||PhoneAvailable||invalidDate">Sign Up</button>
+              </div>
+            </form>
+            <a ui-sref="login" class="loginLinks text-center p-0 p-t-5">Already have an account? Login</a>
+            <a class="loginLinks text-center p-0 p-t-5" target="_blank" ui-sref="doctorTerms"><span>By signing up, you agree to our</span> Terms of Service.</a>
+          </div>
+        </div>
+       </div>
+    </section>
+    <script type="text/ng-template" ng-show="visible" id="register_done_modal">
+      <div class="ngdialog-message">
+          <div class="ngdialog-body">
+              <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                <img src="app/img/SVG/doc_regis.svg"/>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-md-12 text-center">
+                <h4 class="m-t-30 m-b-10 col-lg-12 col-sm-12 col-xs-12 col-md-12"><strong>Congratulations!  You are now successfully enrolled for Now Beauty.</strong></h4>
+                <h4 class="m-t-10 m-b-30 col-lg-12 col-sm-12 col-xs-12 col-md-12"><strong>
+                  Now never let a patient leave without using your dental services and earn monthly recurring revenue from every Patient.
+                </strong></h4>
+              </div>
+              <div class="p-0 col-lg-12 text-center">
+                <button type="button" ng-click="reg.continueToUpgrade()" class="btn btn-primary btn-pop">Continue
+                </button>
+              </div>
+          </div>
+      </div>
+  </script>
+
+  <script type="text/ng-template" ng-show="visible" id="register_pop_modal">
+      <div class="ngdialog-message m-b-0">
+          <div class="ngdialog-body p-0 brd-4">
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 p-0">
+
+              <div class="col-lg-12 col-md-12 col-xs-12 col-sm-8 p-0 dentistRegDiv">
+                <div class="col-lg-12 col-md-12 col-sm-12 text-center signUpGraphicDiv">
+                  <h3>Enroll to hassle <strong>FREE</strong> financing for all your patients.</h3>
+                  <img src="app/img/SVG/popupIcon.svg" width="100%"/>
+                </div>
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-t-30">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-md-12 text-center">
+                      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 p-20 p-b-10 pfDivReg" style="margin-top:40px">
+                        <label style="font-size: 16px;color: #4582bc;"><strong>Patient Financing</strong></label>
+                      </div>
+                      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 p-10 ">
+                        <label style="color:#413d3d"><strong>5% to 10% per Transaction</strong></label>
+                        <label>Easily Collect Interest</label>
+                        <label>Recurring Revenue</label>
+                        <label>Guaranteed Payments</label>
+                        <label>100% Instant Financing</label>
+                        <label>Immediate Payouts</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="p-0 col-lg-12 text-center m-b-20">
+									<!-- <a href="http://doctor.nowbeauty.com/#/register"> -->
+                  <a ng-click="closeThisDialog()" target="_blank" class=" m-t-0 btn btn-primary btnDefault">Get Started
+                  </a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+      </div>
+  </script>
+</div>

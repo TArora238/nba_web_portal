@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="adminPanel">
+
+<head>
+   <meta charset="utf-8">
+   <!-- <base href="/"> -->
+   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+   <meta name="description" content="{{app.description||'Now Beauty - Admin Panel'}}">
+   <link rel="shortcut icon" type="image/png" href="app/img/PNG/favicon.png"/>
+   <!--<link rel="shortcut icon" type="image/x-icon" href="app/img/PNG/favicon.ico"/>-->
+   <meta name="google-site-verification" content="5XeEQULH_Sb60V-7oZwIIU1euv_C6_ELR0gTtVfqoC4" />
+   <meta name="keywords" content="app, responsive, angular, bootstrap, dashboard, admin">
+   <title data-ng-bind="::pageTitle()">Now Beauty - Admin Panel</title>
+   <!-- Bootstrap styles-->
+   <link rel="stylesheet" href="app/css/bootstrap.css" data-ng-if="!app.layout.isRTL">
+   <!-- <link rel="stylesheet" href="app/css/bootstrap-rtl.css" data-ng-if="app.layout.isRTL"> -->
+   <!-- Application styles-->
+   <link rel="stylesheet" href="app/css/app.css" data-ng-if="!app.layout.isRTL">
+   <link rel="stylesheet" href="app/css/custom.css?version=0.0.1" />
+   <link rel="stylesheet" href="app/css/theme-a.css" />
+   <!--<link rel='stylesheet' href='vendor/textAngular/dist/textAngular.css'>-->
+   <link rel="stylesheet" href="vendor/angularjs-toaster/toaster.css" >
+   <link rel="stylesheet" href="vendor/ngDialog/css/ngDialog.min.css" >
+   <link rel="stylesheet" href="vendor/ngDialog/css/ngDialog-theme-default.min.css" >
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700">
+   <!-- <link rel="stylesheet" href="app/css/app-rtl.css" data-ng-if="app.layout.isRTL"> -->
+   <!-- Themes-->
+   <link rel="stylesheet" ng-href="{{app.layout.theme}}" data-ng-if="app.layout.theme">
+</head>
+<body data-ng-controller="mainController as mCtrl" data-ng-class="{ 'layout-fixed' : app.layout.isFixed, 'aside-collapsed' : app.layout.isCollapsed, 'layout-boxed' : app.layout.isBoxed, 'layout-fs': app.useFullLayout, 'hidden-footer': app.hiddenFooter, 'layout-h': app.layout.horizontal, 'aside-float': app.layout.isFloat, 'offsidebar-open': app.offsidebarOpen, 'aside-toggled': app.asideToggled, 'aside-collapsed-text': app.layout.isCollapsedText}" class="layout-h
+">
+   <div data-preloader></div>
+   <toaster-container toaster-options="{'position-class': 'toast-bottom-center', 'close-button':false}"></toaster-container>
+   <div class="wrapper" data-ui-view="" data-autoscroll="false"></div>
+   <script src="app/js/base.js"></script>
+   <script src="vendor/moment/min/moment.min.js"></script>
+   <script src="vendor/ngDialog/js/ngDialog.min.js"></script>
+   <script src="vendor/angularjs-toaster/toaster.js"></script>
+   <script src="app/js/app.js"></script>
+   <script type="text/javascript" src="//cdn.jsdelivr.net/fingerprintjs2/1.5.1/fingerprint2.min.js"></script>
+   <!--<script type="text/javascript" src="https://js.stripe.com/v2/"></script>-->
+   <script src="https://apis.google.com/js/client.js?key=AIzaSyAUnB3N3ZeNuxlz3oHO5fCmQ__JFxDTBLc"></script>
+   <script src="app/js/settings.js"></script>
+   <script src="app/js/mainCtrl.js?version=0.0.1"></script>
+   <script src="app/js/routes.js?version=0.0.1"></script>
+   <script src="app/js/controllers.js?version=0.0.1"></script>
+   <script src="app/js/sidebar.js"></script>
+   <script src="app/js/validations.js"></script>
+   <!--<script src='vendor/signature/signature_pad.min.js' defer></script>-->
+   <!--<script src='vendor/signature/signature.js' defer></script>-->
+   <!-- <script src='vendor/html2canvas/dist/html2canvas.min.js'></script> -->
+   <!--<script src='vendor/htmlToPdf/jspdf.debug.js'></script>-->
+   <!--<script src='vendor/htmlToPdf/jspdf.autotable.js'></script>-->
+   <!-- <script src='vendor/htmlToPdf/htmlToPdf.js'></script> -->
+   <!--<script src='vendor/textAngular/dist/textAngular-rangy.min.js'></script>-->
+   <!--<script src='vendor/textAngular/dist/textAngular-sanitize.min.js'></script>-->
+   <!--<script src='vendor/textAngular/dist/textAngular.min.js'></script>-->
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+[
+
+  {
+    "text": "Customers",
+    "sref":"app.customers"
+  },
+  {
+    "text": "Cuisines",
+    "sref":"app.cuisines"
+  },
+  {
+    "text": "Menus",
+    "sref":"app.menu"
+  },
+  {
+    "text": "Support",
+    "sref": "app.support"
+  }
+]

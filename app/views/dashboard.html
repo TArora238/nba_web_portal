@@ -1,0 +1,205 @@
+<!-- START widgets box-->
+<div class="row" data-ng-controller="DashboardController as dash">
+    <div class="col-lg-12">
+
+    </div>
+    <div class="col-lg-4 col-sm-4 col-xs-12 m-b-30 m-t-30 hide">
+       <!-- START widget-->
+       <div class="panel widget bg-yellow">
+          <div class="row row-table">
+             <div class="col-xs-4 text-center bg-yellow-dark pv-lg">
+                <em class="fa fa-usd fa-3x"></em>
+             </div>
+             <div class="col-xs-8 pv-lg">
+                <div class="h2 mt0">{{dash.dashboard.total_financed_amount||0| number : 2}}</div>
+                <div class="text-uppercase">Total Financed Amount</div>
+             </div>
+          </div>
+       </div>
+    </div>
+   <div class="col-lg-4 col-sm-4 col-xs-12 m-b-30 m-t-30 hide">
+      <!-- START widget-->
+      <div class="panel widget bg-primary">
+         <div class="row row-table">
+            <div class="col-xs-4 text-center bg-primary-dark pv-lg">
+               <em class="fa fa-usd fa-3x"></em>
+            </div>
+            <div class="col-xs-8 pv-lg">
+               <div class="h2 mt0">{{dash.dashboard.total_downpayment||0| number : 2}}</div>
+               <div class="text-uppercase">Total Downpayment</div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+     <div class="col-lg-4 col-sm-4 col-xs-12 m-b-30 m-t-30 hide">
+      <!-- START widget-->
+      <div class="panel widget bg-warning-light">
+         <div class="row row-table">
+            <div class="col-xs-4 text-center bg-warning-dark pv-lg">
+               <em class="fa fa-usd fa-3x"></em>
+            </div>
+            <div class="col-xs-8 pv-lg">
+               <div class="h2 mt0">{{dash.dashboard.expected_payout||0| number : 2}}</div>
+               <div class="text-uppercase text-sm">Expected Payouts(Next 30 days)</div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="clearfix"></div>
+   <div class="col-lg-4 col-sm-4 col-xs-12 m-b-30 m-t-30 hide">
+      <!-- START widget-->
+      <div class="panel widget bg-purple">
+         <div class="row row-table">
+            <div class="col-xs-4 text-center bg-purple-dark pv-lg">
+               <em class="icon-docs fa-3x"></em>
+            </div>
+            <div class="col-xs-8 pv-lg">
+               <div class="h2 mt0">{{dash.dashboard.total_number_contracts||0}}
+                  <!-- <small>GB</small> -->
+               </div>
+               <div class="text-uppercase">Total Contracts</div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="col-lg-4 col-sm-4 col-xs-12 m-b-30  m-t-30 hide">
+      <!-- START widget-->
+      <div class="panel widget bg-info">
+         <div class="row row-table">
+            <div class="col-xs-4 text-center bg-info-dark pv-lg">
+               <em class="icon-people fa-3x"></em>
+            </div>
+            <div class="col-xs-8 pv-lg">
+               <div class="h2 mt0">{{dash.dashboard.total_unique_patients||0}}
+                  <!-- <small>GB</small> -->
+               </div>
+               <div class="text-uppercase">Total Patients</div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="col-lg-4 col-sm-4 col-xs-12 m-b-30  m-t-30 hide">
+      <div class="panel widget bg-green">
+         <div class="row row-table">
+            <div class="col-xs-4 text-center bg-green-dark pv-lg">
+              <em class="fa fa-usd fa-3x"></em>
+            </div>
+            <div class="col-xs-8 pv-lg">
+              <div class="h2 mt0">{{dash.dashboard.averageFinancedAmount||0|number:2}}
+                 <!-- <small>GB</small> -->
+              </div>
+              <div class="text-uppercase text-sm">Average Financed Amount</div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="clearfix"></div>
+   <!-- <div class="col-lg-4 col-sm-4 col-xs-12 m-b-30  m-t-30">
+      <div class="panel widget bg-green">
+         <div class="row row-table">
+            <div class="col-xs-4 text-center bg-green-dark pv-lg">
+              <now class="h2 mt0" format="d"></now>
+               <br/>
+               <now class="text-sm text-uppercase" format="MMMM"></now>
+            </div>
+            <div class="col-xs-8 pv-lg">
+               <now class="h2 mt0" format="h:mm"></now>
+               <now class="text-sm" format="a"></now>
+               <br/>
+               <now class="text-uppercase" format="EEEE"></now>
+
+            </div>
+         </div>
+      </div>
+   </div> -->
+
+   <div class="col-lg-8 col-xs-12 m-b-30 m-t-30 hide">
+         <div class="panel panel-default" >
+            <div class="panel-heading">
+            <div class="panel-title">Payment Schedule</div>
+            </div>
+            <div class="panel-wrapper">
+               <div class="panel-body">
+                  <!-- <flot dataset="dash.barData" options="dash.barOptions" height="235px"></flot> -->
+                  <div class="calendar" ui-calendar="CalendarConfig.calendar" ng-model="dash.eventSources"></div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div style="display:flex" class="hide">
+        <div class="col-lg-4 col-xs-12 m-b-30 m-t-30" style="min-height:200px">
+        <div class="panel panel-default" style="height:100%">
+           <div class="panel-heading">
+             <div class="panel-title">Recent Payouts
+               <a class="btn btn-default btn-sm pull-right m-0" ng-if="dash.dashboard.payouts.length>0" ng-click="dash.viewPayouts(dash.dashboard.payouts)">View All Payouts</a>
+             </div>
+           </div>
+           <div class="panel-wrapper" style="height:calc(100% - 44px)">
+              <div class="panel-body" style="height:calc(100% - 61px)">
+                <div class="list-group mb0">
+                 <div class="list-group-item" ng-repeat="data in dash.dashboard.payouts|limitTo:6">
+                    <span class="label pull-right" style="text-transform:capitalize"pen,can,faile ng-class={'bg-green':data.status=="paid",'bg-warning-light':data.status=="in_transit"||data.status=="pending",'bg-danger':data.status=="canceled"||data.status=="failed"}>{{data.status|underscoreless}}</span>
+                    $ {{data.amount|number:2}} &nbsp;&nbsp;:&nbsp;&nbsp; {{data.arrival_date|date:"MM-dd-yyyy"}}
+                  </div>
+                  <div class="list-group-item"  ng-if="dash.dashboard.payouts.length==0">
+                    No Payouts Yet
+                  </div>
+              </div>
+              </div>
+              <div class="panel-footer" style="display: table;width: 100%;" ng-if="dash.dashboard.payouts.length>6">
+                <a class="pull-right btn whiteBtn" ng-click="dash.viewPayouts(dash.dashboard.payouts)" ><i class="fa fa-caret-right"></i></a>
+              </div>
+           </div>
+        </div>
+     </div>
+     <div class="col-lg-8 col-xs-12 m-b-30 m-t-30" style="min-height:200px">
+       <div class="panel panel-default" style="height:100%">
+          <div class="panel-heading">
+          <div class="panel-title">Upcoming Payments
+            <a class="btn btn-default btn-sm pull-right m-0" ng-if="dash.dashboard.upcoming_payments.length>0" ng-click="dash.viewPayments(dash.dashboard.upcoming_payments)">View All Payments</a>
+          </div>
+          </div>
+          <div class="panel-wrapper" style="height:calc(100% - 44px)">
+             <div class="panel-body" style="height:calc(100% - 61px)">
+               <div class="list-group-item"  ng-if="dash.dashboard.upcoming_payments.length==0">
+                 No Payments Yet
+               </div>
+               <div class="tableDiv" ng-if="dash.dashboard.upcoming_payments.length>0">
+                 <div class="table-responsive">
+                   <table id="datatable_up_payments" class="table table-striped table-hover table-vmiddle" style="table-layout:fixed;">
+                     <thead>
+                       <tr>
+                         <th class="normalTD">Patient Name</th>
+                         <!-- <th class="normalTD">Enrollment Date</th> -->
+                         <!-- <th class="normalTD">Amount Financed</th> -->
+                         <th class="normalTD">Recurring Amount</th>
+                         <th class="normalTD">Total Balance</th>
+                         <th class="normalTD">Next Reccuring Date</th>
+                       </tr>
+                     </thead>
+                     <tbody>
+                       <tr ng-repeat="data in dash.dashboard.upcoming_payments|limitTo:5">
+                         <td class="normalTD">{{data.patient_first_name}}&nbsp;{{data.patient_last_name}}</td>
+                         <!-- <td class="normalTD">{{data.start_date|date:'MM-dd-yyyy'}}</td> -->
+                         <!-- <td class="normalTD">$ {{data.financed_amount}}</td> -->
+                         <td class="normalTD">$ {{data.recurring_amount|number:2}}</td>
+                         <td class="normalTD">$ {{data.remaining_payments*data.recurring_amount|number:2}}</td>
+                         <td class="normalTD">{{data.next_payment_date|date:'MM-dd-yyyy'}}</td>
+                       </tr>
+                     </tbody>
+                   </table>
+                 </div>
+               </div>
+             </div>
+             <div class="panel-footer" style="display: table;width: 100%;" ng-if="dash.dashboard.upcoming_payments.length>5">
+               <a class="pull-right btn whiteBtn" ng-click="dash.viewPayments(dash.dashboard.upcoming_payments)" ><i class="fa fa-caret-right"></i></a>
+             </div>
+          </div>
+       </div>
+    </div>
+
+  </div>
+
+<style>.dataTables_length{display:none}</style>
+</div>
