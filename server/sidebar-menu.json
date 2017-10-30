@@ -5,15 +5,52 @@
     "sref":"app.customers"
   },
   {
-    "text": "Cuisines",
-    "sref":"app.cuisines"
+    "text": "Artists",
+    "sref":"app.artists"
   },
   {
-    "text": "Menus",
-    "sref":"app.menu"
+    "text": "Areas",
+    "sref":"app.areas"
   },
   {
-    "text": "Support",
-    "sref": "app.support"
+    "text": "Bookings",
+    "submenu":[
+      {
+      "text": "To Be Accepted",
+      "sref": "app.tbaBookings"
+      },
+      {
+        "text": "Upcoming",
+        "sref": "app.upcomingBookings"
+      },
+      {
+        "text": "Ongoing",
+        "sref": "app.ongoingBookings"
+      },
+      {
+        "text": "Finished",
+        "sref": "app.finishedBookings"
+      },
+      {
+        "text": "Paid",
+        "sref": "app.paidBookings"
+      },      {
+        "text": "Cancelled",
+        "sref": "app.cancelledBookings"
+      },
+      {
+        "text": "Disputed",
+        "sref": "app.disputedBookings"
+      }
+    ]
+  },
+  {
+    "text": "Settings",
+    "submenu":[
+      {
+        "text": "Document Types",
+        "sref": "app.documentTypes"
+      }
+    ]
   }
 ]

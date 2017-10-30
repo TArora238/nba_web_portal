@@ -18,34 +18,40 @@
                         <table id="dtCustomers"  datatable="ng" dt-options="mCtrl.dtOptions"  class="table table-striped table-hover table-vmiddle" style="table-layout:fixed;">
                             <thead>
                             <tr>
-                                 <th class="smallTD">S.No.</th>
+                                <th class="smallTD">S.No.</th>
                                 <th class="normalTD">Customer Name</th>
+                                <th class="normalTD">Image</th>
                                 <th class="normalTD">Mobile</th>
-                                <th class="normalTD">Mobile Verified</th>
                                 <th class="normalTD">Email</th>
-                                <th class="normalTD">Email Verified</th>
                                 <th class="normalTD">Registration Date</th>
+                                <th class="normalTD">Referral Code</th>
+                                <th class="normalTD">Credits</th>
                                 <th class="largeTD">Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr ng-repeat="data in cust.customers">
                                 <td class="smallTD">{{$index+1}}</td>
-                                <td class="normalTD">
+                                <td class="normalTD" >
                                     <!-- {{data.patient_first_name}}&nbsp;{{data.patient_last_name}} -->
-                                    <a style="color:#000000" >{{data.firstName}}&nbsp;{{data.lastName}}</a>
+                                    <a style="color:#000000" >{{data.user_name||'N/A'}}</a>
                                 </td>
-                                <td class="normalTD">{{data.countryCode}}-{{data.phoneNo}}</td>
-                                <td class="normalTD" ng-if="data.phoneVerified">Yes</td>
-                                <td class="normalTD" ng-if="!data.phoneVerified">No</td>
-                                <td class="normalTD">{{data.email}}</td>
-                                <td class="normalTD" ng-if="data.emailVerified">Yes</td>
-                                <td class="normalTD" ng-if="!data.emailVerified">No</td>
-                                <td class="normalTD">{{data.registrationDate|date:'dd-MM-yyyy'}}</td>
+                                <td class="normalTD">
+                                    <img ng-src="{{data.user_image}}" ng-if="data.user_image" class="w-100 img--circle"/>
+                                    <label ng-if="!data.user_image">Not uploaded yet</label>
+                                </td>
+                                <td class="normalTD">{{data.user_mobile|phoneNumber}}</td>
+                                <td class="normalTD">{{data.user_email||'N/A'}}</td>
+                                <td class="normalTD">{{data.date_registered|date:'dd-MM-yyyy'}}</td>
+                                <td class="normalTD">{{data.referral_code}}</td>
+                                <td class="normalTD">{{data.user_credits}}</td>
 
-                                <td class="largeTD">
-                                    <a class="btn btn-sm btn-actions" title="Deactivate" ng-click="cust.ngDialogPop('deactivate_patient_modal','smallPop')">
-                                        Action
+                                <td class="largeTD" >
+                                    <a class="btn btn-sm btn-actions" title="Block" ng-if="!data.is_blocked" ng-click="cust.blockConfirm(data.user_id,0)">
+                                        Block
+                                    </a>
+                                    <a class="btn btn-sm btn-actions" title="Block" ng-if="data.is_blocked" ng-click="cust.blockConfirm(data.user_id,1)">
+                                        Unblock
                                     </a>
                                 </td>
                             </tr>
@@ -56,21 +62,22 @@
             </div>
         </div>
     </div>
-    <script type="text/ng-template" ng-show="visible" id="deactivate_patient_modal">
+    <script type="text/ng-template" id="block_user_modal">
         <div class="ngdialog-message logoutpopo">
 
             <div class="ngdialog-header">
-                <p>Information</p>
+                <p>Confirmation</p>
             </div>
             <div class="ngdialog-body">
-                <p>Please contact the support center at <a href="tel:+18333363348">1 (833) DENEFITS</a> to deactivate the patient.</p>
-                <!-- <button type="button" ng-click="closeThisDialog('button')"
+                <p>Are you sure you want to <strong>{{cust.blocked}}</strong> this user ? </p>
+                <button type="button" ng-click="closeThisDialog('button')"
                         class="btn btn-default pull-left btn-cancel">Cancel
-                        </button>
-                        <button type="button" ng-click="delete_prospect(id)"
-                                class="btn btn-primary pull-right btn-pop">Delete
-                        </button> -->
+                </button>
+                <button type="button" ng-click="cust.block_user()"
+                        class="btn btn-primary pull-right btn-pop" style="text-transform:capitalize">{{cust.blocked}}
+                </button>
             </div>
         </div>
     </script>
+
 </div>

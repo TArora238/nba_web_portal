@@ -39,7 +39,7 @@ body,
 .topnavbar .navbar-nav > .open > a:hover,
 .topnavbar .navbar-nav > li > a:focus,
 .topnavbar .navbar-nav > .open > a:focus {
-  color: #000000;
+  color: #f1f1f1;
 }
 
 .topnavbar .navbar-nav > li.active > a,
@@ -87,7 +87,7 @@ body,
   .topnavbar .navbar-nav > .open > a:hover,
   .topnavbar .navbar-nav > li > a:focus,
   .topnavbar .navbar-nav > .open > a:focus {
-    color: #000000;
+    color: #f1f1f1;
   }
   .topnavbar .navbar-nav > li.active{
     background: #000000

@@ -341,128 +341,27 @@
                 vm.hitInProgress = false;
             }
         }
-      vm.EmailAvailable = false;
-      vm.PhoneAvailable = false;
-      vm.check_email = function(id, email) {
 
-        if (email) {
-          $.post(api.url + 'check_admin_email', {
-              admin_email: email,
-              admin_id: id
-            })
-            .success(function(data, status) {
-              if (typeof data === 'string')
-                var data = JSON.parse(data);
-              // console.log(data);
-              vm.flagPopUps(data.flag,data.is_error);
-              if (data.is_error == 0) {
-                vm.EmailAvailable = false;
-              } else {
-                vm.EmailAvailable = true;
-              }
-            });
-        } else {
-          toaster.pop('error', 'Enter a valid email');
-          return false;
-        }
-
-      }
-      vm.check_mobile = function(id, mobile) {
-        console.log(mobile);
-        if (mobile) {
-          var mob = mobile.replace(/[^0-9]/g, "");
-
-          $.post(api.url + 'check_admin_mobile', {
-              admin_mobile: '+1-'+mobile,
-              admin_id: id
-            })
-            .success(function(data, status) {
-              if (typeof data === 'string')
-                var data = JSON.parse(data);
-              // console.log(data);
-              vm.flagPopUps(data.flag,data.is_error);
-              if (data.is_error == 0) {
-                vm.PhoneAvailable = false;
-              } else {
-                vm.PhoneAvailable = true;
-              }
-            });
-        }
-        // else{
-        //   toaster.pop('error','Enter a valid mobile');
-        //   return false;
-        // }
-
-      }
-      vm.check_patient_email = function(id, email) {
-        console.log(email);
-        if (email) {
-          $.post(api.url + 'check_patient_email', {
-              patient_email: email,
-              patient_id: id
-            })
-            .success(function(data, status) {
-              if (typeof data === 'string')
-                var data = JSON.parse(data);
-              // console.log(data);
-              vm.flagPopUps(data.flag,data.is_error);
-              if (data.is_error == 0) {
-                vm.EmailAvailable = false;
-              } else {
-                vm.EmailAvailable = true;
-              }
-            });
-        }
-
-      }
-      vm.check_patient_mobile = function(id, mobile, code) {
-        if (mobile) {
-          $.post(api.url + 'check_patient_mobile', {
-              patient_mobile: '+' + code.Code + '-' + mobile.replace(/[^0-9]/g, ""),
-              patient_id: id
-            })
-
-            .success(function(data, status) {
-              if (typeof data === 'string')
-                var data = JSON.parse(data);
-              // console.log(data);
-              vm.flagPopUps(data.flag,data.is_error);
-              if (data.is_error == 0) {
-                vm.PhoneAvailable = false;
-              } else {
-                vm.PhoneAvailable = true;
-              }
-            });
-        }
-      }
       vm.states=[];
       vm.getLocation = function(query) {
-        // console.log(query);
         if(query.length<4)return false;
         return $.post(api.url + 'get_zipcode', {
           zipcode: query
         }).then(function(data, status) {
           if (typeof data === 'string')
             var data = JSON.parse(data);
-          // console.log(data);
           if (data.is_error == 0) {
-            // return vm.items=data.zip_info;
-            // console.log(data);
             vm.states = data.zip_info;
-            // vm.$apply();
-            // if(vm.states.length>0)$('typeahead-popup').css('display','block');
             $timeout(function() {
               return vm.states;
             })
-            // querySearch(query);
           }
-
         });
-      }
+      };
       vm.changePasswordFn = function() {
         vm.change = {};
         vm.ngDialogPop('change_password_modal', 'bigPop');
-      }
+      };
       vm.changePasswordApi = function() {
         if (!vm.change.oldPassword || vm.change.oldPassword.trim().length == 0 || !vm.change.newPassword || vm.change.newPassword.trim().length == 0) {
           vm.openToast('warning', 'Enter a valid password', '');
@@ -486,19 +385,13 @@
 
           if (data.is_error == 0) ngDialog.close();
         });
-      }
+      };
       vm.checkDoctorToken = function(login) {
-        // vm.freshUser = localStorage.getItem('freshUser')||0;
-        // localStorage.setItem('freshUser',vm.freshUser);
-
-        // console.log(localStorage.getItem('adminToken'));
-        // console.log("asdf");
+        console.log(localStorage.getItem('adminToken'));
         if (!localStorage.getItem('adminToken')) {
           localStorage.removeItem('adminToken')
           $state.go('login');
-          // vm.openToast('warning','Access token has expired, please Login to continue','');
         } else {
-          // console.log(localStorage.getItem('adminToken'));
           $.post(api.url + "access_token_login", {
               access_token: localStorage.getItem('adminToken'),
               device_type: 0,
@@ -511,45 +404,34 @@
                 var data = JSON.parse(data);
               console.log(data);
               vm.flagPopUps(data.flag,data.is_error);
-              if (data.show_plan_screen == 1 || data.show_location_screen == 1 || data.show_bank_screen == 1 || data.show_payment_screen == 1 || data.show_practice_screen == 1) {
-                vm.setLoginData(data);
-                // if ($state.current.name != "app.dashboard") $state.go("app.dashboard");
-                // else $state.reload();
-                vm.checkBankScreen();
-                if (login == 'register') $state.go('addData');
-                if (login == 'bank') $state.reload();
-              } else if (data.is_error == 0) {
+              if (data.is_error == 0) {
                 vm.setLoginData(data, login);
-                vm.checkBankScreen();
               }
             });
         }
-      }
+      };
       vm.dtOptions = {
         "scrollX": true
-      }
+      };
 
       vm.setLoginData = function(data, login) {
 
         $timeout(function() {
           vm.profile = {};
-          if (data.admin_profile && data.admin_profile.access_token) {
-              localStorage.setItem('adminToken', data.admin_profile.access_token);
-          }
           if(data.admin_profile){
-            vm.admin_profile = data.admin_profile;
-            localStorage.setItem('profileData', JSON.stringify(data.admin_profile));
+            vm.admin_profile = data.admin_profile[0];
+            localStorage.setItem('profileData', JSON.stringify(vm.admin_profile));
+            localStorage.setItem('adminToken', vm.admin_profile.access_token);
           }
-          if (data.access_token) localStorage.setItem('adminToken', data.access_token);
-          
+          console.log(vm.admin_profile);
           vm.admin_notifications = [];
           if(data.admin_notifications)vm.admin_notifications = data.admin_notifications;
-          if (data.admin_profile.admin_image)
-            vm.profilePicThumb = data.admin_profile.admin_image;
+          if (vm.admin_profile.admin_image)
+            vm.profilePicThumb = vm.admin_profile.admin_image;
           else vm.profilePicThumb = 'app/img/SVG/profile_placeholder.svg';
           localStorage.setItem('profilePicThumb', vm.profilePicThumb);
-          vm.profile.profileData = data.admin_profile;
-          localStorage.setItem('admin_name', data.admin_profile.admin_first_name.toString() + ' ' + data.admin_profile.admin_last_name.toString());
+          vm.profile.profileData = vm.admin_profile;
+          localStorage.setItem('admin_name', vm.admin_profile.admin_name.toString());
           vm.admin_name = localStorage.getItem('admin_name');
           vm.profilePicThumb = localStorage.getItem('profilePicThumb');
           if (login == 1) {

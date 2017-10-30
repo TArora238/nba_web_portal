@@ -22,8 +22,9 @@
             'app.mainCtrl',
             'app.dashboard',
             'app.customers',
-            'app.cuisines',
-            'app.menu',
+            'app.areas',
+            'app.artists',
+            'app.bookings',
             'app.support',
             'app.sidebar',
             'app.elements',
@@ -281,13 +282,19 @@
     'use strict';
 
     angular
-        .module('app.cuisines', []);
+        .module('app.areas', []);
 })();
 (function() {
     'use strict';
 
     angular
-        .module('app.menu', []);
+        .module('app.artists', []);
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.bookings', []);
 })();
 (function() {
     'use strict';

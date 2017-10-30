@@ -147,20 +147,50 @@
               templateUrl:  helper.basepath('customers.html'),
               resolve: helper.resolveFor('datatables')
           })
-
-        .state('app.cuisines', {
-            url: '/cuisines',
-            templateUrl:  helper.basepath('cuisines.html'),
-            resolve: helper.resolveFor('datatables', 'filestyle')
-        })
-            .state('app.menu', {
-                url: '/menu',
-                templateUrl:  helper.basepath('menus.html'),
-                resolve: helper.resolveFor('datatables', 'filestyle')
+          .state('app.artists', {
+              url: '/artists',
+              templateUrl:  helper.basepath('artists.html'),
+              resolve: helper.resolveFor('datatables')
             })
-            .state('app.support', {
-                url: '/support',
-                templateUrl:  helper.basepath('support.html')
+          .state('app.areas', {
+              url: '/areas',
+              templateUrl:  helper.basepath('areas.html'),
+              resolve: helper.resolveFor('datatables')
+            })
+          .state('app.cancelledBookings', {
+              url: '/cancelledBookings',
+              templateUrl:  helper.basepath('cancelledBookings.html'),
+              resolve: helper.resolveFor('datatables')
+            })
+          .state('app.disputedBookings', {
+              url: '/disputedBookings',
+              templateUrl:  helper.basepath('disputedBookings.html'),
+              resolve: helper.resolveFor('datatables')
+            })
+          .state('app.finishedBookings', {
+              url: '/finishedBookings',
+              templateUrl:  helper.basepath('finishedBookings.html'),
+              resolve: helper.resolveFor('datatables')
+            })
+          .state('app.ongoingBookings', {
+              url: '/ongoingBookings',
+              templateUrl:  helper.basepath('ongoingBookings.html'),
+              resolve: helper.resolveFor('datatables')
+            })
+          .state('app.paidBookings', {
+              url: '/paidBookings',
+              templateUrl:  helper.basepath('paidBookings.html'),
+              resolve: helper.resolveFor('datatables')
+            })
+          .state('app.tbaBookings', {
+              url: '/tbaBookings',
+              templateUrl:  helper.basepath('tbaBookings.html'),
+              resolve: helper.resolveFor('datatables')
+            })
+          .state('app.upcomingBookings', {
+              url: '/upcomingBookings',
+              templateUrl:  helper.basepath('upcomingBookings.html'),
+              resolve: helper.resolveFor('datatables')
             })
 
     }
