@@ -2,7 +2,7 @@
     <div class="animated fadeIn">
         <!--<h3 class="page-header-divpage-header">Sales</h3>-->
         <div class="row p-15">
-            <h3 class="col-lg-4 col-md-4 col-xs-12 col-sm-4 p-0 m-0">Manage Artists</h3>
+            <h3 class="col-lg-4 col-md-4 col-xs-12 col-sm-4 p-0 m-0">Verified Artists</h3>
             <div class="pull-right col-lg-3 col-md-3 col-xs-6 col-sm-3 greenDiv" style="max-width:200px;padding:12.5px">
                 <h4><span>Total Artists : </span>&nbsp;{{artist.totalItems||0}}</h4>
             </div>
@@ -48,10 +48,10 @@
                                     <!--<a class="btn btn-sm btn-actions" title="Edit" ng-click="addEditProspectFn(0,data)">-->
                                         <!--<img src='img/SVG/edit.svg'>-->
                                     <!--</a>-->
-                                    <a class="btn btn-sm btn-actions" title="Block" ng-if="!data.is_blocked" ng-click="blockConfirm(data.artist_id,0)">
+                                    <a class="btn btn-sm btn-actions" title="Block" ng-if="!data.is_blocked" ng-click="artist.blockConfirm(data.artist_id,0)">
                                         Block
                                     </a>
-                                    <a class="btn btn-sm btn-actions" title="Block" ng-if="data.is_blocked" ng-click="blockConfirm(data.artist_id,1)">
+                                    <a class="btn btn-sm btn-actions" title="Block" ng-if="data.is_blocked" ng-click="artist.blockConfirm(data.artist_id,1)">
                                         Unblock
                                     </a>
                                 </td>
@@ -74,7 +74,7 @@
                 <button type="button" ng-click="closeThisDialog('button')"
                         class="btn btn-default pull-left btn-cancel">Cancel
                 </button>
-                <button type="button" ng-click="artist.block_user()"
+                <button type="button" ng-click="artist.block_artist()"
                         class="btn btn-primary pull-right btn-pop" style="text-transform:capitalize">{{artist.blocked}}
                 </button>
             </div>

@@ -320,7 +320,7 @@
                 vm.ngDialogPop('block_artist_modal','smallPop');
             };
 
-            vm.block_user = function () {
+            vm.block_artist = function () {
                 cfpLoadingBar.start();
                 if (vm.is_blocked)
                     vm.is_blocked = 0;
@@ -329,7 +329,7 @@
 
                 $.post(api.url + 'block_unblock_artist', {
                     access_token: localStorage.getItem('adminToken'),
-                    user_id: vm.id,
+                    artist_id: vm.id,
                     block_unblock: vm.is_blocked
                 }).success(function (data, status) {
                     if (typeof data === 'string')
