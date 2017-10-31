@@ -420,9 +420,7 @@
                             console.log(vm.customers)
                         })
                     });
-                $.get(api.url + "get_artist_lists",{
-                    access_token: localStorage.getItem('adminToken')
-                })
+                $.get(api.url + "get_artist_lists")
                     .success(function(data, status) {
                         cfpLoadingBar.complete();
                         if (typeof data === 'string') data = JSON.parse(data);
