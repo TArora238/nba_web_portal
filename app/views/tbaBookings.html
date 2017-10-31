@@ -1,15 +1,15 @@
-<div class="row p-b-30" ng-controller="CancelledBookingsController as canc">
+<div class="row p-b-30" ng-controller="TBABookingsController as tba">
     <div class="animated fadeIn">
         <!--<h3 class="page-header-divpage-header">Sales</h3>-->
         <div class="row p-15">
             <h3 class="col-lg-4 col-md-4 col-xs-12 col-sm-4 p-0 m-0">Cancelled Bookings</h3>
         </div>
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
-            <div class="col-md-12 col-lg-12 text-center m-t-30" ng-if="canc.cancelledList.length==0">
+            <div class="col-md-12 col-lg-12 text-center m-t-30" ng-if="tba.tobeAcceptedList.length==0">
                 <img src="app/img/SVG/empty/patients.svg" />
                 <h4 style="color:#8592a5">No bookings cancelled yet</h4>
             </div>
-            <div class="panel panel-default row p-15" ng-if="canc.cancelledList.length>0">
+            <div class="panel panel-default row p-15" ng-if="tba.tobeAcceptedList.length>0">
                 <div class="tableDiv">
                     <div class="table-responsive">
                         <table id="dtCancelled"  datatable="ng" dt-options="mCtrl.dtOptions"  class="table table-striped table-hover table-vmiddle" style="table-layout:fixed;">
@@ -19,15 +19,15 @@
                                 <th class="normalTD">Booking ID</th>
                                 <th class="normalTD">Time Booked</th>
                                 <th class="normalTD">Time Accepted</th>
-                                <th class="normalTD">Parent Name</th>
-                                <th class="normalTD">Parent Mobile</th>
-                                <th class="normalTD">Parent Email</th>
-                                <th class="normalTD">Parent Address</th>
-                                <th class="normalTD">Parent City</th>
+                                <th class="normalTD">User Name</th>
+                                <th class="normalTD">User Mobile</th>
+                                <th class="normalTD">User Email</th>
+                                <th class="normalTD">User Address</th>
+                                <th class="normalTD">User City</th>
                                 <th class="normalTD">Area</th>
-                                <th class="normalTD">Nanny Name..</th>
-                                <th class="normalTD">Nanny Mobile</th>
-                                <th class="normalTD">Nanny Email</th>
+                                <th class="normalTD">Artist Name..</th>
+                                <th class="normalTD">Artist Mobile</th>
+                                <th class="normalTD">Artist Email</th>
                                 <th class="largeTD">Start Time</th>
                                 <th class="largeTD">End Time</th>
                                 <th class="largeTD">Actual Start Time</th>
@@ -40,20 +40,20 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="data in canc.cancelledList">
+                            <tr ng-repeat="data in tba.tobeAcceptedList">
                                 <td class="smallTD">{{$index+1}}</td>
                                 <td class="normalTD">{{data.booking_id}}</td>
                                 <td class="largeTD">{{data.local_date_booked|date:'MM-dd-yyyy hh:mm a'}}</td>
                                 <td class="largeTD">{{data.local_accepted_at|date:'MM-dd-yyyy hh:mm a'}}</td>
                                 <td class="normalTD">{{data.booking_user_name}}</td>
-                                <td class="normalTD">{{data.booking_user_mobile}}</td>
+                                <td class="normalTD">{{data.booking_user_mobile|phoneNumber}}</td>
                                 <td class="normalTD">{{data.user_email}}</td>
                                 <td class="normalTD">({{data.address_title}}):&nbsp;{{data.apt_address}}&nbsp;{{data.street_route}}&nbsp;{{dat.city}}{{data.state}}&nbsp;&nbsp;{{data.post_code}}</td>
                                 <td class="normalTD">{{data.city}}</td>
                                 <td class="normalTD">{{data.area_name}}</td>
-                                <td class="normalTD">{{data.nanny_name||'-'}}</td>
-                                <td class="normalTD">{{data.nanny_mobile||'-'}}</td>
-                                <td class="normalTD">{{data.nanny_email||'-'}}</td>
+                                <td class="normalTD">{{data.artist_name||'-'}}</td>
+                                <td class="normalTD">{{data.artist_mobile||'-'|phoneNumber}}</td>
+                                <td class="normalTD">{{data.artist_email||'-'}}</td>
                                 <td class="largeTD">{{data.local_start_time|date:'MM-dd-yyyy hh:mm a'}}</td>
                                 <td class="largeTD">{{data.local_end_time|date:'MM-dd-yyyy hh:mm a'}}</td>
                                 <td class="largeTD">{{data.local_actual_start_time|date:'MM-dd-yyyy hh:mm a'}}</td>

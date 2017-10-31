@@ -147,9 +147,14 @@
               templateUrl:  helper.basepath('customers.html'),
               resolve: helper.resolveFor('datatables')
           })
-          .state('app.artists', {
-              url: '/artists',
-              templateUrl:  helper.basepath('artists.html'),
+          .state('app.verifiedArtists', {
+              url: '/verifiedArtists',
+              templateUrl:  helper.basepath('verifiedArtists.html'),
+              resolve: helper.resolveFor('datatables')
+            })
+          .state('app.unverifiedArtists', {
+              url: '/unverifiedArtists',
+              templateUrl:  helper.basepath('unverifiedArtists.html'),
               resolve: helper.resolveFor('datatables')
             })
           .state('app.areas', {
@@ -160,11 +165,6 @@
           .state('app.cancelledBookings', {
               url: '/cancelledBookings',
               templateUrl:  helper.basepath('cancelledBookings.html'),
-              resolve: helper.resolveFor('datatables')
-            })
-          .state('app.disputedBookings', {
-              url: '/disputedBookings',
-              templateUrl:  helper.basepath('disputedBookings.html'),
               resolve: helper.resolveFor('datatables')
             })
           .state('app.finishedBookings', {

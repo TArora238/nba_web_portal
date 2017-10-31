@@ -236,7 +236,7 @@
 })();
 
 /**=========================================================
- * Module: Artist List
+ * Module: Verified Artists List
  =========================================================*/
 
 (function() {
@@ -244,11 +244,11 @@
 
     angular
         .module('app.artists')
-        .controller('ArtistsController', ArtistsController);
+        .controller('VerifiedArtistsController', VerifiedArtistsController);
 
-    ArtistsController.$inject = ['$http', '$state', '$rootScope', 'toaster', '$scope', 'cfpLoadingBar', 'api', '$timeout', 'ngDialog'];
+    VerifiedArtistsController.$inject = ['$http', '$state', '$rootScope', 'toaster', '$scope', 'cfpLoadingBar', 'api', '$timeout', 'ngDialog'];
 
-    function ArtistsController($http, $state, $rootScope, toaster, $scope, cfpLoadingBar, api, $timeout, ngDialog) {
+    function VerifiedArtistsController($http, $state, $rootScope, toaster, $scope, cfpLoadingBar, api, $timeout, ngDialog) {
         var vm = this;
 
         activate();
@@ -301,8 +301,8 @@
                         console.log(data);
                         $scope.mCtrl.flagPopUps(data.flag, data.is_error);
                         $timeout(function () {
-                            vm.artists = data.all_users;
-                            vm.totalItems = data.all_users.length;
+                            vm.artists = data.all_artists;
+                            vm.totalItems = data.all_artists.length;
                             console.log(vm.customers)
                         })
                     });
@@ -342,6 +342,88 @@
                     }
                 });
 
+            }
+        }
+    }
+})();
+
+
+
+/**=========================================================
+ * Module: Unverified Artists List
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.artists')
+        .controller('UnverifiedArtistsController', UnverifiedArtistsController);
+
+    UnverifiedArtistsController.$inject = ['$http', '$state', '$rootScope', 'toaster', '$scope', 'cfpLoadingBar', 'api', '$timeout', 'ngDialog'];
+
+    function UnverifiedArtistsController($http, $state, $rootScope, toaster, $scope, cfpLoadingBar, api, $timeout, ngDialog) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+            $scope.mCtrl.checkToken();
+            // $scope.mCtrl.checkDoctorToken();
+
+
+            vm.dtOptions = {
+                "scrollX": true
+            };
+            vm.ngDialogPop = function(template, className) {
+                ngDialog.openConfirm({
+                    template: template,
+                    className: 'ngdialog-theme-default ' + className,
+                    scope: $scope,
+                    closeByEscape: false,
+                    closeByDocument: false
+                }).then(function(value) {}, function(reason) {});
+
+            };
+            vm.currentPage = 1;
+            vm.itemsPerPage = 10;
+            vm.maxSize = 5;
+            vm.skip = 0;
+            vm.pageChanged = function (currentPage) {
+                vm.currentPage = currentPage;
+                for (var i = 1; i <= vm.totalItems / 10 + 1; i++) {
+                    if (vm.currentPage == i) {
+                        vm.skip = 10 * (i - 1);
+                    }
+                }
+                vm.customers = [];
+                vm.initTable();
+            };
+            vm.initTable = function() {
+                cfpLoadingBar.start();
+                vm.pf_patient_list = [];
+                $.post(api.url + "unverified_artist_list",{
+                    access_token: localStorage.getItem('adminToken'),
+                    limit: 10,
+                    offset: vm.skip
+                })
+                    .success(function(data, status) {
+                        cfpLoadingBar.complete();
+                        if (typeof data === 'string') data = JSON.parse(data);
+                        console.log(data);
+                        $scope.mCtrl.flagPopUps(data.flag, data.is_error);
+                        $timeout(function () {
+                            vm.artists = data.all_artists;
+                            vm.totalItems = data.all_artists.length;
+                            console.log(vm.customers)
+                        })
+                    });
+            };
+            vm.initTable();
+            vm.verifyArtist = function (data) {
+                vm.ngDialogPop('verify_artist_modal','bigPop');
             }
         }
     }
@@ -441,9 +523,9 @@
                         console.log(data);
                         $scope.mCtrl.flagPopUps(data.flag, data.is_error);
                         $timeout(function () {
-                            vm.cancelledList = data.all_users;
-                            vm.totalItems = data.all_users.length;
-                            console.log(vm.customers)
+                            vm.cancelledList = data.all_bookings;
+                            vm.totalItems = data.all_bookings.length;
+                            console.log(vm.cancelledList)
                         })
                     });
             };
@@ -453,59 +535,6 @@
     }
 })();
 
-
-/**=========================================================
- * Module: Disputed List
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.bookings')
-        .controller('DisputedBookingsController', DisputedBookingsController);
-
-    DisputedBookingsController.$inject = ['$http', '$state', '$rootScope', 'toaster', '$scope', 'cfpLoadingBar', 'api', '$timeout', 'ngDialog'];
-
-    function DisputedBookingsController($http, $state, $rootScope, toaster, $scope, cfpLoadingBar, api, $timeout, ngDialog) {
-        var vm = this;
-
-        activate();
-
-        ////////////////
-
-        function activate() {
-            $scope.mCtrl.checkToken();
-            // $scope.mCtrl.checkDoctorToken();
-
-
-            vm.dtOptions = {
-                "scrollX": true
-            };
-            vm.initTable = function() {
-                cfpLoadingBar.start();
-                vm.pf_patient_list = [];
-                $.post(api.url + "disputed_bookings",{
-                    access_token: localStorage.getItem('adminToken'),
-                    area_id: localStorage.getItem('area_id')||1
-                })
-                    .success(function(data, status) {
-                        cfpLoadingBar.complete();
-                        if (typeof data === 'string') data = JSON.parse(data);
-                        console.log(data);
-                        $scope.mCtrl.flagPopUps(data.flag, data.is_error);
-                        $timeout(function () {
-                            vm.disputedList = data.all_users;
-                            vm.totalItems = data.all_users.length;
-                            console.log(vm.customers)
-                        })
-                    });
-            };
-            vm.initTable();
-
-        }
-    }
-})();
 
 
 /**=========================================================
@@ -549,9 +578,9 @@
                         console.log(data);
                         $scope.mCtrl.flagPopUps(data.flag, data.is_error);
                         $timeout(function () {
-                            vm.cancelledList = data.all_users;
-                            vm.totalItems = data.all_users.length;
-                            console.log(vm.customers)
+                            vm.finishedList = data.all_bookings;
+                            vm.totalItems = data.all_bookings.length;
+                            console.log(vm.finishedList)
                         })
                     });
             };
@@ -563,7 +592,7 @@
 
 
 /**=========================================================
- * Module: Disputed List
+ * Module: Ongoing List
  =========================================================*/
 
 (function() {
@@ -603,9 +632,9 @@
                         console.log(data);
                         $scope.mCtrl.flagPopUps(data.flag, data.is_error);
                         $timeout(function () {
-                            vm.cancelledList = data.all_users;
-                            vm.totalItems = data.all_users.length;
-                            console.log(vm.customers)
+                            vm.ongoingList = data.all_bookings;
+                            vm.totalItems = data.all_bookings.length;
+                            console.log(vm.ongoingList)
                         })
                     });
             };
@@ -617,7 +646,7 @@
 
 
 /**=========================================================
- * Module: Disputed List
+ * Module: Paid List
  =========================================================*/
 
 (function() {
@@ -657,9 +686,9 @@
                         console.log(data);
                         $scope.mCtrl.flagPopUps(data.flag, data.is_error);
                         $timeout(function () {
-                            vm.cancelledList = data.all_users;
-                            vm.totalItems = data.all_users.length;
-                            console.log(vm.customers)
+                            vm.paidList = data.all_bookings;
+                            vm.totalItems = data.all_bookings.length;
+                            console.log(vm.paidList)
                         })
                     });
             };
@@ -671,7 +700,7 @@
 
 
 /**=========================================================
- * Module: Disputed List
+ * Module: To Be Accepted List
  =========================================================*/
 
 (function() {
@@ -711,9 +740,9 @@
                         console.log(data);
                         $scope.mCtrl.flagPopUps(data.flag, data.is_error);
                         $timeout(function () {
-                            vm.cancelledList = data.all_users;
-                            vm.totalItems = data.all_users.length;
-                            console.log(vm.customers)
+                            vm.tobeAcceptedList = data.all_bookings;
+                            vm.totalItems = data.all_bookings.length;
+                            console.log(vm.tobeAcceptedList)
                         })
                     });
             };
@@ -765,9 +794,9 @@
                         console.log(data);
                         $scope.mCtrl.flagPopUps(data.flag, data.is_error);
                         $timeout(function () {
-                            vm.cancelledList = data.all_users;
-                            vm.totalItems = data.all_users.length;
-                            console.log(vm.customers)
+                            vm.upcomingList = data.all_bookings;
+                            vm.totalItems = data.all_bookings.length;
+                            console.log(vm.upcomingList)
                         })
                     });
             };

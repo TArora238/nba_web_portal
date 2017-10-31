@@ -6,7 +6,15 @@
   },
   {
     "text": "Artists",
-    "sref":"app.artists"
+    "submenu":[
+      {
+        "text": "Verified",
+        "sref": "app.verifiedArtists"
+      },
+      {
+        "text": "Unverified",
+        "sref": "app.unverifiedArtists"
+      }]
   },
   {
     "text": "Areas",
@@ -37,10 +45,6 @@
       },      {
         "text": "Cancelled",
         "sref": "app.cancelledBookings"
-      },
-      {
-        "text": "Disputed",
-        "sref": "app.disputedBookings"
       }
     ]
   },
