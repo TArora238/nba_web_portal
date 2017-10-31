@@ -17,10 +17,6 @@
       }]
   },
   {
-    "text": "Areas",
-    "sref":"app.areas"
-  },
-  {
     "text": "Bookings",
     "submenu":[
       {
@@ -45,15 +41,6 @@
       },      {
         "text": "Cancelled",
         "sref": "app.cancelledBookings"
-      }
-    ]
-  },
-  {
-    "text": "Settings",
-    "submenu":[
-      {
-        "text": "Document Types",
-        "sref": "app.documentTypes"
       }
     ]
   }

@@ -420,6 +420,20 @@
                             console.log(vm.customers)
                         })
                     });
+                $.get(api.url + "get_artist_lists",{
+                    access_token: localStorage.getItem('adminToken')
+                })
+                    .success(function(data, status) {
+                        cfpLoadingBar.complete();
+                        if (typeof data === 'string') data = JSON.parse(data);
+                        console.log(data);
+                        $timeout(function () {
+                            vm.document_types = data.document_types;
+                            vm.experience_types = data.experience_types;
+                            vm.skills = data.skills;
+                            console.log(data)
+                        })
+                    });
             };
             vm.initTable();
             vm.verifyArtist = function (data) {
