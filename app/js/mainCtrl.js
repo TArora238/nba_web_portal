@@ -325,6 +325,11 @@
         vm.flagPopUps = function (flag, error) {
             cfpLoadingBar.complete();
             vm.hitInProgress = false;
+            if(flag==4||flag==5){
+                localStorage.removeItem('adminToken');
+                $state.go('login');
+                cfpLoadingBar.complete();
+            }
             if (!$rootScope.messageList || $rootScope.messageList.length == 0) {
                 $rootScope.get_settings();
                 return false;

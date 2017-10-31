@@ -145,7 +145,7 @@
 
     function activate() {
       $scope.mCtrl.checkToken();
-      // $scope.mCtrl.checkDoctorToken();
+      $scope.mCtrl.checkDoctorToken();
 
 
       vm.dtOptions = {
@@ -257,7 +257,7 @@
 
         function activate() {
             $scope.mCtrl.checkToken();
-            // $scope.mCtrl.checkDoctorToken();
+            $scope.mCtrl.checkDoctorToken();
 
 
             vm.dtOptions = {
@@ -371,7 +371,7 @@
 
         function activate() {
             $scope.mCtrl.checkToken();
-            // $scope.mCtrl.checkDoctorToken();
+            $scope.mCtrl.checkDoctorToken();
 
 
             vm.dtOptions = {
@@ -434,10 +434,73 @@
                             console.log(data)
                         })
                     });
+                $.post(api.url + "serving_areas",{
+                    access_token: localStorage.getItem('adminToken')
+                })
+                    .success(function(data, status) {
+                        cfpLoadingBar.complete();
+                        if (typeof data === 'string') data = JSON.parse(data);
+                        console.log(data);
+                        $scope.mCtrl.flagPopUps(data.flag, data.is_error);
+                        $timeout(function () {
+                            vm.areaList = data.serving_areas;
+                            console.log(vm.areaList);
+                            vm.selectedArea = [];
+                            vm.areaCheck = [];
+                            for(var i=0;i<vm.areaList;i++){
+                                vm.areaCheck[i]=false;
+                            }
+                        })
+                    });
             };
             vm.initTable();
+            vm.chooseArea = function(area, index) {
+                console.log(area, index);
+                console.log(vm.areaCheck[index]);
+
+                if (vm.areaCheck[index]) {
+                    if (vm.selectedArea.indexOf(area) == -1)
+                        vm.selectedArea.push(area);
+
+                } else {
+                    vm.selectedArea.splice(vm.selectedArea.indexOf(area), 1)
+                }
+
+
+                console.log(vm.selectedArea);
+                console.log(vm.areaCheck);
+            };
             vm.verifyArtist = function (data) {
+                vm.artist=data;
                 vm.ngDialogPop('verify_artist_modal','bigPop');
+            };
+            vm.verifyFn = function () {
+              if(vm.selectedArea.length==0){
+                  toaster.pop("warning","Choose at least one area for the artist to serve in.","");
+                  return false;
+              }
+              vm.areas='';
+              for (var i=0;i<vm.selectedArea.length;i++){
+                  vm.areas+=vm.selectedArea[i];
+                  if(i!=vm.selectedArea.length-1)vm.areas+=',';
+              }
+                $.post(api.url + "verify_artist",{
+                    access_token: localStorage.getItem('adminToken'),
+                    artist_id: vm.artist.artist_id,
+                    serving_areas:vm.areas
+                })
+                    .success(function(data, status) {
+                        cfpLoadingBar.complete();
+                        if (typeof data === 'string') data = JSON.parse(data);
+                        console.log(data);
+                        $scope.mCtrl.flagPopUps(data.flag, data.is_error);
+                        $timeout(function () {
+                            if (data.is_error == 0) {
+                                ngDialog.close();
+                                $state.reload();
+                            }
+                        })
+                    });
             }
         }
     }
@@ -467,7 +530,7 @@
 
         function activate() {
             $scope.mCtrl.checkToken();
-            // $scope.mCtrl.checkDoctorToken();
+            $scope.mCtrl.checkDoctorToken();
 
 
             vm.dtOptions = {
@@ -518,7 +581,7 @@
 
         function activate() {
             $scope.mCtrl.checkToken();
-            // $scope.mCtrl.checkDoctorToken();
+            $scope.mCtrl.checkDoctorToken();
 
 
             vm.dtOptions = {
@@ -573,7 +636,7 @@
 
         function activate() {
             $scope.mCtrl.checkToken();
-            // $scope.mCtrl.checkDoctorToken();
+            $scope.mCtrl.checkDoctorToken();
 
 
             vm.dtOptions = {
@@ -627,7 +690,7 @@
 
         function activate() {
             $scope.mCtrl.checkToken();
-            // $scope.mCtrl.checkDoctorToken();
+            $scope.mCtrl.checkDoctorToken();
 
 
             vm.dtOptions = {
@@ -681,7 +744,7 @@
 
         function activate() {
             $scope.mCtrl.checkToken();
-            // $scope.mCtrl.checkDoctorToken();
+            $scope.mCtrl.checkDoctorToken();
 
 
             vm.dtOptions = {
@@ -735,7 +798,7 @@
 
         function activate() {
             $scope.mCtrl.checkToken();
-            // $scope.mCtrl.checkDoctorToken();
+            $scope.mCtrl.checkDoctorToken();
 
 
             vm.dtOptions = {
@@ -789,7 +852,7 @@
 
         function activate() {
             $scope.mCtrl.checkToken();
-            // $scope.mCtrl.checkDoctorToken();
+            $scope.mCtrl.checkDoctorToken();
 
 
             vm.dtOptions = {

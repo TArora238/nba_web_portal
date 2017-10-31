@@ -4,13 +4,13 @@
         <div class="row p-15">
             <h3 class="col-lg-4 col-md-4 col-xs-12 col-sm-4 p-0 m-0">Unverified Artists</h3>
             <div class="pull-right col-lg-3 col-md-3 col-xs-6 col-sm-3 greenDiv" style="max-width:200px;padding:12.5px">
-                <h4><span>Total Artists : </span>&nbsp;{{artist.totalItems||0}}</h4>
+                <h4><span>Unverified Artists : </span>&nbsp;{{artist.totalItems||0}}</h4>
             </div>
         </div>
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
             <div class="col-md-12 col-lg-12 text-center m-t-30" ng-if="unArtist.artists.length==0">
                 <img src="app/img/SVG/empty/patients.svg" />
-                <h4 style="color:#8592a5">No Artists added yet</h4>
+                <h4 style="color:#8592a5">No Artists pending for verification</h4>
             </div>
             <div class="panel panel-default row p-15" ng-if="unArtist.artists.length>0">
                 <div class="tableDiv">
@@ -71,10 +71,16 @@
                 <p>Verification</p>
             </div>
             <div class="ngdialog-body">
-                <form>
+                <form name="unArtist.verifyForm" ng-submit="unArtist.verifyForm.$submitted&&unArtist.verifyFn()">
                     <div class="form-group">
-                        <label>Serving Areas</label>
-
+                        <label class="col-lg-12">Serving Areas</label>
+                        <div class="checkbox col-lg-4 m-t-10 m-b-10" ng-repeat="area in unArtist.areaList">
+                            <label style="color:#505050">
+                                <input type="checkbox" value="" ng-model="unArtist.areaCheck[$index]" ng-change="unArtist.chooseArea(area.area_id,$index)">
+                                <i class="input-helper"></i>
+                                {{area.area_name}}
+                            </label>
+                        </div>
                     </div>
                     <hr class="popHR">
                     <button type="button" ng-click="closeThisDialog('button')"
