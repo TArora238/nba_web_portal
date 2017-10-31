@@ -63,23 +63,6 @@
             </div>
         </div>
     </div>
-    <script type="text/ng-template" id="block_artist_modal">
-        <div class="ngdialog-message logoutpopo">
-
-            <div class="ngdialog-header">
-                <p>Confirmation</p>
-            </div>
-            <div class="ngdialog-body">
-                <p>Are you sure you want to <strong>{{unArtist.blocked}}</strong> this artist ? </p>
-                <button type="button" ng-click="closeThisDialog('button')"
-                        class="btn btn-default pull-left btn-cancel">Cancel
-                </button>
-                <button type="button" ng-click="unArtist.block_user()"
-                        class="btn btn-primary pull-right btn-pop" style="text-transform:capitalize">{{unArtist.blocked}}
-                </button>
-            </div>
-        </div>
-    </script>
 
     <script type="text/ng-template" id="verify_artist_modal">
         <div class="ngdialog-message logoutpopo">
@@ -90,7 +73,8 @@
             <div class="ngdialog-body">
                 <form>
                     <div class="form-group">
-                        <label></label>
+                        <label>Serving Areas</label>
+
                     </div>
                     <hr class="popHR">
                     <button type="button" ng-click="closeThisDialog('button')"
