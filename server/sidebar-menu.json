@@ -17,6 +17,10 @@
       }]
   },
   {
+    "text": "Categories",
+    "sref":"app.categories"
+  },
+  {
     "text": "Bookings",
     "submenu":[
       {

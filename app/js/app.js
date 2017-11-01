@@ -23,6 +23,7 @@
             'app.dashboard',
             'app.customers',
             'app.areas',
+            'app.category',
             'app.artists',
             'app.bookings',
             'app.support',
@@ -295,6 +296,12 @@
 
     angular
         .module('app.bookings', []);
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.category', []);
 })();
 (function() {
     'use strict';

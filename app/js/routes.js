@@ -192,6 +192,21 @@
               templateUrl:  helper.basepath('upcomingBookings.html'),
               resolve: helper.resolveFor('datatables')
             })
+          .state('app.categories', {
+              url: '/categories',
+              templateUrl:  helper.basepath('categories.html'),
+              resolve: helper.resolveFor('datatables')
+            })
+          .state('app.services', {
+              url: '/services',
+              templateUrl:  helper.basepath('catServices.html'),
+              resolve: helper.resolveFor('datatables')
+            })
+          .state('app.additionalServices', {
+              url: '/additionalServices',
+              templateUrl:  helper.basepath('additionalServices.html'),
+              resolve: helper.resolveFor('datatables')
+            })
 
     }
 })();

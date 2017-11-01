@@ -177,7 +177,7 @@
         };
       vm.initTable = function() {
         cfpLoadingBar.start();
-        vm.pf_patient_list = [];
+
         $.post(api.url + "user_list",{
             access_token: localStorage.getItem('adminToken'),
             limit: 10,
@@ -289,7 +289,7 @@
             };
             vm.initTable = function() {
                 cfpLoadingBar.start();
-                vm.pf_patient_list = [];
+
                 $.post(api.url + "artist_list",{
                     access_token: localStorage.getItem('adminToken'),
                     limit: 10,
@@ -403,7 +403,7 @@
             };
             vm.initTable = function() {
                 cfpLoadingBar.start();
-                vm.pf_patient_list = [];
+
                 $.post(api.url + "unverified_artist_list",{
                     access_token: localStorage.getItem('adminToken'),
                     limit: 10,
@@ -536,7 +536,7 @@
             };
             vm.initTable = function() {
                 cfpLoadingBar.start();
-                vm.pf_patient_list = [];
+
                 $.post(api.url + "serving_areas",{
                     access_token: localStorage.getItem('adminToken')
                 })
@@ -587,7 +587,7 @@
             };
             vm.initTable = function() {
                 cfpLoadingBar.start();
-                vm.pf_patient_list = [];
+
                 $.post(api.url + "cancelled_bookings",{
                     access_token: localStorage.getItem('adminToken'),
                     area_id: localStorage.getItem('area_id')||1
@@ -642,7 +642,7 @@
             };
             vm.initTable = function() {
                 cfpLoadingBar.start();
-                vm.pf_patient_list = [];
+
                 $.post(api.url + "finished_bookings",{
                     access_token: localStorage.getItem('adminToken'),
                     area_id: localStorage.getItem('area_id')||1
@@ -696,7 +696,7 @@
             };
             vm.initTable = function() {
                 cfpLoadingBar.start();
-                vm.pf_patient_list = [];
+
                 $.post(api.url + "ongoing_bookings",{
                     access_token: localStorage.getItem('adminToken'),
                     area_id: localStorage.getItem('area_id')||1
@@ -750,7 +750,7 @@
             };
             vm.initTable = function() {
                 cfpLoadingBar.start();
-                vm.pf_patient_list = [];
+
                 $.post(api.url + "paid_bookings",{
                     access_token: localStorage.getItem('adminToken'),
                     area_id: localStorage.getItem('area_id')||1
@@ -804,7 +804,7 @@
             };
             vm.initTable = function() {
                 cfpLoadingBar.start();
-                vm.pf_patient_list = [];
+
                 $.post(api.url + "tobeaccepted_bookings",{
                     access_token: localStorage.getItem('adminToken'),
                     area_id: localStorage.getItem('area_id')||1
@@ -829,7 +829,7 @@
 
 
 /**=========================================================
- * Module: Disputed List
+ * Module: Upcoming List
  =========================================================*/
 
 (function() {
@@ -858,7 +858,7 @@
             };
             vm.initTable = function() {
                 cfpLoadingBar.start();
-                vm.pf_patient_list = [];
+
                 $.post(api.url + "upcoming_bookings",{
                     access_token: localStorage.getItem('adminToken'),
                     area_id: localStorage.getItem('area_id')||1
@@ -877,6 +877,174 @@
             };
             vm.initTable();
 
+        }
+    }
+})();
+
+
+/**=========================================================
+ * Module: Category List
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.category')
+        .controller('CategoryController', CategoryController);
+
+    CategoryController.$inject = ['$http', '$state', '$rootScope', 'toaster', '$scope', 'cfpLoadingBar', 'api', '$timeout', 'ngDialog'];
+
+    function CategoryController($http, $state, $rootScope, toaster, $scope, cfpLoadingBar, api, $timeout, ngDialog) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+            $scope.mCtrl.checkToken();
+            $scope.mCtrl.checkDoctorToken();
+
+
+            vm.dtOptions = {
+                "scrollX": true
+            };
+            vm.initTable = function() {
+                cfpLoadingBar.start();
+
+                $.post(api.url + "categories_list",{
+                    access_token: localStorage.getItem('adminToken'),
+                    area_id: localStorage.getItem('area_id')||1
+                })
+                    .success(function(data, status) {
+                        cfpLoadingBar.complete();
+                        if (typeof data === 'string') data = JSON.parse(data);
+                        console.log(data);
+                        $scope.mCtrl.flagPopUps(data.flag, data.is_error);
+                        $timeout(function () {
+                            vm.categories = data.categories;
+                            vm.totalItems = vm.categories.length;
+                            console.log(vm.categories);
+                        })
+                    });
+            };
+            vm.initTable();
+            vm.viewServices = function (data) {
+                localStorage.setItem("cat_id",data.category_id);
+                $state.go("app.services");
+            }
+        }
+    }
+})();
+
+
+
+/**=========================================================
+ * Module: Category Service List
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.category')
+        .controller('CategoryServicesController', CategoryServicesController);
+
+    CategoryServicesController.$inject = ['$http', '$state', '$rootScope', 'toaster', '$scope', 'cfpLoadingBar', 'api', '$timeout', 'ngDialog'];
+
+    function CategoryServicesController($http, $state, $rootScope, toaster, $scope, cfpLoadingBar, api, $timeout, ngDialog) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+            $scope.mCtrl.checkToken();
+            $scope.mCtrl.checkDoctorToken();
+
+
+            vm.dtOptions = {
+                "scrollX": true
+            };
+            vm.initTable = function() {
+                cfpLoadingBar.start();
+
+                $.post(api.url + "services_list",{
+                    access_token: localStorage.getItem('adminToken'),
+                    category_id: localStorage.getItem('cat_id')
+                })
+                    .success(function(data, status) {
+                        cfpLoadingBar.complete();
+                        if (typeof data === 'string') data = JSON.parse(data);
+                        console.log(data);
+                        $scope.mCtrl.flagPopUps(data.flag, data.is_error);
+                        $timeout(function () {
+                            vm.services = data.services;
+                            vm.totalItems = vm.services.length;
+                            console.log(vm.services);
+                        })
+                    });
+            };
+            vm.initTable();
+            vm.viewAddServices = function (data) {
+                localStorage.setItem("catServ_id",data.service_id);
+                $state.go("app.additionalServices");
+            }
+        }
+    }
+})();
+
+
+/**=========================================================
+ * Module: Additional Service List
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.category')
+        .controller('AdditionalServicesController', AdditionalServicesController);
+
+    AdditionalServicesController.$inject = ['$http', '$state', '$rootScope', 'toaster', '$scope', 'cfpLoadingBar', 'api', '$timeout', 'ngDialog'];
+
+    function AdditionalServicesController($http, $state, $rootScope, toaster, $scope, cfpLoadingBar, api, $timeout, ngDialog) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+            $scope.mCtrl.checkToken();
+            $scope.mCtrl.checkDoctorToken();
+
+
+            vm.dtOptions = {
+                "scrollX": true
+            };
+            vm.initTable = function() {
+                cfpLoadingBar.start();
+
+                $.post(api.url + "as_list",{
+                    access_token: localStorage.getItem('adminToken'),
+                    service_id: localStorage.getItem('catServ_id')
+                })
+                    .success(function(data, status) {
+                        cfpLoadingBar.complete();
+                        if (typeof data === 'string') data = JSON.parse(data);
+                        console.log(data);
+                        $scope.mCtrl.flagPopUps(data.flag, data.is_error);
+                        $timeout(function () {
+                            vm.additionalServices = data.additional_services;
+                            vm.totalItems = vm.additionalServices.length;
+                            console.log(vm.additionalServices);
+                        })
+                    });
+            };
+            vm.initTable();
         }
     }
 })();
