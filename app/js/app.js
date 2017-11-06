@@ -16,17 +16,11 @@
     'use strict';
 
     angular
-        .module('adminPanel', [
+        .module('portalPanel', [
             'app.core',
             'app.routes',
             'app.mainCtrl',
-            'app.dashboard',
             'app.customers',
-            'app.areas',
-            'app.category',
-            'app.artists',
-            'app.bookings',
-            'app.support',
             'app.sidebar',
             'app.elements',
             'app.navsearch',
@@ -97,7 +91,7 @@
 (function() {
     'use strict';
     angular
-        .module('adminPanel').constant("api", {
+        .module('portalPanel').constant("api", {
             // Live
             // "url": "https://apilive.nowbeauty.com:3003/"
             // Dev
@@ -154,13 +148,7 @@
     'use strict';
 
     angular
-        .module('app.dashboard', []);
-})();
-(function() {
-    'use strict';
-
-    angular
-        .module('app.dashboard')
+        .module('app.mainCtrl')
         .directive('flot', flot);
 
     flot.$inject = ['$http', '$timeout'];
@@ -278,36 +266,6 @@
 
     angular
         .module('app.customers', []);
-})();
-(function() {
-    'use strict';
-
-    angular
-        .module('app.areas', []);
-})();
-(function() {
-    'use strict';
-
-    angular
-        .module('app.artists', []);
-})();
-(function() {
-    'use strict';
-
-    angular
-        .module('app.bookings', []);
-})();
-(function() {
-    'use strict';
-
-    angular
-        .module('app.category', []);
-})();
-(function() {
-    'use strict';
-
-    angular
-        .module('app.support', []);
 })();
 (function() {
     'use strict';
@@ -660,7 +618,7 @@
     'use strict';
 
     angular
-        .module('adminPanel')
+        .module('portalPanel')
         .directive('filestyle', filestyle);
 
     function filestyle () {
@@ -2117,7 +2075,7 @@
     angular
         .module('custom', [
             // request the the entire framework
-            'adminPanel',
+            'portalPanel',
             // or just modules
             'app.core',
             'app.sidebar'

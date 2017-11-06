@@ -6,7 +6,7 @@
   'use strict';
 
   angular
-    .module('adminPanel')
+    .module('portalPanel')
     .run(mainRun)
 
   mainRun.$inject = ['$http', '$state', '$timeout', 'api', 'cfpLoadingBar', '$interval', '$rootScope'];
@@ -16,7 +16,7 @@
     // console.log('inside main run');
     var aT = window.location.href.split("token=");
     if (aT[1])
-      localStorage.setItem('adminToken', aT[1]);
+      localStorage.setItem('portalToken', aT[1]);
     if (typeof localStorage === 'object') {
       try {
         localStorage.setItem('localStorage', 1);
@@ -28,9 +28,9 @@
       }
     }
 
-    // if (!localStorage.getItem('adminToken')) {
-    //   localStorage.removeItem('adminToken');
-    //   $state.go('login');
+    // if (!localStorage.getItem('portalToken')) {
+    //   localStorage.removeItem('portalToken');
+    //   $state.go('home');
     // }
     $('input').attr('autocomplete', 'new-password');
     $rootScope.get_settings = function() {
@@ -155,12 +155,25 @@
     function activate() {
       $rootScope.$on("$locationChangeSuccess", function() {
         $timeout(function() {
-          $(window).scrollTop(0);
-          window.scrollTo(0, 0);
+          // $(window).scrollTop(0);
+          // window.scrollTo(0, 0);
           ngDialog.close();
           $('.modal-backdrop').remove();
         });
       });
+        vm.scrollHeader=false;
+        console.log(vm.scrollHeader);
+        $(document).ready(function() {
+            $(window).on("scroll", function () {
+                $timeout(function () {
+                    if ($(window).scrollTop() > 20) {
+                        vm.scrollHeader=true;
+                    } else {
+                        vm.scrollHeader=false;
+                    }
+                })
+            });
+        });  
       // console.log(api.url);
 
       vm.emailPattern = /^[a-z0-9A-Z]+[a-zA-Z0-9.+_]+@[a-z0-9A-Z.-]+\.[a-zA-Z]{2,7}$/;
@@ -170,7 +183,7 @@
       vm.today = new Date();
       vm.headers = {
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-      }
+      };
       vm.ngDialogPop = function(template, className) {
         ngDialog.openConfirm({
           template: template,
@@ -180,8 +193,8 @@
 
       }
       vm.loginRedirect = function() {
-        localStorage.removeItem('adminToken');
-        $state.go('login');
+        localStorage.removeItem('portalToken');
+        $state.go('home');
       }
       vm.continueToDashboard = function(a) {
         // ngDialog.close();
@@ -201,15 +214,15 @@
 
       vm.checkToken = function() {
           cfpLoadingBar.complete();
-          if (!localStorage.getItem('adminToken') || localStorage.getItem('adminToken') == null) {
-              localStorage.removeItem('adminToken');
-              $state.go('login');
+          if (!localStorage.getItem('portalToken') || localStorage.getItem('portalToken') == null) {
+              localStorage.removeItem('portalToken');
+              $state.go('home');
               return false;
           }
       };
 
       if ($state.current.name.indexOf('app')!==-1&&!localStorage.getItem('profileData')) {
-        $state.go('login')
+        $state.go('home')
       } else if (localStorage.getItem('profileData')) {
         vm.admin_profile = JSON.parse(localStorage.getItem('profileData'));
         if (vm.admin_profile.plan_id) {
@@ -238,7 +251,7 @@
         }
       }
       vm.get_notifications = function() {
-        if (!localStorage.getItem('adminToken') || localStorage.getItem('adminToken') == null) {
+        if (!localStorage.getItem('portalToken') || localStorage.getItem('portalToken') == null) {
           return false;
         } else {
           vm.admin_notifications = [];
@@ -248,7 +261,7 @@
             app_type: 2,
             app_version: 100,
             device_id: localStorage.getItem('user'),
-            access_token: localStorage.getItem('adminToken'),
+            access_token: localStorage.getItem('portalToken'),
           })
           .success(function(data, status) {
             if (typeof data === 'string')
@@ -273,7 +286,7 @@
             app_type: 2,
             app_version: 100,
             device_id: localStorage.getItem('user'),
-            access_token: localStorage.getItem('adminToken'),
+            access_token: localStorage.getItem('portalToken'),
             dn_id: id
           })
           .success(function(data, status) {
@@ -294,7 +307,7 @@
             app_type: 2,
             app_version: 100,
             device_id: localStorage.getItem('user'),
-            access_token: localStorage.getItem('adminToken'),
+            access_token: localStorage.getItem('portalToken'),
             dn_id: id
           })
           .success(function(data, status) {
@@ -310,7 +323,7 @@
             app_type: 2,
             app_version: 100,
             device_id: localStorage.getItem('user'),
-            access_token: localStorage.getItem('adminToken'),
+            access_token: localStorage.getItem('portalToken'),
             dn_id: id
           })
           .success(function(data, status) {
@@ -326,8 +339,8 @@
             cfpLoadingBar.complete();
             vm.hitInProgress = false;
             if(flag==4||flag==5){
-                localStorage.removeItem('adminToken');
-                $state.go('login');
+                localStorage.removeItem('portalToken');
+                $state.go('home');
                 cfpLoadingBar.complete();
             }
             if (!$rootScope.messageList || $rootScope.messageList.length == 0) {
@@ -375,7 +388,7 @@
 
         cfpLoadingBar.start();
         $.post(api.url + "change_password", {
-          access_token: localStorage.getItem('adminToken'),
+          access_token: localStorage.getItem('portalToken'),
           old_password: vm.change.oldPassword,
           new_password: vm.change.newPassword,
           device_type: 0,
@@ -392,13 +405,13 @@
         });
       };
       vm.checkDoctorToken = function(login) {
-        console.log(localStorage.getItem('adminToken'));
-        if (!localStorage.getItem('adminToken')) {
-          localStorage.removeItem('adminToken')
-          $state.go('login');
+        console.log(localStorage.getItem('portalToken'));
+        if (!localStorage.getItem('portalToken')) {
+          localStorage.removeItem('portalToken')
+          $state.go('home');
         } else {
           $.post(api.url + "access_token_login", {
-              access_token: localStorage.getItem('adminToken'),
+              access_token: localStorage.getItem('portalToken'),
               device_type: 0,
               app_type: 2,
               app_version: 100,
@@ -426,7 +439,7 @@
           if(data.admin_profile){
             vm.admin_profile = data.admin_profile[0];
             localStorage.setItem('profileData', JSON.stringify(vm.admin_profile));
-            localStorage.setItem('adminToken', vm.admin_profile.access_token);
+            localStorage.setItem('portalToken', vm.admin_profile.access_token);
           }
           console.log(vm.admin_profile);
           vm.admin_notifications = [];
@@ -463,7 +476,7 @@
         vm.serving_areas = function () {
             console.log("sd");
             $.post(api.url + "serving_areas", {
-                access_token: localStorage.getItem('adminToken')
+                access_token: localStorage.getItem('portalToken')
             })
                 .success(function (data, status) {
                     if (typeof data === 'string')
@@ -481,7 +494,7 @@
       vm.logout = function() {
         cfpLoadingBar.start();
           $.post(api.url + "admin_logout", {
-              access_token: localStorage.getItem('adminToken'),
+              access_token: localStorage.getItem('portalToken'),
               device_type: 0,
               device_id: localStorage.getItem('user')
           })
@@ -491,9 +504,9 @@
 
             console.log(data);
             ngDialog.close();
-            localStorage.removeItem('adminToken');
+            localStorage.removeItem('portalToken');
             toaster.pop('success', 'Logged Out Successfully', '');
-            $state.go('login');
+            $state.go('home');
             cfpLoadingBar.complete();
           });
       };

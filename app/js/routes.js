@@ -103,31 +103,23 @@
         // $locationProvider.html5Mode(false);
         $locationProvider.html5Mode(false).hashPrefix('');
         // defaults to dashboard
-        $urlRouterProvider.otherwise('/login');
+        $urlRouterProvider.otherwise('/home');
 
         //
         // Application Routes
         // -----------------------------------
         $stateProvider
-          // .state('page', {
-          //       url: '',
-          //       templateUrl: 'app/pages/page.html',
-          //       resolve: helper.resolveFor('modernizr', 'icons'),
-          //       controller: ['$rootScope', function($rootScope) {
-          //           $rootScope.app.layout.isBoxed = false;
-          //       }]
-          //   })
           .state('main', {
                 url: '',
                 abstract: true,
                 resolve: helper.resolveFor('modernizr', 'icons','moment','ngDialog','toaster'),
                 controller: 'mainController'
             })
-          .state('login', {
-              url: '/login',
-              title: 'Login',
+          .state('home', {
+              url: '/home',
+              title: 'Home',
               resolve: helper.resolveFor('modernizr', 'icons','loaders.css', 'spinkit'),
-              templateUrl: 'app/pages/login.html'
+              templateUrl: 'app/pages/home.html'
           })
           .state('app', {
               url: '/app',
@@ -136,77 +128,12 @@
               resolve: helper.resolveFor( 'modernizr','inputmask', 'ngDialog', 'icons',  'animo',  'toaster', 'loaders.css', 'spinkit','easypiechart')
               // 'fastclick','screenfull','sparklines', 'slimscroll', 'easypiechart','whirl',
           })
-          .state('app.dashboard', {
-              url: '/dashboard',
-              title: 'Dashboard',
-              templateUrl: helper.basepath('dashboard.html'),
-              resolve: helper.resolveFor('ngDialog','easypiechart','flot-chart','flot-chart-plugins','ui.calendar')
-          })
-          .state('app.customers', {
-              url: '/customers',
-              templateUrl:  helper.basepath('customers.html'),
-              resolve: helper.resolveFor('datatables')
-          })
-          .state('app.verifiedArtists', {
-              url: '/verifiedArtists',
-              templateUrl:  helper.basepath('verifiedArtists.html'),
-              resolve: helper.resolveFor('datatables')
+            .state('app.location', {
+                url: '/location',
+                title: 'Location',
+                templateUrl: 'app/views/location.html'
             })
-          .state('app.unverifiedArtists', {
-              url: '/unverifiedArtists',
-              templateUrl:  helper.basepath('unverifiedArtists.html'),
-              resolve: helper.resolveFor('datatables')
-            })
-          .state('app.areas', {
-              url: '/areas',
-              templateUrl:  helper.basepath('areas.html'),
-              resolve: helper.resolveFor('datatables')
-            })
-          .state('app.cancelledBookings', {
-              url: '/cancelledBookings',
-              templateUrl:  helper.basepath('cancelledBookings.html'),
-              resolve: helper.resolveFor('datatables')
-            })
-          .state('app.finishedBookings', {
-              url: '/finishedBookings',
-              templateUrl:  helper.basepath('finishedBookings.html'),
-              resolve: helper.resolveFor('datatables')
-            })
-          .state('app.ongoingBookings', {
-              url: '/ongoingBookings',
-              templateUrl:  helper.basepath('ongoingBookings.html'),
-              resolve: helper.resolveFor('datatables')
-            })
-          .state('app.paidBookings', {
-              url: '/paidBookings',
-              templateUrl:  helper.basepath('paidBookings.html'),
-              resolve: helper.resolveFor('datatables')
-            })
-          .state('app.tbaBookings', {
-              url: '/tbaBookings',
-              templateUrl:  helper.basepath('tbaBookings.html'),
-              resolve: helper.resolveFor('datatables')
-            })
-          .state('app.upcomingBookings', {
-              url: '/upcomingBookings',
-              templateUrl:  helper.basepath('upcomingBookings.html'),
-              resolve: helper.resolveFor('datatables')
-            })
-          .state('app.categories', {
-              url: '/categories',
-              templateUrl:  helper.basepath('categories.html'),
-              resolve: helper.resolveFor('datatables')
-            })
-          .state('app.services', {
-              url: '/services',
-              templateUrl:  helper.basepath('catServices.html'),
-              resolve: helper.resolveFor('datatables')
-            })
-          .state('app.additionalServices', {
-              url: '/additionalServices',
-              templateUrl:  helper.basepath('additionalServices.html'),
-              resolve: helper.resolveFor('datatables')
-            })
+
 
     }
 })();

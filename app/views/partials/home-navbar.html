@@ -1,0 +1,93 @@
+<!-- START Top Navbar-->
+<nav class="navbar topnavbar" data-ng-class="{'noScrollHeader':!mCtrl.scrollHeader,'scrollHeader':mCtrl.scrollHeader}" role="navigation" >
+   <!-- START navbar header-->
+   <div class="navbar-header">
+      <button class="navbar-toggle collapsed" type="button" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
+         <span class="sr-only">Toggle navigation</span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand">
+         <div class="brand-logo whiteLogo">
+            <img class="img-responsive" src="app/img/SVG/logo_white.svg" alt="App Logo" />
+         </div>
+          <div class="brand-logo blackLogo">
+              <img class="img-responsive" src="app/img/SVG/logo_black.svg" alt="App Logo" />
+          </div>
+         <div class="brand-logo-collapsed">
+            <img class="img-responsive" src="app/img/SVG/bar_logo.svg" alt="App Logo" />
+         </div>
+      </a>
+   </div>
+   <!-- END navbar header-->
+   <!-- START Nav wrapper-->
+   <div class="collapse navbar-collapse" uib-collapse="navCollapsed">
+      <!-- Navbar Menu -->
+      <ul class="nav navbar-nav pull-right" ng-controller="SidebarController" >
+         <li ng-repeat="item in menuItems " ng-class="{'dropdown': item.submenu,'active':$state.includes(item.sref)||(pfTab&&item.sref=='app.pf')}" uib-dropdown="!!item.submenu" ng-hide="item.sref=='app.updateAccount'&&mCtrl.showAccount==0||item.sref=='app.updateFeatures'&&mCtrl.is_guaranteed==1">
+            <a ng-if="!item.heading &amp;&amp; !item.submenu" ng-href="{{$state.href(item.sref)}}" title="{{item.text}}" ng-class="{'active':$state.includes(item.sref)}">
+               <span>{{item.text}}</span>
+               <!-- (item.translate | translate) ||  -->
+            </a>
+            <a uib-dropdown-toggle="" ng-if="item.submenu">
+               <span>{{item.text}}</span>
+            </a>
+            <!-- START Dropdown menu-->
+            <ul class="dropdown-menu animated fadeInUp">
+               <li ng-repeat="subitem in item.submenu">
+                  <a ng-href="{{$state.href(subitem.sref)}}" title="{{subitem.text}}" ng-hide="subitem.sref=='app.pfFinanceInfo'&&can_finance==0">
+                     <span>{{subitem.text}}</span>
+                  </a>
+               </li>
+            </ul>
+         </li>
+      </ul>
+
+      <!-- END Right Navbar-->
+   </div>
+
+   <script type="text/ng-template" ng-show="visible" id="change_password_modal">
+            <div class="ngdialog-message logoutpopo">
+                <div class="ngdialog-header">
+                    <p>Change Password</p>
+                </div>
+                <div class="ngdialog-body">
+                  <form role="form" class="mb-lg" name="mCtrl.changePassword"
+                  ng-submit="mCtrl.change.newPassword&&mCtrl.change.oldPassword&&mCtrl.change.confirmPassword
+                  &&mCtrl.change.oldPassword!=mCtrl.change.newPassword&&mCtrl.change.confirmPassword==mCtrl.change.newPassword
+                  &&mCtrl.changePassword.$submitted&&mCtrl.changePasswordApi()">
+                    <div class="col-lg-12 p-b-15">
+                        <label>Current Password</label>
+                        <input type="password" ng-model="mCtrl.change.oldPassword" class="form-control" required  minlength="6" maxlength="25"/>
+                    </div>
+                    <span ng-show="mCtrl.change.oldWrong"
+                          class="alert errorSpanPop" style="margin-left: 7px">Password is wrong</span>
+                    <div class="col-lg-12 p-b-15">
+                        <label>New Password</label>
+                        <input type="password" ng-model="mCtrl.change.newPassword" class="form-control" required minlength="6" maxlength="25"/>
+                    </div>
+                    <span ng-show="mCtrl.change.newPassword&&mCtrl.change.oldPassword&&mCtrl.change.newPassword==mCtrl.change.oldPassword"
+                          class="alert errorSpanPop" style="margin-left: 7px">New password can't be same as old password</span>
+                    <div class="col-lg-12 p-b-15">
+                        <label>Confirm Password</label>
+                        <input name="mCtrl.confirmPassword" type="password" ng-model="mCtrl.change.confirmPassword"  minlength="6" maxlength="25" ng-pattern="(mCtrl.change.newPassword)" class="form-control" required/>
+                    </div>
+                    <span ng-show="mCtrl.changePassword.confirmPassword.$error.pattern"
+                          class="alert errorSpanPop" style="margin-left: 7px">Passwords don't match</span>
+                    <div style="clear:both"></div>
+                    <div class="col-lg-12 p-b-15">
+                      <button type="button" ng-click="closeThisDialog('button')"
+                      class="btn btn-default pull-left btn-cancel">Cancel
+                      </button>
+                      <button type="submit"
+                              class="btn btn-primary pull-right btn-pop">Confirm
+                      </button>
+                    </div>
+                  </form>
+
+                </div>
+            </div>
+        </script>
+</nav>
+<!-- END Top Navbar-->
