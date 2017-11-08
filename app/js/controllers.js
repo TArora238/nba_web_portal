@@ -37,9 +37,11 @@
                 scope: $scope
             }).then(function(value) {}, function(reason) {});
 
-        }
+        };
+      var user = localStorage.getItem("user");
       localStorage.clear();
-
+      localStorage.setItem("user",user);
+      localStorage.setItem("loggedIn",0);
     }
   }
 })();
