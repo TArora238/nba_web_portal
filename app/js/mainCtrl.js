@@ -50,14 +50,14 @@
             // api.url = data.port + '/';
             // console.log(api.url);
 
-            // Stripe.setPublishableKey(data.stripe_pk);
+            Stripe.setPublishableKey(data.stripe_key);
             $timeout(function() {
               $rootScope.messageList = data.popup;
 
               // $rootScope.$emit('init');
             });
             $rootScope.profile = {};
-            // $rootScope.checkDoctorToken();
+            // $rootScope.checkPortalToken();
           });
 
       } else {
@@ -144,10 +144,10 @@
     .module('app.mainCtrl')
     .controller('mainController', mainController)
 
-  mainController.$inject = ['$http', '$state', '$scope', '$timeout', 'api', 'cfpLoadingBar', '$interval', '$rootScope', 'ngDialog', 'toaster'];
+  mainController.$inject = ['$http', '$state', '$scope', '$timeout', 'api', 'cfpLoadingBar', '$interval', '$rootScope', 'ngDialog', 'toaster','$anchorScroll','$location'];
   // 'toaster', 'toastrConfig',
   // toaster, toastrConfig,
-  function mainController($http, $state, $scope, $timeout, api, cfpLoadingBar, $interval, $rootScope, ngDialog, toaster) {
+  function mainController($http, $state, $scope, $timeout, api, cfpLoadingBar, $interval, $rootScope, ngDialog, toaster,$anchorScroll,$location) {
     var vm = this;
 
     // $rootScope.$on('init', function() {
@@ -158,12 +158,17 @@
     function activate() {
       $rootScope.$on("$locationChangeSuccess", function() {
         $timeout(function() {
-          // $(window).scrollTop(0);
-          // window.scrollTo(0, 0);
+          $(window).scrollTop(0);
+          window.scrollTo(0, 0);
           ngDialog.close();
           $('.modal-backdrop').remove();
         });
       });
+        vm.goToScrollID = function (a) {
+            $location.hash(a);
+            $anchorScroll.yOffset = 70;
+            $anchorScroll();
+        };
         vm.scrollHeader=false;
         // console.log(vm.scrollHeader);
         $(document).ready(function() {
@@ -194,24 +199,123 @@
           scope: $scope
         }).then(function(value) {}, function(reason) {});
 
-      }
+      };
+      vm.signInPop = function () {
+          vm.login={
+              phone:'',
+              name:'',
+              email:''
+          };
+          vm.ngDialogPop("signInModal","bigPop");
+      };
+        vm.code='+44';
+        vm.codes=['+44','+91'];
+        vm.chooseCode = function (c) {
+            vm.code=c;
+        };
+
+      vm.signInFn = function (i) {
+          var mob = vm.login.phone.replace(/[^0-9]/g, "");
+          cfpLoadingBar.start();
+          $.post(api.url + "send_otp", {
+              user_mobile: vm.code + '-' + mob,
+              device_type: 0,
+              device_id: localStorage.getItem('user'),
+              app_version: "100",
+              device_token: "1234",
+              app_type: 0
+          })
+              .success(function(data, status) {
+                  if (typeof data === 'string')
+                      var data = JSON.parse(data);
+                  console.log(data);
+                  $timeout(function() {
+                      vm.flagPopUps(data.flag, data.is_error);
+                      if (data.is_error == 0) {
+                          // localStorage.setItem('',JSON.stringify($rootScope.personal));
+
+                          vm.OTP={};
+                          vm.resendOTP = 1;
+                          vm.resendOTPCounter = 30;
+                          vm.firstResend = 1;
+                          var resend1 = $interval(function() {
+                              if (vm.resendOTPCounter > 0 && vm.firstResend == 1)
+                              {
+                                  --vm.resendOTPCounter;
+                                  if(vm.resendOTPCounter<10){
+                                      vm.OTPCounter='0'+vm.resendOTPCounter;
+                                  }
+                                  else{
+                                      vm.OTPCounter=vm.resendOTPCounter;
+                                  }
+                              }
+
+                          }, 1000);
+                          $timeout(function() {
+                              if (vm.firstResend == 1) {
+                                  vm.resendOTP = 0;
+                                  $interval.cancel(resend1);
+                                  // $scope.$apply();
+                              }
+                          }, 30000);
+
+                          if(i==2){
+                              localStorage.setItem("personalData",JSON.stringify(vm.login));
+                          }
+                          ngDialog.close();
+                          vm.ngDialogPop("otp_modal",'biggerPop');
+                      }
+                  });
+              })
+      };
+        vm.verifyOTPLogin = function (i) {
+            cfpLoadingBar.start();
+            vm.OTP_formatted = '';
+            vm.OTP_formatted = vm.OTP_formatted + vm.OTP.a + vm.OTP.b + vm.OTP.c + vm.OTP.d;
+
+            $.post(api.url + "verify_otp", {
+                user_mobile: vm.code + '-' + vm.login.phone.replace(/[^0-9]/g, ""),
+                otp: vm.OTP_formatted,
+                device_type: 0,
+                device_id: localStorage.getItem('user'),
+                app_version: "100",
+                device_token: "1234",
+                app_type: 0
+            })
+                .success(function(data, status) {
+                    if (typeof data === 'string')
+                        var data = JSON.parse(data);
+                    console.log(data);
+                    //vm.loading=false;
+                    $timeout(function() {
+                        vm.flagPopUps(data.flag, data.is_error);
+                        if (data.is_error == 0) {
+                            // $rootScope.setLoginData(data, 1);
+                            ngDialog.close();
+                            vm.otpSent = 0;
+                            if (data.access_token) localStorage.setItem('portalToken', data.access_token);
+                            if (data.user_address.length > 0) localStorage.setItem('userAddress', JSON.stringify(data.user_address))
+                            else localStorage.removeItem('userAddress');
+                            if (data.user_cards.length > 0) localStorage.setItem('userCards', JSON.stringify(data.user_cards))
+                            else localStorage.removeItem('userCards');
+                            if (data.user_profile) localStorage.setItem('userProfile', JSON.stringify(data.user_profile));
+                            vm.user_name=JSON.parse(localStorage.getItem('userProfile')).user_name;
+                            $rootScope.loggedIn = true;
+                            if (data.countries) {
+                                localStorage.setItem('userCountries', JSON.stringify(data.countries));
+                                vm.countries = data.countries;
+                            }
+                            localStorage.setItem('loggedIn',1);
+                            if(i){$state.reload();}
+                            else $state.go("app.categories");
+                        }
+                    })
+                })
+        };
       vm.loginRedirect = function() {
         localStorage.removeItem('portalToken');
         $state.go('home');
-      }
-      vm.continueToDashboard = function(a) {
-        // ngDialog.close();
-        // $rootScope.get_settings();
-        //
-        // if (localStorage.getItem('bankFromFinance') != 1) $state.go('app.dashboard');
-        // else $state.go('app.pfFinanceInfo');
-        // if(a!=1){
-        //     $timeout(function () {
-        //       $rootScope.tourGuide();
-        //     },200);
-        // }
-      }
-
+      };
 
 
 
@@ -224,118 +328,9 @@
           }
       };
 
-      if ($state.current.name.indexOf('app')!==-1&&!localStorage.getItem('profileData')) {
-        $state.go('home')
-      } else if (localStorage.getItem('profileData')) {
-        vm.admin_profile = JSON.parse(localStorage.getItem('profileData'));
-        if (vm.admin_profile.plan_id) {
 
-          if (vm.admin_profile.plan_id.indexOf('2') > -1) {
-            vm.showPFMenu = 1;
-          } else {
-            vm.showPFMenu = 0;
-          }
-
-        }
-        if (vm.admin_profile.is_pdp == 0) {
-          vm.showPDPMenu = 0;
-        } else {
-          vm.showPDPMenu = 1;
-        }
-      }
 
       vm.hitInProgress = false;
-      vm.countNotfs = function() {
-        vm.unreadNotfs = 0;
-        for (var i = 0; i < vm.admin_notifications.length; i++) {
-          if (vm.admin_notifications[i].read_at == null) {
-            vm.unreadNotfs++;
-          }
-        }
-      }
-      vm.get_notifications = function() {
-        if (!localStorage.getItem('portalToken') || localStorage.getItem('portalToken') == null) {
-          return false;
-        } else {
-          vm.admin_notifications = [];
-        }
-        $.post(api.url + "get_notifications", {
-            device_type: 0,
-            app_type: 2,
-            app_version: 100,
-            device_id: localStorage.getItem('user'),
-            access_token: localStorage.getItem('portalToken'),
-          })
-          .success(function(data, status) {
-            if (typeof data === 'string')
-              var data = JSON.parse(data);
-            if (data.flag == 4) {
-              $interval.cancel(notfInterval);
-            }
-            $timeout(function() {
-              vm.admin_notifications = data.admin_notifications;
-              vm.countNotfs();
-            });
-          });
-      }
-      // vm.get_notifications();
-      var notfInterval = $interval(function() {
-        // vm.get_notifications();
-      }, 60000);
-      vm.read_notification = function(id, index) {
-        vm.admin_notifications = [];
-        $.post(api.url + "read_notification", {
-            device_type: 0,
-            app_type: 2,
-            app_version: 100,
-            device_id: localStorage.getItem('user'),
-            access_token: localStorage.getItem('portalToken'),
-            dn_id: id
-          })
-          .success(function(data, status) {
-            if (typeof data === 'string')
-              var data = JSON.parse(data);
-
-            $timeout(function() {
-
-              vm.admin_notifications = data.admin_notifications;
-              vm.countNotfs();
-            })
-          });
-      }
-      vm.acceptProspect = function(id, index) {
-        vm.admin_notifications = [];
-        $.post(api.url + "accept_prospect", {
-            device_type: 0,
-            app_type: 2,
-            app_version: 100,
-            device_id: localStorage.getItem('user'),
-            access_token: localStorage.getItem('portalToken'),
-            dn_id: id
-          })
-          .success(function(data, status) {
-            if (typeof data === 'string')
-              var data = JSON.parse(data);
-            vm.read_notification(id);
-          });
-      }
-      vm.rejectProspect = function(id, index) {
-        vm.admin_notifications = [];
-        $.post(api.url + "reject_prospect", {
-            device_type: 0,
-            app_type: 2,
-            app_version: 100,
-            device_id: localStorage.getItem('user'),
-            access_token: localStorage.getItem('portalToken'),
-            dn_id: id
-          })
-          .success(function(data, status) {
-            if (typeof data === 'string')
-              var data = JSON.parse(data);
-            vm.read_notification(id);
-          });
-      }
-
 
       
         vm.flagPopUps = function (flag, error) {
@@ -361,7 +356,7 @@
                 }
                 vm.hitInProgress = false;
             }
-        }
+        };
 
       vm.states=[];
       vm.getLocation = function(query) {
@@ -379,44 +374,18 @@
           }
         });
       };
-      vm.changePasswordFn = function() {
-        vm.change = {};
-        vm.ngDialogPop('change_password_modal', 'bigPop');
-      };
-      vm.changePasswordApi = function() {
-        if (!vm.change.oldPassword || vm.change.oldPassword.trim().length == 0 || !vm.change.newPassword || vm.change.newPassword.trim().length == 0) {
-          vm.openToast('warning', 'Enter a valid password', '');
-          return false;
-        }
 
-        cfpLoadingBar.start();
-        $.post(api.url + "change_password", {
-          access_token: localStorage.getItem('portalToken'),
-          old_password: vm.change.oldPassword,
-          new_password: vm.change.newPassword,
-          device_type: 0,
-          app_type: 2,
-          app_version: 100,
-          device_id: localStorage.getItem('user')
-        }).success(function(data, status) {
-          if (typeof data === 'string')
-            var data = JSON.parse(data);
-          // console.log(data);
-          vm.flagPopUps(data.flag,data.is_error);
-
-          if (data.is_error == 0) ngDialog.close();
-        });
-      };
-      vm.checkDoctorToken = function(login) {
+      vm.checkPortalToken = function(login) {
         console.log(localStorage.getItem('portalToken'));
-        if (!localStorage.getItem('portalToken')) {
-          localStorage.removeItem('portalToken')
-          $state.go('home');
-        } else {
+        // if (!localStorage.getItem('portalToken')) {
+        //   localStorage.removeItem('portalToken')
+        //   $state.go('home');
+        // } else {
           $.post(api.url + "access_token_login", {
               access_token: localStorage.getItem('portalToken'),
               device_type: 0,
               app_type: 2,
+              device_token: "1234",
               app_version: 100,
               device_id: localStorage.getItem('user')
             })
@@ -424,74 +393,33 @@
               if (typeof data === 'string')
                 var data = JSON.parse(data);
               console.log(data);
-              vm.flagPopUps(data.flag,data.is_error);
+              // vm.flagPopUps(data.flag,data.is_error);
               if (data.is_error == 0) {
-                vm.setLoginData(data, login);
+                  if (data.access_token) localStorage.setItem('portalToken', data.access_token);
+                  if (data.user_address.length > 0) localStorage.setItem('userAddress', JSON.stringify(data.user_address))
+                  else localStorage.removeItem('userAddress');
+                  if (data.user_cards.length > 0) localStorage.setItem('userCards', JSON.stringify(data.user_cards))
+                  else localStorage.removeItem('userCards');
+                  if (data.user_profile) localStorage.setItem('userProfile', JSON.stringify(data.user_profile));
+                  vm.user_name=JSON.parse(localStorage.getItem('userProfile')).user_name;
+                  if (data.countries) {
+                      localStorage.setItem('userCountries', JSON.stringify(data.countries));
+                      vm.countries = data.countries;
+                  }
+
+                  $rootScope.loggedIn = true;
+                  localStorage.setItem('loggedIn',1);
+                  $rootScope.userAddress = JSON.parse(localStorage.getItem('userAddress'));
+                  $rootScope.userCards = JSON.parse(localStorage.getItem('userCards'));
+                  $rootScope.userProfile = JSON.parse(localStorage.getItem('userProfile'));
+
               }
             });
-        }
+        // }
       };
       vm.dtOptions = {
         "scrollX": true
       };
-
-      vm.setLoginData = function(data, login) {
-
-        $timeout(function() {
-          vm.profile = {};
-          if(data.admin_profile){
-            vm.admin_profile = data.admin_profile[0];
-            localStorage.setItem('profileData', JSON.stringify(vm.admin_profile));
-            localStorage.setItem('portalToken', vm.admin_profile.access_token);
-          }
-          console.log(vm.admin_profile);
-          vm.admin_notifications = [];
-          if(data.admin_notifications)vm.admin_notifications = data.admin_notifications;
-          if (vm.admin_profile.admin_image)
-            vm.profilePicThumb = vm.admin_profile.admin_image;
-          else vm.profilePicThumb = 'app/img/SVG/profile_placeholder.svg';
-          localStorage.setItem('profilePicThumb', vm.profilePicThumb);
-          vm.profile.profileData = vm.admin_profile;
-          localStorage.setItem('admin_name', vm.admin_profile.admin_name.toString());
-          vm.admin_name = localStorage.getItem('admin_name');
-          vm.profilePicThumb = localStorage.getItem('profilePicThumb');
-          if (login == 1) {
-            vm.serving_areas();
-            $state.go('app.dashboard');
-          } else if (login == 2) {
-              vm.serving_areas();
-              $state.go('app.dashboard');
-          }
-        });
-      };
-        if (localStorage.getItem('selected_area'))
-            vm.selected_area = localStorage.getItem('selected_area');
-        else
-            vm.selected_area = 'Select Area';
-        vm.select_area = function (a) {
-            vm.selected_area = a.area_name;
-            vm.area_id = a.area_id;
-            localStorage.setItem('selected_area', vm.selected_area);
-            localStorage.setItem('area_id', vm.area_id);
-            $state.reload();
-        };
-        vm.serving_area_list = [];
-        vm.serving_areas = function () {
-            console.log("sd");
-            $.post(api.url + "serving_areas", {
-                access_token: localStorage.getItem('portalToken')
-            })
-                .success(function (data, status) {
-                    if (typeof data === 'string')
-                        var data = JSON.parse(data);
-                    // console.log(data);
-                    vm.serving_area_list = data.serving_areas;
-                    // console.log(vm.serving_area_list);
-                });
-        };
-      vm.admin_name = localStorage.getItem('admin_name');
-      vm.profilePicThumb = localStorage.getItem('profilePicThumb');
-
 
 
       vm.logout = function() {

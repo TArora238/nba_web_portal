@@ -11,16 +11,17 @@
                             <div class="whiteHeader p-15">
                                 <h4>Your Details</h4>
                                 <div class="row">
+                                    <form name="details.detailsForm">
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label>Full Name</label>
-                                            <input class="form-control" ng-model="details.personal.fullName">
+                                            <input name="fullName" ng-disabled="!details.detailsForm.fullName.$dirty&&details.personal.fullName" class="form-control" ng-model="details.personal.fullName">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Email</label>
-                                            <input class="form-control" ng-pattern="emailPattern"  ng-model="details.personal.email">
+                                            <input name="email" ng-disabled="!details.detailsForm.email.$dirty&&details.personal.email" class="form-control" ng-pattern="mCtrl.emailPattern"  ng-model="details.personal.email">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -28,7 +29,7 @@
                                             <label>Phone</label>
                                             <div class="input-group">
                                                 <div class="input-group-btn dropdown" uib-dropdown="" style="">
-                                                    <button class="btn btn-default dropdown-toggle" type="button" uib-dropdown-toggle=""
+                                                    <button ng-disabled="!details.detailsForm.phone.$dirty&&details.personal.phone" class="btn btn-default dropdown-toggle" type="button" uib-dropdown-toggle=""
                                                             aria-haspopup="true" aria-expanded="false">{{details.code}}
                                                         <span class="caret"></span></button>
                                                     <ul class="dropdown-menu">
@@ -37,14 +38,15 @@
                                                         </li>
                                                     </ul>
                                                 </div>
-                                                <input class="form-control" type="text" ng-model="details.personal.phone" maxlength=15 minlength=9
+                                                <input name="phone" ng-disabled="!details.detailsForm.phone.$dirty&&details.personal.phone" class="form-control" type="text" ng-model="details.personal.phone" maxlength=15 minlength=9
                                                        onkeypress="return isNumberKey(event)" masked="" data-inputmask="'mask': '(999) 999-9999'">
                                             </div>
                                         </div>
                                     </div>
+                                    </form>
                                 </div>
                             </div>
-                            <div class="p-15 w-100" style="display: table;">
+                            <div class="p-15 w-100" style="display: table;" ng-if="!loggedIn||userAddress.length==0">
                                 <h4>Your Address</h4>
                                 <div class="row">
                                     <form name="details.addressForm">
@@ -93,6 +95,27 @@
                                     </form>
                                 </div>
                             </div>
+                            <div class="p-15 w-100" style="display: table;" ng-if="loggedIn&&userAddress.length>0">
+                                <h4 class="m-t-0 col-lg-6 col-xs-12">Your Saved Address</h4>
+                                <a class="text-right col-lg-6 col-xs-12" style="color: #ee7670" ng-click="details.ngDialogPop('addAddressModal','biggerPop')">Add new address</a>
+                                <div class="clearfix"></div>
+                                <div class="row m-t-20">
+                                    <div class="col-lg-6 col-xs-12" ng-repeat="data in userAddress">
+                                        <div class="savedAddressDiv ">
+                                            <div class="radio">
+                                                <label class="savAddSubDiv">
+                                                    <input type="radio" ng-model="details.savedAddress" name="savedAddress"
+                                                           value="{{$index}}" ng-click="details.addressSelect($index)"/>
+                                                    <div>
+                                                        <h4>{{data.address_title}}</h4>
+                                                        <label>{{data.apt_address}}{{data.city}}</label>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-xs-12 col-md-4 col-sm-12 ">
@@ -115,6 +138,43 @@
                     </div>
                 </div>
             </div>
+            <script type="text/ng-template" id="otp_modal">
+                <div class="ngdialog-message m-0">
+                    <div class="p-0 ngdialog-body prospectDiv row" style="display: flex;padding: 0!important">
+                        <div class="p-0 hidden-xs col-lg-5 col-md-5 col-sm-5 verifyDiv">
+                        </div>
+                        <div class="p-30 col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                            <form name="details.verifyOTPForm" class="OtpForm" ng-submit="details.verifyOTPForm.$submitted&&details.verifyOTP()">
+                                    <h3 class=" text-left">Verify your phone number</h3>
+                                    <label style="color:#505050" class="m-b-30 text-left">Please enter verification code sent to {{details.code}}-{{details.personal.phone}}</label>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-0">
+                                        <ul class="full-width text-left list-inline">
+                                            <li><input type="tel" maxlength="1" id="input0" auto-tab-to="input1" switch="input0" class="form-otp-input text-center"  numbers-only="numbers-only" name="OTP"  ng-model="details.OTP.a" required autocomplete="off"></li>
+                                            <li><input type="tel" maxlength="1" id="input1" auto-tab-to="input2" switch="input0" class="form-otp-input text-center"  numbers-only="numbers-only" name="OTP"  ng-model="details.OTP.b" required autocomplete="off"></li>
+                                            <li><input type="tel" maxlength="1" id="input2" auto-tab-to="input3" switch="input1" class="form-otp-input text-center"  numbers-only="numbers-only" name="OTP"  ng-model="details.OTP.c" required autocomplete="off"></li>
+                                            <li><input type="tel" maxlength="1" id="input3" auto-tab-to="input3" switch="input2" class="form-otp-input text-center"  numbers-only="numbers-only" name="OTP"  ng-model="details.OTP.d" required autocomplete="off"></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-lg-12 col-xs-12 col-md-12 col-sm-12 text-left p-0 m-t-20">
+                                        <a ng-click="!details.resendOTP&&details.generateOTP(2)" class="resendOTP" style="width: 35%;"
+                                                ng-disabled="details.resendOTP" ><span ng-show="!details.resendOTP">Resend Code</span>
+                                            <span ng-show="details.resendOTP">00:{{details.OTPCounter||30}}</span>
+                                        </a>
+                                    </div>
+                                    <div class="p-0 col-lg-12">
+
+                                        <button type="submit"
+                                                class="m-l-15 btn btnDefault pull-left btn-pop">Verify Code
+                                        </button>
+                                        <button type="button"
+                                                class="btn pull-right btn-cancel m-r-15" ng-click="closeThisDialog('button')">Cancel
+                                        </button>
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </script>
         </div>
     </div>
 </div>

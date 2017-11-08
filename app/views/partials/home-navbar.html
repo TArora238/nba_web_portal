@@ -25,69 +25,89 @@
    <div class="collapse navbar-collapse" uib-collapse="navCollapsed">
       <!-- Navbar Menu -->
       <ul class="nav navbar-nav pull-right" ng-controller="SidebarController" >
-         <li ng-repeat="item in menuItems " ng-class="{'dropdown': item.submenu,'active':$state.includes(item.sref)||(pfTab&&item.sref=='app.pf')}" uib-dropdown="!!item.submenu" ng-hide="item.sref=='app.updateAccount'&&mCtrl.showAccount==0||item.sref=='app.updateFeatures'&&mCtrl.is_guaranteed==1">
-            <a ng-if="!item.heading &amp;&amp; !item.submenu" ng-href="{{$state.href(item.sref)}}" title="{{item.text}}" ng-class="{'active':$state.includes(item.sref)}">
-               <span>{{item.text}}</span>
-               <!-- (item.translate | translate) ||  -->
-            </a>
-            <a uib-dropdown-toggle="" ng-if="item.submenu">
-               <span>{{item.text}}</span>
-            </a>
-            <!-- START Dropdown menu-->
-            <ul class="dropdown-menu animated fadeInUp">
-               <li ng-repeat="subitem in item.submenu">
-                  <a ng-href="{{$state.href(subitem.sref)}}" title="{{subitem.text}}" ng-hide="subitem.sref=='app.pfFinanceInfo'&&can_finance==0">
-                     <span>{{subitem.text}}</span>
-                  </a>
-               </li>
-            </ul>
-         </li>
+         <li ><a ng-click="mCtrl.goToScrollID('home')"><span>Home</span></a></li>
+         <li ><a ng-click="mCtrl.goToScrollID('services')"><span>Services</span></a></li>
+         <li ><a ng-click="mCtrl.goToScrollID('why')"><span>Why Us</span></a></li>
+         <li ><a ng-click="mCtrl.signInPop()"><span>Sign In</span></a></li>
+         <li ><a class="joinUs"><span>Join Us</span></a></li>
       </ul>
 
       <!-- END Right Navbar-->
    </div>
 
-   <script type="text/ng-template" ng-show="visible" id="change_password_modal">
-            <div class="ngdialog-message logoutpopo">
-                <div class="ngdialog-header">
-                    <p>Change Password</p>
-                </div>
-                <div class="ngdialog-body">
-                  <form role="form" class="mb-lg" name="mCtrl.changePassword"
-                  ng-submit="mCtrl.change.newPassword&&mCtrl.change.oldPassword&&mCtrl.change.confirmPassword
-                  &&mCtrl.change.oldPassword!=mCtrl.change.newPassword&&mCtrl.change.confirmPassword==mCtrl.change.newPassword
-                  &&mCtrl.changePassword.$submitted&&mCtrl.changePasswordApi()">
-                    <div class="col-lg-12 p-b-15">
-                        <label>Current Password</label>
-                        <input type="password" ng-model="mCtrl.change.oldPassword" class="form-control" required  minlength="6" maxlength="25"/>
-                    </div>
-                    <span ng-show="mCtrl.change.oldWrong"
-                          class="alert errorSpanPop" style="margin-left: 7px">Password is wrong</span>
-                    <div class="col-lg-12 p-b-15">
-                        <label>New Password</label>
-                        <input type="password" ng-model="mCtrl.change.newPassword" class="form-control" required minlength="6" maxlength="25"/>
-                    </div>
-                    <span ng-show="mCtrl.change.newPassword&&mCtrl.change.oldPassword&&mCtrl.change.newPassword==mCtrl.change.oldPassword"
-                          class="alert errorSpanPop" style="margin-left: 7px">New password can't be same as old password</span>
-                    <div class="col-lg-12 p-b-15">
-                        <label>Confirm Password</label>
-                        <input name="mCtrl.confirmPassword" type="password" ng-model="mCtrl.change.confirmPassword"  minlength="6" maxlength="25" ng-pattern="(mCtrl.change.newPassword)" class="form-control" required/>
-                    </div>
-                    <span ng-show="mCtrl.changePassword.confirmPassword.$error.pattern"
-                          class="alert errorSpanPop" style="margin-left: 7px">Passwords don't match</span>
-                    <div style="clear:both"></div>
-                    <div class="col-lg-12 p-b-15">
-                      <button type="button" ng-click="closeThisDialog('button')"
-                      class="btn btn-default pull-left btn-cancel">Cancel
-                      </button>
-                      <button type="submit"
-                              class="btn btn-primary pull-right btn-pop">Confirm
-                      </button>
-                    </div>
-                  </form>
+   <script type="text/ng-template" ng-show="visible" id="signInModal">
+            <div class="ngdialog-message logoutpopo m-0">
+                <div class="ngdialog-body p-0" style="padding: 0!important;">
+                    <div class="singInImage"></div>
+                    <div class="singInUpDiv p-20">
+                        <uib-tabset>
+                            <uib-tab heading="Sign In">
+                                <form name="mCtrl.signInForm" ng-submit="mCtrl.signInForm.$submitted&&mCtrl.signInFn()">
+                                    <div class="form-group">
+                                        <label>Enter your phone number to continue</label>
+                                        <div class="input-group">
+                                            <div class="input-group-btn dropdown" uib-dropdown="" style="">
+                                                <button class="btn btn-default dropdown-toggle" type="button" uib-dropdown-toggle=""
+                                                        aria-haspopup="true" aria-expanded="false">{{mCtrl.code}}
+                                                    <span class="caret"></span></button>
+                                                <ul class="dropdown-menu">
+                                                    <li ng-repeat="code in mCtrl.codes">
+                                                        <a ng-click="mCtrl.chooseCode(code)">{{code}}</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <input class="form-control" type="text" ng-model="mCtrl.login.phone" maxlength=15 minlength=9
+                                                   onkeypress="return isNumberKey(event)" masked="" data-inputmask="'mask': '(999) 999-9999'">
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btnDefault w-100">Continue</button>
+                                </form>
+                            </uib-tab>
+                            <uib-tab heading="Sing Up">
 
+                            </uib-tab>
+                        </uib-tabset>
+                        <div class="col-lg-12 text-center"><a class="w-100 text-center">By continuing, you agree to <span style="color: #ee7670">Terms & Conditions</span></a></div>
+                    </div>
                 </div>
             </div>
         </script>
+    <script type="text/ng-template" id="otp_modal">
+        <div class="ngdialog-message m-0">
+            <div class="p-0 ngdialog-body prospectDiv row" style="display: flex;padding: 0!important">
+                <div class="p-0 hidden-xs col-lg-5 col-md-5 col-sm-5 verifyDiv">
+                </div>
+                <div class="p-30 col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                    <form name="mCtrl.verifyOTPForm" class="OtpForm" ng-submit="mCtrl.verifyOTPForm.$submitted&&mCtrl.verifyOTPLogin()">
+                        <h3 class=" text-left">Verify your phone number</h3>
+                        <label style="color:#505050" class="m-b-30 text-left">Please enter verification code sent to {{mCtrl.code}}-{{mCtrl.login.phone}}</label>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-0">
+                            <ul class="full-width text-left list-inline">
+                                <li><input type="tel" maxlength="1" id="input0" auto-tab-to="input1" switch="input0" class="form-otp-input text-center"  numbers-only="numbers-only" name="OTP"  ng-model="mCtrl.OTP.a" required autocomplete="off"></li>
+                                <li><input type="tel" maxlength="1" id="input1" auto-tab-to="input2" switch="input0" class="form-otp-input text-center"  numbers-only="numbers-only" name="OTP"  ng-model="mCtrl.OTP.b" required autocomplete="off"></li>
+                                <li><input type="tel" maxlength="1" id="input2" auto-tab-to="input3" switch="input1" class="form-otp-input text-center"  numbers-only="numbers-only" name="OTP"  ng-model="mCtrl.OTP.c" required autocomplete="off"></li>
+                                <li><input type="tel" maxlength="1" id="input3" auto-tab-to="input3" switch="input2" class="form-otp-input text-center"  numbers-only="numbers-only" name="OTP"  ng-model="mCtrl.OTP.d" required autocomplete="off"></li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-12 col-xs-12 col-md-12 col-sm-12 text-left p-0 m-t-20">
+                            <a ng-click="!mCtrl.resendOTP&&mCtrl.generateOTP(2)" class="resendOTP" style="width: 35%;"
+                               ng-disabled="mCtrl.resendOTP" ><span ng-show="!mCtrl.resendOTP">Resend Code</span>
+                                <span ng-show="mCtrl.resendOTP">00:{{mCtrl.OTPCounter||30}}</span>
+                            </a>
+                        </div>
+                        <div class="p-0 col-lg-12">
+
+                            <button type="submit"
+                                    class="m-l-15 btn btnDefault pull-left btn-pop">Verify Code
+                            </button>
+                            <button type="button"
+                                    class="btn pull-right btn-cancel m-r-15" ng-click="closeThisDialog('button')">Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </script>
 </nav>
 <!-- END Top Navbar-->

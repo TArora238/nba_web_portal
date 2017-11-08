@@ -397,13 +397,13 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
     /*border: solid 1px #65a9ea;*/
     font-weight: bold;
     /*background-image: linear-gradient(to bottom, #65a9ea, #4582BC);*/
-    background-image: linear-gradient(to right, #000000 0%, #000000 100%);
+    background-image: linear-gradient(to right, #ee7670 0%, #ee7670 100%);
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.07);
 }
 .btn-pop:hover{
     /*border: solid 1px #65a9ea;*/
     /*background-image: linear-gradient(to bottom, #4582BC, #65a9ea);*/
-    background-image: linear-gradient(to right, #000000 0%, #000000 100%);
+    background-image: linear-gradient(to right, #ee7670 0%, #ee7670 100%);
 }
 .ngdialog-header{
     border-bottom: 1px solid #dce5eb;
@@ -429,6 +429,7 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
     margin: 30px 0 0 0!important;
     padding: 10px 25px;
     max-width: 150px;
+    font-size: 16px!important;
 }
 .smallPop .ngdialog-close{
     top:    20px!important;
@@ -538,6 +539,12 @@ label,div,h1,h2,h3,h4,h5,h6,button,a,input,p{font-family: 'segoe'!important;}
     color: #909090!important;
     font-size: 14px;
     text-align: left;
+}
+.joinUs{
+    border: 1px solid #aaaaaa;
+    border-radius: 4px;
+    padding: 9px 15px!important;
+    margin: 7px!important;
 }
 .noScrollHeader{
     background-color: transparent!important;
@@ -670,6 +677,12 @@ label,div,h1,h2,h3,h4,h5,h6,button,a,input,p{font-family: 'segoe'!important;}
 .socialLinks img{
     width: 30px;
 }
+.singInImage{
+    background: url("../img/PNG/login_bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 200px;
+}
 
 /*******************************************************/
 
@@ -700,9 +713,9 @@ label,div,h1,h2,h3,h4,h5,h6,button,a,input,p{font-family: 'segoe'!important;}
     background-color: white;
     border-right: none;
 }
-.locationDiv .input-group input{
-    border-left:none;
-}
+/*.locationDiv .input-group input{*/
+    /*border-left:none;*/
+/*}*/
 .navBar{
     position: fixed;
     height: 70px;
@@ -771,6 +784,42 @@ label,div,h1,h2,h3,h4,h5,h6,button,a,input,p{font-family: 'segoe'!important;}
     background-image: none!important;
     color: white!important;
 }
+.verifyDiv{
+    background: url("../img/PNG/thanks_bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #000;
+    min-height: 350px;
+}
+.savedAddressDiv{
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    padding: 15px;
+}
+.savAddSubDiv{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-items: left;
+}
+.savAddSubDiv h4,.savAddSubDiv label{
+    margin: 0;
+    padding: 0;
+}
+.savAddSubDiv label{
+    font-size: 14px;
+    color: #909090;
+}
+
+.savAddSubDiv h4{
+    font-size: 16px;
+    color: #000;
+}
+
+
+
+
+
 
 .thanksDiv{
     height: calc(100vh - 70px);

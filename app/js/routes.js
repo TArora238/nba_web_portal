@@ -112,13 +112,13 @@
           .state('main', {
                 url: '',
                 abstract: true,
-                resolve: helper.resolveFor('modernizr', 'icons','moment','ngDialog','toaster'),
+                resolve: helper.resolveFor('modernizr', 'inputmask','icons','moment','ngDialog','toaster'),
                 controller: 'mainController'
             })
           .state('home', {
               url: '/home',
               title: 'Home',
-              resolve: helper.resolveFor('modernizr', 'icons','loaders.css', 'spinkit'),
+              resolve: helper.resolveFor('modernizr', 'icons','loaders.css','inputmask', 'ngDialog', 'spinkit'),
               templateUrl: 'app/pages/home.html'
           })
           .state('app', {

@@ -202,11 +202,15 @@ now {
 .nav-tabs > li > a {
   font-weight: bold;
   color: #515253;
-  background-color: #edf1f2;
+  /*background-color: #edf1f2;*/
   margin: 0;
-  border: 1px solid #dde6e9;
+  /*border: 1px solid #dde6e9;*/
   border-radius: 0;
   padding: 10px 20px;
+}
+.nav-tabs > li > a:hover,.nav-tabs > li.active > a{
+  border:none;
+  border-bottom:2px solid #ee7670;
 }
 .nav-tabs > li.active{
   background: #000000;
@@ -215,13 +219,14 @@ now {
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
   color: inherit;
-  border-bottom-color: #fff;
+  /*border-bottom-color: #ee7670;*/
+  border-bottom:2px solid #ee7670;
 }
 .tab-content {
-  padding: 10px 20px;
-  border-style: solid;
-  border-width: 0 1px 1px 1px;
-  border-color: #dde6e9;
+  padding: 20px 0px;
+  /*border-style: solid;*/
+  /*border-width: 0 1px 1px 1px;*/
+  /*border-color: #dde6e9;*/
 }
 .nav-pills + .tab-content {
   border: 0;
