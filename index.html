@@ -13,6 +13,7 @@
    <title data-ng-bind="::pageTitle()">Now Beauty - Admin Panel</title>
    <!-- Bootstrap styles-->
    <link rel="stylesheet" href="app/css/bootstrap.css" data-ng-if="!app.layout.isRTL">
+   <link href="vendor/angular-datepicker-master/dist/angular-datepicker.css" rel="stylesheet" type="text/css" />
    <!-- <link rel="stylesheet" href="app/css/bootstrap-rtl.css" data-ng-if="app.layout.isRTL"> -->
    <!-- Application styles-->
    <link rel="stylesheet" href="app/css/app.css" data-ng-if="!app.layout.isRTL">
@@ -36,16 +37,18 @@
    <script src="vendor/moment/min/moment.min.js"></script>
    <script src="vendor/ngDialog/js/ngDialog.min.js"></script>
    <script src="vendor/angularjs-toaster/toaster.js"></script>
+   <!--<script src="https://apis.google.com/js/client.js?key=AIzaSyAUnB3N3ZeNuxlz3oHO5fCmQ__JFxDTBLc"></script>-->
+   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyA80G1P_m1F6RKSOPEl-UCIECVO3yS340Y"></script>
    <script src="app/js/app.js"></script>
    <script type="text/javascript" src="//cdn.jsdelivr.net/fingerprintjs2/1.5.1/fingerprint2.min.js"></script>
    <!--<script type="text/javascript" src="https://js.stripe.com/v2/"></script>-->
-   <script src="https://apis.google.com/js/client.js?key=AIzaSyAUnB3N3ZeNuxlz3oHO5fCmQ__JFxDTBLc"></script>
    <script src="app/js/settings.js"></script>
    <script src="app/js/mainCtrl.js?version=0.0.2"></script>
    <script src="app/js/routes.js?version=0.0.2"></script>
    <script src="app/js/controllers.js?version=0.0.2"></script>
    <script src="app/js/sidebar.js"></script>
    <script src="app/js/validations.js"></script>
+   <script src="vendor/angular-datepicker-master/dist/angular-datepicker.js"></script>
    <!--<script src='vendor/signature/signature_pad.min.js' defer></script>-->
    <!--<script src='vendor/signature/signature.js' defer></script>-->
    <!-- <script src='vendor/html2canvas/dist/html2canvas.min.js'></script> -->

@@ -33,10 +33,6 @@ body,html{
     width: 100%;
     overflow-x: hidden;
 }
-p,h1,h2,h3,h5,h6,label,span,a,button,input,textarea{
-  font-family: 'segoe'!important;
-    font-weight: 400;
-}
 .ta-editor{
   margin-top: 15px;
 }
@@ -155,13 +151,7 @@ a,button{
 .page-header .btn-group{
     width: 100%;
 }
-.btn-default,.timeRangeDiv,.greyDiv {
-    color: #505050;
-    background-color: rgba(0,0,0,0.06);
-    border:none;
-    border-radius: 4px;
-    margin-right: 15px;
-}
+
 
 
 
@@ -177,8 +167,8 @@ a,button{
     border-radius: 4px;
     color: #ffffff;
     background-color: #fff;
-    border:1px solid #dce5eb;
-    text-align: center;
+    border:1px solid #dddddd;
+    /*text-align: center;*/
 }
 .searchDiv{
     height: 60px;
@@ -208,7 +198,7 @@ a,button{
     margin: 0;
 }
 .greenDiv h4{ color: white}
-.whiteDiv h4,.whiteDiv span{ text-align: left;color: #505050}
+/*.whiteDiv h4,.whiteDiv span{ text-align: left;color: #505050}*/
 
 .loginBtn:hover,
 .loginBtn:focus,
@@ -234,12 +224,12 @@ a,button{
     font-size: 16px;
     margin: auto;
 }
-.btn-default:hover {
-    color: #333333;
-    /*background-color: #ffffff;*/
+/*.btn-default:hover {*/
+    /*color: #333333;*/
+    /*!*background-color: #ffffff;*!*/
 
-    border:none;
-}
+    /*border:none;*/
+/*}*/
 .errorSpan{
     position: absolute;
     right: 0;
@@ -538,10 +528,17 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
     font-family: 'segoe';
     src: url('../fonts/segoe/segoeui.ttf');
 }
-*{font-family: 'segoe'!important;}
+label,div,h1,h2,h3,h4,h5,h6,button,a,input,p{font-family: 'segoe'!important;}
+.layout-h.layout-fixed .wrapper > section{margin: 70px 0 0!important;max-width: none}
+.layout-h.layout-fixed .wrapper > section > .content-wrapper{padding: 0!important;}
 .noScrollHeader .whiteLogo,.scrollHeader .blackLogo{display: none!important;}
 .navbar-brand{  height:70px;}
 .navbar-nav{ padding:7.5px 0;}
+.form-group label{
+    color: #909090!important;
+    font-size: 14px;
+    text-align: left;
+}
 .noScrollHeader{
     background-color: transparent!important;
     background-image: none!important;
@@ -672,4 +669,128 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
 }
 .socialLinks img{
     width: 30px;
+}
+
+/*******************************************************/
+
+
+.locationDiv{
+    background: url("../img/PNG/location_bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #000;
+    background-position-x: 60%;
+    height: calc(100vh - 70px);
+    display: flex;
+    align-items: center;
+}
+.autoDetect{
+    color: #ee7670;
+    display: flex;
+    align-items: center;
+    line-height: 16px;
+    padding: 8.5px 15px;
+}
+.autoDetect img{
+    width:14px;
+}
+.locationDiv h3{color: #000;font-weight: bold}
+.locationDiv label{color: #909090;font-size: 16px;margin: 2vh auto 3vh;line-height: 18px;}
+.input-group-addon{
+    background-color: white;
+    border-right: none;
+}
+.locationDiv .input-group input{
+    border-left:none;
+}
+.navBar{
+    position: fixed;
+    height: 70px;
+    background-color: #dce5eb;
+    z-index: 9999;
+}
+.navBar .navLink{
+    position: absolute;
+    top:0;
+}
+.navBar h3{color: #000;text-align: center}
+.contentDiv{
+    margin-top: 70px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.servDiv{
+    border:1px solid #dddddd;
+    border-radius: 4px;
+    padding: 20px;
+}
+.subServDiv{
+    border-radius: 4px;
+    background-color: #ffffff;
+    border: solid 1px #dddddd;
+    padding:15px;
+    margin: 20px auto;
+}
+.subServDiv:hover{
+    box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.1);
+}
+.addServDiv{
+    border-radius: 4px;
+    background-color: #ffffff;
+    border: solid 1px #dddddd;
+    margin: 20px auto;
+}
+.addServDiv label.serviceName{
+    text-align: left;
+    font-size: 20px;
+    color: #000000;
+
+}
+.whiteHeader{
+    border-bottom: 1px solid #dddddd;
+}
+.whiteFooter{
+    border-top: 1px solid #dddddd;
+}
+.whiteDiv h2{
+    color: #ee7670;
+    font-size: 3rem;
+    margin: 10px 0 25px;
+}
+.whiteDiv label,.whiteDiv h4{
+    color: #000;
+    text-align: left;
+    font-weight: normal;
+}
+.greyFooter{
+    border-top: 1px solid #dddddd;
+    background-color: #f4f7f9;
+}
+.selectedBox{
+    background-color: #ee7670!important;
+    background-image: none!important;
+    color: white!important;
+}
+
+.thanksDiv{
+    height: calc(100vh - 70px);
+    display: flex;
+    align-items: center;
+}
+.thanksPic{
+    background: url("../img/PNG/thanks_bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #000;
+    height: calc(100vh - 70px);
+}
+.thanksText{
+    display: flex;
+    padding: 0 10vw;
+    color: #000;
+}
+.thanksText label{
+    color: #909090;
+    font-size: 14px;
+    line-height: 16px;
 }

@@ -1,0 +1,120 @@
+<div class="detailsDiv" ng-controller="DetailsController as details">
+    <div class="animated fadeIn">
+        <div class="navBar col-md-12 col-xs-12 col-sm-12 col-lg-12">
+
+        </div>
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 contentDiv">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-xs-12 col-md-8 col-sm-12 ">
+                        <div class="whiteDiv col-lg-12 p-0">
+                            <div class="whiteHeader p-15">
+                                <h4>Your Details</h4>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>Full Name</label>
+                                            <input class="form-control" ng-model="details.personal.fullName">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input class="form-control" ng-pattern="emailPattern"  ng-model="details.personal.email">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Phone</label>
+                                            <div class="input-group">
+                                                <div class="input-group-btn dropdown" uib-dropdown="" style="">
+                                                    <button class="btn btn-default dropdown-toggle" type="button" uib-dropdown-toggle=""
+                                                            aria-haspopup="true" aria-expanded="false">{{details.code}}
+                                                        <span class="caret"></span></button>
+                                                    <ul class="dropdown-menu">
+                                                        <li ng-repeat="code in details.codes">
+                                                            <a ng-click="details.chooseCode(code)">{{code}}</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <input class="form-control" type="text" ng-model="details.personal.phone" maxlength=15 minlength=9
+                                                       onkeypress="return isNumberKey(event)" masked="" data-inputmask="'mask': '(999) 999-9999'">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-15 w-100" style="display: table;">
+                                <h4>Your Address</h4>
+                                <div class="row">
+                                    <form name="details.addressForm">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Apt/Suite</label>
+                                                <input class="form-control" name="apt_address" ng-model="details.address.apt_address">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Locality</label>
+                                                <input class="form-control" name="locality" ng-model="details.address.locality">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>City</label>
+                                                <input class="form-control" name="city" ng-model="details.address.city" ng-disabled="!details.addressForm.city.$dirty&&details.address.city">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>State</label>
+                                                <input class="form-control" name="state" ng-model="details.address.state" ng-disabled="!details.addressForm.state.$dirty&&details.address.state">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>Postcode</label>
+                                                <input class="form-control" name="postal_code" ng-model="details.address.postal_code" ng-disabled="!details.addressForm.postal_code.$dirty&&details.address.postal_code">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label class="col-lg-12 p-0">Address Label</label>
+                                                <button class="btn whiteBtn col-lg-2 m-b-15 m-r-15" ng-click="details.chooseAddressLabel('Home')" ng-class={'selectedBox':details.address.addressLabel=='Home'}>
+                                                    <strong>Home</strong></button>
+                                                <button class="btn whiteBtn col-lg-2 m-b-15 m-r-15" ng-click="details.chooseAddressLabel('Work')" ng-class={'selectedBox':details.address.addressLabel=='Work'}>
+                                                    <strong>Work</strong></button>
+                                                <button class="btn whiteBtn col-lg-2 m-b-15 m-r-15" ng-click="details.chooseAddressLabel('Other')" ng-class={'selectedBox':details.address.addressLabel=='Other'}>
+                                                    <strong>Other</strong></button>
+                                                <input class="form-control" ng-model="details.address.addressLabelOther" ng-if="details.address.addressLabel=='Other'">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xs-12 col-md-4 col-sm-12 ">
+                        <div class="whiteDiv col-lg-12 p-0">
+                            <div class="whiteHeader p-15">
+                                <h4>Booking Summary</h4>
+                            </div>
+                            <div class="p-15">
+                                <h2><i class="fa fa-gbp"></i>{{details.totalPrice}}</h2>
+                                <h4>{{details.service.service_name}} - {{details.category.category_name}}</h4>
+                                <label ng-if="details.additionalServices.length>0"
+                                       ng-repeat="data in details.additionalServices">+ {{data.as_name}}</label>
+                            </div>
+                            <div class="greyFooter p-15">
+                                <h4 class="m-t-0">{{details.bookingTime|date:'EEEE'}}</h4>
+                                <label>{{details.bookingTime|date:'MMMM dd, yyyy | hh:mm a'}}</label>
+                            </div>
+                        </div>
+                        <button class="btn btnDefault w-100 m-t-30" ng-click="details.goToPayment()">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

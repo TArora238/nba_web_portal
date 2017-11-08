@@ -1,0 +1,28 @@
+<div class="catListDiv" ng-controller="CategoryListController as cat">
+    <div class="animated fadeIn">
+
+        <div class="navBar col-md-12 col-xs-12 col-sm-12 col-lg-12">
+            <div class="navLink" style="display: flex;height: 100%;vertical-align: middle;align-items: center;">
+                <a ui-sref="app.location" style="display: flex"><i class="fa fa-caret-left fa-2x" style="color: #ee7670"></i>
+                    <span class="p-l-20" style="padding-top: 3px">{{cat.location}}</span></a>
+            </div>
+            <h3>Select Services</h3>
+        </div>
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 contentDiv">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4" ng-repeat="data in cat.categories">
+                        <div class="col-lg-12 servDiv" >
+                            <img ng-src="{{data.category_image}}" class="w-100">
+                            <h4>{{data.category_name}}</h4>
+                            <label>{{data.category_description}}</label>
+                            <button class="btn btnDefault w-100" ng-click="cat.chooseCat(data)">Select</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

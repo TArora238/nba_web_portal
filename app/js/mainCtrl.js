@@ -47,7 +47,7 @@
             if (typeof data === 'string')
               var data = JSON.parse(data);
             // console.log(api.url);
-            api.url = data.port + '/';
+            // api.url = data.port + '/';
             // console.log(api.url);
 
             // Stripe.setPublishableKey(data.stripe_pk);
@@ -64,7 +64,7 @@
         $rootScope.deviceId();
       }
 
-    }
+    };
     $rootScope.deviceId = function() {
       new Fingerprint2().get(function(result, components) {
         var hash = result;
@@ -97,19 +97,22 @@
         month: '',
         month_name: ''
       };
-      if (j + 1 == 1) $rootScope.months[j].month_name = 'January';
-      if (j + 1 == 2) $rootScope.months[j].month_name = 'February';
-      if (j + 1 == 3) $rootScope.months[j].month_name = 'March';
-      if (j + 1 == 4) $rootScope.months[j].month_name = 'April';
+      if (j + 1 == 1) $rootScope.months[j].month_name = 'Jan';
+      if (j + 1 == 2) $rootScope.months[j].month_name = 'Feb';
+      if (j + 1 == 3) $rootScope.months[j].month_name = 'Mar';
+      if (j + 1 == 4) $rootScope.months[j].month_name = 'Apr';
       if (j + 1 == 5) $rootScope.months[j].month_name = 'May';
-      if (j + 1 == 6) $rootScope.months[j].month_name = 'June';
-      if (j + 1 == 7) $rootScope.months[j].month_name = 'July';
-      if (j + 1 == 8) $rootScope.months[j].month_name = 'August';
-      if (j + 1 == 9) $rootScope.months[j].month_name = 'September';
-      if (j + 1 == 10) $rootScope.months[j].month_name = 'October';
-      if (j + 1 == 11) $rootScope.months[j].month_name = 'November';
-      if (j + 1 == 12) $rootScope.months[j].month_name = 'December';
-      $rootScope.months[j].month = j + 1;
+      if (j + 1 == 6) $rootScope.months[j].month_name = 'Jun';
+      if (j + 1 == 7) $rootScope.months[j].month_name = 'Jul';
+      if (j + 1 == 8) $rootScope.months[j].month_name = 'Aug';
+      if (j + 1 == 9) $rootScope.months[j].month_name = 'Sept';
+      if (j + 1 == 10) $rootScope.months[j].month_name = 'Oct';
+      if (j + 1 == 11) $rootScope.months[j].month_name = 'Nov';
+      if (j + 1 == 12) $rootScope.months[j].month_name = 'Dec';
+      if(j>9)$rootScope.months[j].month = j + 1;
+      else {
+        $rootScope.months[j].month = '0'+(j + 1).toString();
+      }
     }
     var currentYear = 1900 + d.getYear();
     var cY = currentYear - 13;
@@ -162,7 +165,7 @@
         });
       });
         vm.scrollHeader=false;
-        console.log(vm.scrollHeader);
+        // console.log(vm.scrollHeader);
         $(document).ready(function() {
             $(window).on("scroll", function () {
                 $timeout(function () {

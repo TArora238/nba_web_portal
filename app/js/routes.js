@@ -131,7 +131,46 @@
             .state('app.location', {
                 url: '/location',
                 title: 'Location',
-                templateUrl: 'app/views/location.html'
+                templateUrl: 'app/views/location.html',
+                resolve:helper.resolveFor('icons')
+            })
+            .state('app.categories', {
+                url: '/categories',
+                title: 'Categories',
+                templateUrl: 'app/views/categoryList.html',
+                resolve:helper.resolveFor('icons')
+            })
+            .state('app.subService', {
+                url: '/subService',
+                title: 'Sub Service',
+                templateUrl: 'app/views/subService.html',
+                resolve:helper.resolveFor('icons')
+            })
+            .state('app.bookingTime', {
+                url: '/bookingTime',
+                title: 'Booking Time',
+                templateUrl: 'app/views/bookingTime.html',
+                resolve:helper.resolveFor('modernizr', 'icons','ngDialog','inputmask','loaders.css', 'spinkit')
+            })
+
+            .state('app.details', {
+                url: '/details',
+                title: 'Details',
+                templateUrl: 'app/views/details.html',
+                resolve:helper.resolveFor('modernizr', 'icons','ngDialog','inputmask','loaders.css', 'spinkit')
+            })
+
+            .state('app.payment', {
+                url: '/payment',
+                title: 'Payment',
+                templateUrl: 'app/views/payment.html',
+                resolve:helper.resolveFor('modernizr', 'icons','ngDialog','inputmask','loaders.css', 'spinkit')
+            })
+            .state('app.thanks', {
+                url: '/thanks',
+                title: 'Thanks',
+                templateUrl: 'app/views/thanks.html',
+                resolve:helper.resolveFor('modernizr', 'icons','ngDialog','inputmask','loaders.css', 'spinkit')
             })
 
 

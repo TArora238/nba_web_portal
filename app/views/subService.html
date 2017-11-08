@@ -1,0 +1,54 @@
+<div class="subServiceDiv" ng-controller="SubServiceController as subServ">
+    <div class="animated fadeIn">
+
+        <div class="navBar col-md-12 col-xs-12 col-sm-12 col-lg-12">
+            <div class="navLink" style="display: flex;height: 100%;vertical-align: middle;align-items: center;">
+                <a ui-sref="app.categories"><i class="fa fa-caret-left fa-2x" style="color: #ee7670"></i><span class="p-l-20">Back to Services</span></a>
+            </div>
+            <h3>{{subServ.category.category_name}}</h3>
+        </div>
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 contentDiv">
+            <div class="container">
+                <div class="row text-center">
+                    <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                        <div class="subServDiv " ng-if="subServ.choosingSubServ"
+                             style="max-width: 700px;display: flex" ng-repeat="data in subServ.category.services">
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 VHAlign">
+                                <h4 class="w-100 text-left">{{data.service_name}}</h4>
+                                <label class="w-100 text-left">{{data.service_description}}</label>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 VHAlign" style="display: flex">
+                                <button ng-click="subServ.chooseService(data)" class="btn btnDefault" style="background: black!important;">
+                                    <i class="fa fa-gbp"></i>{{data.service_price}} | {{data.service_time}} mins
+                                </button>
+                            </div>
+                        </div>
+                        <div class="addServDiv " ng-if="!subServ.choosingSubServ"
+                             style="max-width: 700px;display: table;width: 100%">
+                            <div class="col-lg-12 p-15" style="border-bottom: 1px solid #dddddd ">
+                                <label class="serviceName text-left col-lg-4 col-md-4 col-sm-4 col-xs-4" style="border-right:1px solid #dddddd">{{subServ.service.service_name}}</label>
+                                <label class="serviceName text-left col-lg-4 col-md-4 col-sm-4 col-xs-4"><i class="fa fa-gbp"></i>{{subServ.service.service_price}} | {{subServ.service.service_time}} mins</label>
+                                <a ng-click="subServ.resetService()" class="col-lg-1 col-md-1 col-sm-1 col-xs-1 pull-right"><i class="fa fa-times"></i></a>
+                            </div>
+                            <div class="col-lg-12 p-15" style="border-bottom: 1px solid #dddddd ">
+                                <div class="col-lg-12" ng-repeat="data in subServ.service.additional_services">
+                                    <div class="checkbox c-checkbox needsclick text-left">
+                                        <label>
+                                            <input type="checkbox" value="" ng-model="data.check" ng-click="subServ.chooseAddService(data,data.check,$index)" />
+                                            <span class="fa fa-check"></span>{{data.as_name}}
+                                        </label>
+                                        <button class="btn btn-xs pull-right" style="background: black;color: white">+ <i class="fa fa-gbp"></i>{{data.as_price}}</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 p-15 text-center">
+                                <button ng-click="subServ.continueToBookingTime()" class="btn btnDefault w-50">Continue</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

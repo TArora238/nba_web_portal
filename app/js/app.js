@@ -43,7 +43,8 @@
             'app.mailbox',
             'app.utils',
             'ngDialog',
-            'toaster'
+            'toaster',
+            '720kb.datepicker'
         ]);
     // console.log("inside app");
 })();
@@ -96,7 +97,7 @@
             // "url": "https://apilive.nowbeauty.com:3003/"
             // Dev
             // "url": "http://34.213.160.134:3003/"
-            "url": "http://54.218.55.240:3003/"
+            "url": "http://54.218.55.240:3001/"
         })
         .filter('underscoreless', function () {
             return function (input) {
@@ -137,6 +138,110 @@
                 return formattedNumber;
             };
         })
+        .directive('googleplace', function() {
+            return {
+                require: 'ngModel',
+                link: function(scope, element, attrs, model) {
+                    var options = {
+                        types: []
+                    };
+                    scope.gPlace = new google.maps.places.Autocomplete(element[0], options);
+
+                    google.maps.event.addListener(scope.gPlace, 'place_changed', function() {
+                        var geoComponents = scope.gPlace.getPlace();
+                        console.log(geoComponents);
+                        var place_id = geoComponents.place_id;
+                        var latitude = geoComponents.geometry.location.lat();
+                        var longitude = geoComponents.geometry.location.lng();
+                        var addressComponents = geoComponents.address_components;
+                        console.log(addressComponents);
+                        var addressObj={
+                            street_route:''
+                        };
+                        for (var i = 0; i < addressComponents.length; i++) {
+
+                            if(addressComponents[i].types[0]=='street_number'){
+                                addressObj.apt_address = addressComponents[i].long_name
+                            }
+
+                            if(addressComponents[i].types[0]=='route'){
+                                addressObj.street_route = addressComponents[i].long_name
+                            }
+                            if(addressComponents[i].types[0]=='sublocality'){
+                                addressObj.street_route = addressObj.street_route + ', ' + addressComponents[i].long_name;
+                            }
+                            if(addressComponents[i].types[0]=='sublocality_level_1'){
+                                addressObj.street_route = addressObj.street_route + ', ' + addressComponents[i].long_name;
+                            }
+                            if(addressComponents[i].types[0]=='sublocality_level_2'){
+                                addressObj.street_route = addressObj.street_route + ', ' + addressComponents[i].long_name;
+                            }
+                            addressObj.street_route = addressObj.street_route.replace(/^(\,\ )/, "");
+
+
+                            if(addressComponents[i].types[0]=='postal_town'){
+                                addressObj.city = addressComponents[i].long_name
+                            }
+                            if(addressComponents[i].types[0]=='administrative_area_level_2'){
+                                addressObj.city = addressObj.city + ', ' + addressComponents[i].long_name;
+                            }
+
+                            if(addressComponents[i].types[0]=='locality'){
+                                if (!addressObj.city)
+                                    addressObj.city = addressComponents[i].long_name
+
+                            }
+
+                            if(addressComponents[i].types[0]=='administrative_area_level_1'){
+                                addressObj.state = addressComponents[i].long_name
+                            }
+
+                            if(addressComponents[i].types[0]=='country'){
+                                addressObj.country = addressComponents[i].long_name
+                            }
+                            if(addressComponents[i].types[0]=='postal_code_prefix'||addressComponents[i].types[0]=='postal_code'){
+                                addressObj.postal_code = addressComponents[i].long_name
+                            }
+                        }
+                        addressObj.latitude=latitude;
+                        addressObj.longitude=longitude;
+                        addressObj.place_id=place_id;
+                        console.log(addressObj);
+                        // addressComponents.push(latitude, longitude);
+                        // console.log(addressComponents);
+                        scope.$apply(function() {
+                            localStorage.setItem('addressComponents',JSON.stringify(addressObj));
+                            model.$setViewValue(element.val());
+                            console.log(element.val());
+                        });
+                    });
+                }
+            };
+        })
+        .directive('autoTabTo', [function() {
+            return {
+                restrict: "A",
+                link: function(scope, el, attrs) {
+                    el.bind('keyup', function(e) {
+                        var theEvent = e || window.event;
+                        var key = theEvent.keyCode || theEvent.which;
+                        //console.log(key);
+                        if (key == 8) {
+                            var element = document.getElementById(attrs.switch);
+                            console.log(element.value);
+                            if (element)
+                                element.focus();
+                            return false;
+                        } else if (this.value.length === this.maxLength) {
+                            var element = document.getElementById(attrs.autoTabTo);
+                            if (element)
+                                element.focus();
+                            //element.value=e;
+                        }
+                    });
+                }
+            }
+        }])
 })();
 (function() {
     'use strict';
@@ -706,7 +811,7 @@
             'modernizr':          ['vendor/modernizr/modernizr.custom.js'],
             'animate':            ['vendor/animate.css/animate.min.css'],
             'skycons':            ['vendor/skycons/skycons.js'],
-            'icons':              ['vendor/fontawesome/css/font-awesome.min.css',
+            'icons':              ['vendor/fontawesome/css/font-awesome.css',
                                    'vendor/simple-line-icons/css/simple-line-icons.css'],
             'weather-icons':      ['vendor/weather-icons/css/weather-icons.min.css',
                                    'vendor/weather-icons/css/weather-icons-wind.min.css'],
