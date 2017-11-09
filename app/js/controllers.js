@@ -1150,17 +1150,20 @@
                 }
                 vm.personal = localStorage.getItem("personalData");
                 $rootScope.address_id=localStorage.getItem("address_id");
-                $.post(api.url + "book_artist", {
+                var data ={
                     "access_token": localStorage.getItem('portalToken'),
                     "card_id":$rootScope.card_id,
                     "address_id":$rootScope.address_id,
                     "service_id":vm.service.service_id,
                     "user_mobile":$rootScope.userProfile.user_mobile,
                     "user_email":$rootScope.userProfile.user_email||"asd@sdf.sdf",
-                    "as_id":as_ids,
                     "start_time":bookTime
-                //    vm.personal.email
-                })
+
+                };
+                if(as_ids){
+                    data.as_id=as_ids;
+                }
+                $.post(api.url + "book_artist", data)
                     .success(function(data, status) {
                         if (typeof data === 'string')
                             var data = JSON.parse(data);
