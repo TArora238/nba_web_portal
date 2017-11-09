@@ -225,8 +225,10 @@
       else $rootScope.loggedIn = false;
 
       vm.location = "";
-      vm.locationObj = JSON.parse(localStorage.getItem('addressComponents'));
-      vm.location += vm.locationObj.state+","+vm.locationObj.country;
+      if(localStorage.getItem('addressComponents')!=null){
+          vm.locationObj = JSON.parse(localStorage.getItem('addressComponents'));
+          vm.location += vm.locationObj.state+","+vm.locationObj.country;
+      }
       vm.categories = JSON.parse(localStorage.getItem("categories"));
       vm.chooseCat = function (d) {
           localStorage.setItem("selectedCategory",JSON.stringify(d));

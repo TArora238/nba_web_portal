@@ -305,6 +305,7 @@
                                 localStorage.setItem('userCountries', JSON.stringify(data.countries));
                                 vm.countries = data.countries;
                             }
+                            localStorage.setItem("categories",JSON.stringify(data.categories));
                             localStorage.setItem('loggedIn',1);
                             if(i){$state.reload();}
                             else $state.go("app.categories");
@@ -406,7 +407,7 @@
                       localStorage.setItem('userCountries', JSON.stringify(data.countries));
                       vm.countries = data.countries;
                   }
-
+                  localStorage.setItem("categories",JSON.stringify(data.categories));
                   $rootScope.loggedIn = true;
                   localStorage.setItem('loggedIn',1);
                   $rootScope.userAddress = JSON.parse(localStorage.getItem('userAddress'));
