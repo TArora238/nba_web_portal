@@ -474,9 +474,15 @@
             vm.code='+44';
             vm.codes=['+44','+91'];
             vm.personal={};
-            vm.locationObj = JSON.parse(localStorage.getItem('addressComponents'));
-            vm.address = vm.locationObj;
-            vm.address.addressLabel = 'Home';
+            if(localStorage.getItem('addressComponents')!=null){
+                vm.locationObj = JSON.parse(localStorage.getItem('addressComponents'));
+                vm.address = vm.locationObj;
+                vm.address.addressLabel = 'Home';
+            }
+            else{
+                vm.address = {};
+                vm.address.addressLabel = 'Home';
+            }
             console.log(vm.address);
             vm.chooseAddressLabel = function (a) {
               vm.address.addressLabel = a;
@@ -484,8 +490,15 @@
             $rootScope.address_id='';
             if($rootScope.loggedIn){
                 if($rootScope.userAddress!=null&&$rootScope.userAddress.length>0){
-                    $rootScope.address_id=$rootScope.userAddress[0].address_id;
-                    vm.savedAddress=($rootScope.userAddress.length-1).toString();
+                    if(localStorage.getItem("address_id")==null){
+                        $rootScope.address_id=$rootScope.userAddress[0].address_id;
+                        vm.savedAddress=(0).toString();
+                    }
+                    else{
+                        $rootScope.address_id=localStorage.getItem("address_id");
+                        vm.savedAddress=($rootScope.userAddress.length-1).toString();
+                    }
+
                 }
                 else{
                     $rootScope.userAddress=[];
@@ -499,15 +512,20 @@
 
             }
             else vm.savedAddress='';
+            vm.addressSelect = function (c) {
+                console.log(c);
+                $rootScope.address_id = $rootScope.userAddress[c].address_id;
+                console.log($rootScope.address_id);
+                localStorage.setItem("address_id",$rootScope.address_id);
+                // vm.savedCard=c;
+            };
+
             vm.ngDialogPop = function(template, className) {
                 ngDialog.openConfirm({
                     template: template,
                     className: 'ngdialog-theme-default ' + className,
                     scope: $scope
                 }).then(function(value) {}, function(reason) {});
-
-            };
-            vm.addNewAddress = function () {
 
             };
             vm.generateOTP = function (i) {
@@ -651,7 +669,39 @@
                         })
                     })
             };
-            vm.addAddress = function () {
+            vm.addAddress = function (i) {
+                if(i&&localStorage.getItem("addressComponents")==null){
+                    toaster.pop("error",'Choose a valid location','');
+                    return false;
+                }
+                if(!vm.address.apt_address){
+                    toaster.pop("error",'Enter a valid appartment address','');
+                    return false;
+                }
+
+                if(!vm.address.locality){
+                    toaster.pop("error",'Enter a valid locality','');
+                    return false;
+                }
+
+                if(!vm.address.city){
+                    toaster.pop("error",'Enter a valid city','');
+                    return false;
+                }
+
+                if(!vm.address.state){
+                    toaster.pop("error",'Enter a valid state','');
+                    return false;
+                }
+
+                if(!vm.address.postal_code){
+                    toaster.pop("error",'Enter a valid postal code','');
+                    return false;
+                }
+                if(vm.address.addressLabel=='Other'&&!vm.address.addressLabelOther){
+                    toaster.pop("error",'Enter a valid address label','');
+                    return false;
+                }
                 var label = '';
                 if(vm.address.addressLabel!='Other'){
                     label=vm.address.addressLabel;
@@ -691,14 +741,144 @@
                                 $rootScope.address_id=data.user_address[data.user_address.length-1].address_id;
                                 localStorage.setItem("address_id",$rootScope.address_id);
                                 vm.savedAddress=($rootScope.userAddress.length-1).toString();
-                                $state.go('app.payment');
+                                if(i){
+                                    $rootScope.address_id=data.address_id;
+                                    localStorage.setItem("address_id",$rootScope.address_id);
+                                    ngDialog.close();
+                                    $state.reload();
+                                }
+                                else $state.go('app.payment');
                             }
                         })
                     });
+            };
+            vm.addAddressPop = function () {
+                localStorage.removeItem('addressComponents');
+                vm.ngDialogPop('addAddressModal','biggerPop');
+                vm.locationSelected = false;
+            };
+            vm.location='';
+            vm.checkLocation = function () {
+                // cfpLoadingBar.start();
+                vm.locationObj = JSON.parse(localStorage.getItem('addressComponents'));
+                console.log(vm.locationObj);
+                if(vm.locationObj!=null) {
+                    $.post(api.url + "check_location", {
+                        "latitude": vm.locationObj.latitude,
+                        "longitude": vm.locationObj.longitude
+                    }).success(function (data, status) {
+                        if (typeof data === 'string')
+                            var data = JSON.parse(data);
+                        console.log(data);
+                        cfpLoadingBar.complete();
+                        if (data.is_error == 0) {
+                            vm.notServing = false;
+                            $timeout(function () {
+                                vm.locationSelected = true;
+                                vm.locationObj = JSON.parse(localStorage.getItem('addressComponents'));
+                                vm.address = vm.locationObj;
+                                vm.address.addressLabel = 'Home';
+                            });
+                        }
+                        else{
+                            toaster.pop("error","We don't serve in this area","");
+                            vm.notServing = true;
+                            vm.locationSelected = false;
+                        }
+
+                    })
+                }
+                else {
+                    vm.locationSelected = false;
+                    vm.locationObj = '';
+                }
+            };
+            vm.autoDetect = function() {
+                if (navigator.geolocation) {
+                    cfpLoadingBar.start();
+                    navigator.geolocation.getCurrentPosition(vm.usePosition);
+                } else {
+                    vm.locationSelected = false;
+                    x.innerHTML = "Geolocation is not supported by this browser.";
+                }
+            };
+            vm.usePosition = function (position) {
+                var latlng = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+                var geocoder = new google.maps.Geocoder();
+                geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        if (results[1]) {
+                            $timeout(function () {
+                                console.log(results);
+                                vm.location = results[1].formatted_address;
+                                var place_id = results[1].place_id;
+                                var latitude = results[1].geometry.location.lat();
+                                var longitude = results[1].geometry.location.lng();
+                                var addressComponents = results[1].address_components;
+                                console.log(addressComponents);
+                                var addressObj={
+                                    street_route:''
+                                };
+                                for (var i = 0; i < addressComponents.length; i++) {
+
+                                    if(addressComponents[i].types[0]=='street_number'){
+                                        addressObj.apt_address = addressComponents[i].long_name
+                                    }
+
+                                    if(addressComponents[i].types[0]=='route'){
+                                        addressObj.street_route = addressComponents[i].long_name
+                                    }
+                                    if(addressComponents[i].types[0]=='sublocality'){
+                                        addressObj.street_route = addressObj.street_route + ', ' + addressComponents[i].long_name;
+                                    }
+                                    if(addressComponents[i].types[0]=='sublocality_level_1'){
+                                        addressObj.street_route = addressObj.street_route + ', ' + addressComponents[i].long_name;
+                                    }
+                                    if(addressComponents[i].types[0]=='sublocality_level_2'){
+                                        addressObj.street_route = addressObj.street_route + ', ' + addressComponents[i].long_name;
+                                    }
+                                    addressObj.street_route = addressObj.street_route.replace(/^(\,\ )/, "");
 
 
+                                    if(addressComponents[i].types[0]=='postal_town'){
+                                        addressObj.city = addressComponents[i].long_name
+                                    }
+                                    if(addressComponents[i].types[0]=='administrative_area_level_2'){
+                                        addressObj.city = addressObj.city + ', ' + addressComponents[i].long_name;
+                                    }
+
+                                    if(addressComponents[i].types[0]=='locality'){
+                                        if (!addressObj.city)
+                                            addressObj.city = addressComponents[i].long_name
+
+                                    }
+
+                                    if(addressComponents[i].types[0]=='administrative_area_level_1'){
+                                        addressObj.state = addressComponents[i].long_name
+                                    }
+
+                                    if(addressComponents[i].types[0]=='country'){
+                                        addressObj.country = addressComponents[i].long_name
+                                    }
+                                    if(addressComponents[i].types[0]=='postal_code_prefix'||addressComponents[i].types[0]=='postal_code'){
+                                        addressObj.postal_code = addressComponents[i].long_name
+                                    }
+                                }
+                                addressObj.latitude=latitude;
+                                addressObj.longitude=longitude;
+                                addressObj.place_id=place_id;
+                                localStorage.setItem('addressComponents',JSON.stringify(addressObj));
+                                cfpLoadingBar.complete();
+                                vm.locationObj = JSON.parse(localStorage.getItem('addressComponents'));
+                                vm.address = vm.locationObj;
+                                vm.address.addressLabel = 'Home';
+                                vm.locationSelected = true;
+                            });
 
 
+                        }
+                    }
+                });
             };
             vm.goToPayment = function () {
                 if (!$rootScope.loggedIn) {
@@ -786,9 +966,9 @@
         .module('app.customers')
         .controller('PaymentController', PaymentController);
 
-    PaymentController.$inject = ['$http', '$state', '$rootScope', 'toaster', '$scope', 'cfpLoadingBar', 'api', '$timeout'];
+    PaymentController.$inject = ['$http', '$state', '$rootScope', 'toaster', '$scope', 'cfpLoadingBar', 'api', '$timeout','ngDialog'];
 
-    function PaymentController($http, $state, $rootScope, toaster, $scope, cfpLoadingBar, api, $timeout) {
+    function PaymentController($http, $state, $rootScope, toaster, $scope, cfpLoadingBar, api, $timeout,ngDialog) {
         var vm = this;
 
         activate();
@@ -845,6 +1025,14 @@
                 vm.savedCard = '';
                 vm.address = $rootScope.userAddress[$rootScope.userAddress.length-1];
             }
+            vm.ngDialogPop = function(template, className) {
+                ngDialog.openConfirm({
+                    template: template,
+                    className: 'ngdialog-theme-default ' + className,
+                    scope: $scope
+                }).then(function(value) {}, function(reason) {});
+
+            };
             vm.cardSelect = function (c) {
                 console.log(c);
               $rootScope.card_id = $rootScope.userCards[c].card_id;
@@ -886,7 +1074,7 @@
                 year:'',
                 cvv:''
             };
-            vm.addCardUser = function() {
+            vm.addCardUser = function(i) {
                 if(!vm.addCard.number||!vm.addCard.month||!vm.addCard.year||!vm.addCard.cvv){
                     toaster.pop("error","Enter all card details","");
                     return false;
@@ -941,7 +1129,11 @@
                                         }
                                         localStorage.setItem('card_id', data.user_cards[data.user_cards.length - 1].card_id);
                                         $rootScope.card_id =   localStorage.getItem('card_id');
-                                        vm.bookArtist();
+                                        if(i){
+                                            ngDialog.close();
+                                            $state.reload();
+                                        }
+                                        else vm.bookArtist();
                                     }
                                 })
                             })

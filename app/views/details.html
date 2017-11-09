@@ -97,10 +97,10 @@
                             </div>
                             <div class="p-15 w-100" style="display: table;" ng-if="loggedIn&&userAddress.length>0">
                                 <h4 class="m-t-0 col-lg-6 col-xs-12">Your Saved Address</h4>
-                                <a class="text-right col-lg-6 col-xs-12" style="color: #ee7670" ng-click="details.ngDialogPop('addAddressModal','biggerPop')">Add new address</a>
+                                <a class="text-right col-lg-6 col-xs-12" style="color: #ee7670" ng-click="details.addAddressPop()">Add new address</a>
                                 <div class="clearfix"></div>
                                 <div class="row m-t-20">
-                                    <div class="col-lg-6 col-xs-12" ng-repeat="data in userAddress">
+                                    <div class="col-lg-6 col-xs-12 m-b-20" style="height: 110px" ng-repeat="data in userAddress">
                                         <div class="savedAddressDiv ">
                                             <div class="radio">
                                                 <label class="savAddSubDiv">
@@ -108,7 +108,7 @@
                                                            value="{{$index}}" ng-click="details.addressSelect($index)"/>
                                                     <div>
                                                         <h4>{{data.address_title}}</h4>
-                                                        <label>{{data.apt_address}}{{data.city}}</label>
+                                                        <label>{{data.apt_address}} {{data.city}}</label>
                                                     </div>
                                                 </label>
                                             </div>
@@ -172,6 +172,85 @@
                                     </div>
                             </form>
                         </div>
+                    </div>
+                </div>
+            </script>
+
+
+
+            <script type="text/ng-template" id="addAddressModal">
+                <div class="ngdialog-message logoutpopo m-0">
+
+                    <div class="ngdialog-header">
+                        <p>Add New Address</p>
+                        <form name="details.locForm" ng-submit="details.locForm.$submitted&&details.location&&details.checkLocation()">
+
+                        <div class="input-group m-t-20 m-b-30">
+                            <span class="input-group-addon"><em class="fa fa-location-arrow"></em></span>
+                            <input ng-disabled="details.locationSelected" googleplace class="form-control" ng-model="details.location" type="text" placeholder="Enter location here…" required>
+                            <span class="input-group-btn">
+                                    <button  ng-disabled="details.locationSelected" class="btn btn-default autoDetect" type="button" ng-click="details.autoDetect()">
+                                        <img class="m-r-10" src="app/img/SVG/detect-location.svg"> Auto Detect</button>
+                                </span>
+                        </div>
+                            <div class="col-lg-12 text-center">
+                            <button ng-hide="details.locationSelected" type="submit" class="btn btnDefault w-50">Choose</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="ngdialog-body" ng-if="details.locationSelected">
+                        <form name="details.addAddressPop" ng-submit="details.addAddressPop.$submitted&&details.addAddress(1)">
+                            <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Apt/Suite</label>
+                                            <input class="form-control" name="apt_address" ng-model="details.address.apt_address" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Locality</label>
+                                            <input class="form-control" name="locality" ng-model="details.address.locality" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>City</label>
+                                            <input class="form-control" name="city" ng-model="details.address.city"  required ng-disabled="!details.addAddressPop.city.$dirty&&details.address.city">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>State</label>
+                                            <input class="form-control" name="state" ng-model="details.address.state" required ng-disabled="!details.addAddressPop.state.$dirty&&details.address.state">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Postcode</label>
+                                            <input class="form-control" name="postal_code" ng-model="details.address.postal_code" required ng-disabled="!details.addAddressPop.postal_code.$dirty&&details.address.postal_code">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-12 p-0">Address Label</label>
+                                            <button type="button" class="btn whiteBtn col-lg-2 m-b-15 m-r-15" ng-click="details.chooseAddressLabel('Home')" ng-class={'selectedBox':details.address.addressLabel=='Home'}>
+                                                <strong>Home</strong></button>
+                                            <button type="button" class="btn whiteBtn col-lg-2 m-b-15 m-r-15" ng-click="details.chooseAddressLabel('Work')" ng-class={'selectedBox':details.address.addressLabel=='Work'}>
+                                                <strong>Work</strong></button>
+                                            <button type="button" class="btn whiteBtn col-lg-2 m-b-15 m-r-15" ng-click="details.chooseAddressLabel('Other')" ng-class={'selectedBox':details.address.addressLabel=='Other'}>
+                                                <strong>Other</strong></button>
+                                            <input class="form-control" ng-model="details.address.addressLabelOther" ng-if="details.address.addressLabel=='Other'">
+                                        </div>
+                                    </div>
+                            </div>
+                            <hr class="popHR">
+                            <button type="button" ng-click="closeThisDialog('button')"
+                                    class="btn btn-default pull-left btn-cancel">Cancel
+                            </button>
+                            <button type="submit" class="btn btn-primary pull-right btn-pop">Add Address
+                            </button>
+                        </form>
                     </div>
                 </div>
             </script>
