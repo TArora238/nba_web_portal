@@ -89,4 +89,13 @@
         width: 100vw;
         height: 100vh;
     }
+    .locationMob{
+        padding: 15px;
+    }
+    .locationDiv h3{
+        font-size: 20px;
+    }
+    .locationDiv label{
+        font-size: 14px;
+    }
 }

@@ -1233,9 +1233,9 @@
                     "card_id":$rootScope.card_id,
                     "address_id":$rootScope.address_id,
                     "service_id":vm.service.service_id,
-                    "user_name":$rootScope.userProfile.user_name,
+                    "user_name":$rootScope.userProfile.user_name||vm.personal.fullName,
                     "user_mobile":$rootScope.userProfile.user_mobile,
-                    "user_email":$rootScope.userProfile.user_email,
+                    "user_email":$rootScope.userProfile.user_email||vm.personal.email,
                     "start_time":bookTime,
                     "area_id":vm.area_id
                 };
