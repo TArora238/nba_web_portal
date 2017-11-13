@@ -71,6 +71,11 @@
     function activate() {
       // $scope.mCtrl.checkToken();
       // $scope.mCtrl.checkPortalToken();
+        if(localStorage.getItem("loggedIn")==1){
+            $state.go("app.categories");
+            $rootScope.loggedIn=true;
+        }
+        else $rootScope.loggedIn = false;
       vm.location="";
       vm.checkLocation = function () {
           cfpLoadingBar.start();
@@ -655,9 +660,9 @@
                                 vm.otpSent = 0;
                                 if (data.access_token) localStorage.setItem('portalToken', data.access_token);
                                 if (data.user_address.length > 0) localStorage.setItem('userAddress', JSON.stringify(data.user_address))
-                                else localStorage.removeItem('userAddress');
+                                else localStorage.setItem('userAddress',[]);
                                 if (data.user_cards.length > 0) localStorage.setItem('userCards', JSON.stringify(data.user_cards))
-                                else localStorage.removeItem('userCards');
+                                else localStorage.setItem('userCards',[]);
                                 if (data.user_profile) localStorage.setItem('userProfile', JSON.stringify(data.user_profile));
                                 $scope.mCtrl.user_name=JSON.parse(localStorage.getItem('userProfile')).user_name;
                                 $rootScope.loggedIn = true;
@@ -739,7 +744,7 @@
                             $scope.mCtrl.flagPopUps(data.flag, data.is_error);
                             if (data.is_error == 0) {
                                 if (data.user_address.length > 0) localStorage.setItem('userAddress', JSON.stringify(data.user_address));
-                                else localStorage.removeItem('userAddress');
+                                else localStorage.setItem('userAddress',[]);
                                 $rootScope.address_id=data.user_address[data.user_address.length-1].address_id;
                                 localStorage.setItem("address_id",$rootScope.address_id);
                                 vm.savedAddress=($rootScope.userAddress.length-1).toString();
@@ -1118,7 +1123,7 @@
                                         else {
                                             $rootScope.userCards= [];
                                             $scope.addCardView=1;
-                                            localStorage.removeItem('userCards');
+                                            localStorage.setItem('userCards',[]);
                                         }
                                         for(var i=0;i<$rootScope.userCards.length;i++){
                                             console.log($rootScope.userCards[i]);

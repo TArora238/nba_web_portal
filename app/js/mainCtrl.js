@@ -7,8 +7,7 @@
 
   angular
     .module('portalPanel')
-    .run(mainRun)
-
+    .run(mainRun);
   mainRun.$inject = ['$http', '$state', '$timeout', 'api', 'cfpLoadingBar', '$interval', '$rootScope'];
 
   function mainRun($http, $state, $timeout, api, cfpLoadingBar, $interval, $rootScope) {
@@ -295,9 +294,9 @@
                             vm.otpSent = 0;
                             if (data.access_token) localStorage.setItem('portalToken', data.access_token);
                             if (data.user_address.length > 0) localStorage.setItem('userAddress', JSON.stringify(data.user_address))
-                            else localStorage.removeItem('userAddress');
+                            else localStorage.setItem('userAddress',[]);
                             if (data.user_cards.length > 0) localStorage.setItem('userCards', JSON.stringify(data.user_cards))
-                            else localStorage.removeItem('userCards');
+                            else localStorage.setItem('userCards',[]);
                             if (data.user_profile) localStorage.setItem('userProfile', JSON.stringify(data.user_profile));
                             vm.user_name=JSON.parse(localStorage.getItem('userProfile')).user_name;
                             $rootScope.loggedIn = true;
@@ -398,9 +397,9 @@
               if (data.is_error == 0) {
                   if (data.access_token) localStorage.setItem('portalToken', data.access_token);
                   if (data.user_address.length > 0) localStorage.setItem('userAddress', JSON.stringify(data.user_address))
-                  else localStorage.removeItem('userAddress');
+                  else localStorage.setItem('userAddress',[]);
                   if (data.user_cards.length > 0) localStorage.setItem('userCards', JSON.stringify(data.user_cards))
-                  else localStorage.removeItem('userCards');
+                  else localStorage.setItem('userCards',[]);
                   if (data.user_profile) localStorage.setItem('userProfile', JSON.stringify(data.user_profile));
                   vm.user_name=JSON.parse(localStorage.getItem('userProfile')).user_name;
                   if (data.countries) {

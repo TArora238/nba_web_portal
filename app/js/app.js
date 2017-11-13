@@ -143,10 +143,10 @@
                 require: 'ngModel',
                 link: function(scope, element, attrs, model) {
                     var options = {
-                        types: []
+                        types: ['geocode'],
+                        componentRestrictions: {country: ['uk','in']}
                     };
                     scope.gPlace = new google.maps.places.Autocomplete(element[0], options);
-
                     google.maps.event.addListener(scope.gPlace, 'place_changed', function() {
                         var geoComponents = scope.gPlace.getPlace();
                         console.log(geoComponents);
