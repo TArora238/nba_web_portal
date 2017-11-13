@@ -173,10 +173,12 @@
         $(document).ready(function() {
             $(window).on("scroll", function () {
                 $timeout(function () {
-                    if ($(window).scrollTop() > 20) {
-                        vm.scrollHeader=true;
-                    } else {
-                        vm.scrollHeader=false;
+                    if($(window).width()>500){
+                        if($(window).scrollTop() > 20) {
+                            vm.scrollHeader=true;
+                        } else {
+                            vm.scrollHeader=false;
+                        }
                     }
                 })
             });

@@ -1,0 +1,92 @@
+@media only screen and (max-width: 500px) {
+    .topnavbar,.navbar-collapse{
+        background-color: black!important;
+    }
+    .topnavbar .navbar-nav > li > a, .topnavbar .navbar-nav > .open > a ,.noScrollHeader  .navbar-nav > li > a{
+        color: #fff!important;
+    }
+    .homeBG{
+        background-position-x: 20%;
+        padding: 20px;
+        background-color: #d7dce0;
+    }
+    .homeLayer .col-xs-12{
+        padding-top: 10vh;
+    }
+    .homeBG *{
+        color: white!important;
+        opacity: 1!important;
+    }
+    .homeBG h2{
+        font-size: 22px;
+        text-align: center;
+    }
+    .homeBG p{
+        font-size: 12px;
+        line-height: 18px;
+        text-align: center;
+        padding: 0 15px;
+        margin: 0;
+    }
+    .addServDiv label.serviceName{
+        text-align: center;
+        font-size: 16px;
+        line-height: 18px;
+    }
+    .socialLinks{
+        margin: 15px 0;
+    }
+    .prospectDiv h3{font-size: 20px;}
+    .navBar h3{
+        text-align: right;
+    }
+    .subServDiv{
+        padding: 10px;
+    }
+    .subServDiv .col-xs-7,.subServDiv .col-xs-5{padding: 0;}
+    .btnDefault{
+        padding: 7px 10px;
+    }
+    .addHeader{
+        display: table;
+    }
+    .serviceName{padding: 0}
+    .serviceName.col-xs-5{
+        padding: 0 0 0 10px;
+    }
+    .stylistsDiv h4, .missionDiv h4{
+        font-size: 16px;
+        padding: 0 15px;
+    }
+    .thanksPicMob{
+        background: url("../img/PNG/thanks_bg.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-color: #000;
+        height: calc(100vh - 70px);
+        width: 100vw;
+    }
+    .thanksText label,.thanksText h3,.thanksText h4{color: white}
+    .thanksDivFlex,.thanksText{display: block;overflow: hidden;}
+    .layer {
+        background-color: rgba(0,0,0,0.5);
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+    }
+    .homeLayer {
+        background-color: rgba(0,0,0,0.5);
+        justify-content: center;
+        padding: 50vh 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+    }
+}

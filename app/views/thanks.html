@@ -1,7 +1,7 @@
 <div class="thanksDiv" ng-controller="ThanksController as thanks">
     <div class="animated fadeIn">
-        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 p-0" style="display:flex;"> 
-            <div class="thanksText VHAlign col-xs-12 col-sm-6 col-md-6 col-lg-6 text-left pull-left">
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 p-0 thanksDivFlex" >
+            <div class="thanksText VHAlign hidden-xs col-sm-6 col-md-6 col-lg-6 text-left pull-left">
                 <div>
                     <h3 class="m-b-20">Thank You!</h3>
                     <h4 class="m-t-10 m-b-20">Your booking was placed</h4>
@@ -10,9 +10,19 @@
                     <button class="btn btnDefault w-50 m-t-10" ui-sref="home">Go To Home</button>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-left pull-left thanksPic"></div>
+            <div class="thanksText thanksPicMob VHAlign col-xs-12 hidden-lg hidden-md hidden-sm text-left pull-left">
+                <div class="layer">
+                    <div class="p-15">
+                        <h3 class="m-b-20">Thank You!</h3>
+                        <h4 class="m-t-10 m-b-20">Your booking was placed</h4>
+                        <label class="m-t-10 m-b-20">We are looking for a Stylist as we speak, we will let you know as soon as possible when we have found one,
+                            If we are too busy and cannot find one in reasonable time, we will notify you</label>
+                        <button class="btn btnDefault w-50 m-t-10" ui-sref="home">Go To Home</button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="hidden-xs col-sm-6 col-md-6 col-lg-6 text-left pull-left thanksPic"></div>
         </div>
     </div>
-
-
 </div>

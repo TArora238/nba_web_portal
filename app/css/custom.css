@@ -168,6 +168,7 @@ a,button{
     color: #ffffff;
     background-color: #fff;
     border:1px solid #dddddd;
+    margin-bottom: 30px;
     /*text-align: center;*/
 }
 .searchDiv{
@@ -484,16 +485,16 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
 }
 
 .bigPop.ngdialog.ngdialog-theme-default .ngdialog-content {
-    width: 600px!important;
+    max-width: 600px!important;
 }
 .biggerPop.ngdialog.ngdialog-theme-default .ngdialog-content,.biggerPop .modal-dialog {
-    width: 800px!important;
+    max-width: 800px!important;
 }
 .signUpPop.ngdialog.ngdialog-theme-default .ngdialog-content,.signUpPop .modal-dialog {
-    width: 400px!important;
+    max-width: 400px!important;
 }
 .biggestPop.ngdialog.ngdialog-theme-default .ngdialog-content,.biggestPop .modal-dialog {
-    width: 1132px!important;
+    max-width: 1132px!important;
 }
 .modal-header{
   padding: 0!important;
@@ -511,6 +512,7 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
     border-radius: 4px;
     margin: 70px auto !important;
     max-width: 93%;
+    width: 95%!important;
     padding: 0!important;
     height: auto;
     color: #505050!important;
@@ -539,6 +541,9 @@ label,div,h1,h2,h3,h4,h5,h6,button,a,input,p{font-family: 'segoe'!important;}
     color: #909090!important;
     font-size: 14px;
     text-align: left;
+}
+.termsLink{
+    padding: 20px 15px;
 }
 .joinUs{
     border: 1px solid #aaaaaa;
@@ -664,6 +669,7 @@ label,div,h1,h2,h3,h4,h5,h6,button,a,input,p{font-family: 'segoe'!important;}
     width: 100%;
 }
 .blogSingleDiv{
+    margin-bottom: 20px;
     overflow: hidden;
 }
 .footerDiv{background-color: #000;}
@@ -736,6 +742,7 @@ label,div,h1,h2,h3,h4,h5,h6,button,a,input,p{font-family: 'segoe'!important;}
     border:1px solid #dddddd;
     border-radius: 4px;
     padding: 20px;
+    margin-bottom: 30px;
 }
 .subServDiv{
     border-radius: 4px;
@@ -743,6 +750,7 @@ label,div,h1,h2,h3,h4,h5,h6,button,a,input,p{font-family: 'segoe'!important;}
     border: solid 1px #dddddd;
     padding:15px;
     margin: 20px auto;
+    cursor: pointer;
 }
 .subServDiv:hover{
     box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.1);
@@ -795,6 +803,7 @@ label,div,h1,h2,h3,h4,h5,h6,button,a,input,p{font-family: 'segoe'!important;}
     border: 1px solid #dddddd;
     border-radius: 4px;
     padding: 15px;
+    margin-bottom: 20px;
 }
 .savAddSubDiv{
     width: 100%;
@@ -822,7 +831,7 @@ label,div,h1,h2,h3,h4,h5,h6,button,a,input,p{font-family: 'segoe'!important;}
 
 
 
-
+.thanksDivFlex{display:flex;}
 .thanksDiv{
     height: calc(100vh - 70px);
     display: flex;
