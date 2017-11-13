@@ -311,7 +311,7 @@
                             // localStorage.setItem("categories",JSON.stringify(data.categories));
                             localStorage.setItem('loggedIn',1);
                             if(i){$state.reload();}
-                            else $state.go("app.categories");
+                            else $state.go("app.location");
                         }
                     })
                 })

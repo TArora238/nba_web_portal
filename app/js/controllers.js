@@ -77,9 +77,11 @@
             if(localStorage.getItem('userCards'))$rootScope.userCards = JSON.parse(localStorage.getItem('userCards'));
             else $rootScope.userCards=[];
             $rootScope.userProfile = JSON.parse(localStorage.getItem('userProfile'));
-            vm.categories = JSON.parse(localStorage.getItem("categories"));
-            if(vm.categories.length!=0)
-            $state.go("app.categories");
+            if(localStorage.getItem("categories")!=null)vm.categories = JSON.parse(localStorage.getItem("categories"));
+            else vm.categories = [];
+            localStorage.setItem("categories",JSON.stringify(vm.categories));
+            // if(vm.categories.length!=0)
+            // $state.go("app.categories");
             $rootScope.loggedIn=true;
         }
         else $rootScope.loggedIn = false;
@@ -245,7 +247,8 @@
           vm.locationObj = JSON.parse(localStorage.getItem('addressComponents'));
           vm.location += vm.locationObj.state+","+vm.locationObj.country;
       }
-      vm.categories = JSON.parse(localStorage.getItem("categories"));
+      if(localStorage.getItem("categories")!=null)vm.categories = JSON.parse(localStorage.getItem("categories"));
+      else vm.categories=[];
       console.log(vm.categories);
       localStorage.setItem("categories",JSON.stringify(vm.categories));
       if(vm.categories.length==0)
