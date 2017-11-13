@@ -72,6 +72,13 @@
       // $scope.mCtrl.checkToken();
       // $scope.mCtrl.checkPortalToken();
         if(localStorage.getItem("loggedIn")==1){
+            if(localStorage.getItem('userAddress'))$rootScope.userAddress = JSON.parse(localStorage.getItem('userAddress'));
+            else $rootScope.userCards=[];
+            if(localStorage.getItem('userCards'))$rootScope.userCards = JSON.parse(localStorage.getItem('userCards'));
+            else $rootScope.userCards=[];
+            $rootScope.userProfile = JSON.parse(localStorage.getItem('userProfile'));
+            vm.categories = JSON.parse(localStorage.getItem("categories"));
+            if(vm.categories.length!=0)
             $state.go("app.categories");
             $rootScope.loggedIn=true;
         }
@@ -220,9 +227,12 @@
     function activate() {
       // $scope.mCtrl.checkToken();
       if(localStorage.getItem("loggedIn")==1){
-          $rootScope.userAddress = JSON.parse(localStorage.getItem('userAddress'));
-                  $rootScope.userCards = JSON.parse(localStorage.getItem('userCards'));
-                  $rootScope.userProfile = JSON.parse(localStorage.getItem('userProfile'));
+          console.log(localStorage.getItem('userCards'));
+          if(localStorage.getItem('userAddress'))$rootScope.userAddress = JSON.parse(localStorage.getItem('userAddress'));
+          else $rootScope.userCards=[];
+          if(localStorage.getItem('userCards'))$rootScope.userCards = JSON.parse(localStorage.getItem('userCards'));
+          else $rootScope.userCards=[];
+          $rootScope.userProfile = JSON.parse(localStorage.getItem('userProfile'));
 
           $scope.mCtrl.checkPortalToken();
           $rootScope.loggedIn=true;
@@ -230,11 +240,17 @@
       else $rootScope.loggedIn = false;
 
       vm.location = "";
+      localStorage.setItem("additionalServices",JSON.stringify([]));
       if(localStorage.getItem('addressComponents')!=null){
           vm.locationObj = JSON.parse(localStorage.getItem('addressComponents'));
           vm.location += vm.locationObj.state+","+vm.locationObj.country;
       }
       vm.categories = JSON.parse(localStorage.getItem("categories"));
+      console.log(vm.categories);
+      localStorage.setItem("categories",JSON.stringify(vm.categories));
+      if(vm.categories.length==0)
+            $state.go("app.location");
+
       vm.chooseCat = function (d) {
           localStorage.setItem("selectedCategory",JSON.stringify(d));
           $state.go("app.subService");
@@ -268,9 +284,11 @@
       // $scope.mCtrl.checkToken();
       // $scope.mCtrl.checkPortalToken();
         if(localStorage.getItem("loggedIn")==1){
-            $rootScope.userAddress = JSON.parse(localStorage.getItem('userAddress'));
-                  $rootScope.userCards = JSON.parse(localStorage.getItem('userCards'));
-                  $rootScope.userProfile = JSON.parse(localStorage.getItem('userProfile'));
+            if(localStorage.getItem('userAddress'))$rootScope.userAddress = JSON.parse(localStorage.getItem('userAddress'));
+            else $rootScope.userCards=[];
+            if(localStorage.getItem('userCards'))$rootScope.userCards = JSON.parse(localStorage.getItem('userCards'));
+            else $rootScope.userCards=[];
+            $rootScope.userProfile = JSON.parse(localStorage.getItem('userProfile'));
 
             $scope.mCtrl.checkPortalToken();
             $rootScope.loggedIn=true;
@@ -294,6 +312,7 @@
               vm.choosingSubServ=0;
           }
       };
+      localStorage.setItem("additionalServices",JSON.stringify([]));
       vm.additionalServices=[];
       vm.chooseAddService = function (d,c,i) {
           console.log(d,c,i);
@@ -350,9 +369,11 @@
         function activate() {
             // $scope.mCtrl.checkToken();
             if(localStorage.getItem("loggedIn")==1){
-                $rootScope.userAddress = JSON.parse(localStorage.getItem('userAddress'));
-                  $rootScope.userCards = JSON.parse(localStorage.getItem('userCards'));
-                  $rootScope.userProfile = JSON.parse(localStorage.getItem('userProfile'));
+                if(localStorage.getItem('userAddress'))$rootScope.userAddress = JSON.parse(localStorage.getItem('userAddress'));
+                else $rootScope.userCards=[];
+                if(localStorage.getItem('userCards'))$rootScope.userCards = JSON.parse(localStorage.getItem('userCards'));
+                else $rootScope.userCards=[];
+                $rootScope.userProfile = JSON.parse(localStorage.getItem('userProfile'));
 
                 $scope.mCtrl.checkPortalToken();
                 $rootScope.loggedIn=true;
@@ -385,8 +406,9 @@
             vm.hours=[];
             vm.minutes=['00','30'];
             vm.periods=['AM','PM'];
-            for(var i=1;i<13;i++){
-                vm.hours[i]=i;
+            for(var i=0;i<24;i++){
+                if(i<10)vm.hours[i]='0'+i;
+                else vm.hours[i]=i;
             }
             vm.check_time = function (time) {
                 vm.now = new Date();
@@ -396,18 +418,19 @@
                 vm.bookTime = vm.bookingTime;
                 else vm.bookTime = new Date(vm.bookingTime);
                 console.log(vm.bookTime);
-                // return false;
-                if (!time.hour || !time.minute || !time.period) {
+                // return false;   || !time.period
+                if (!time.hour || !time.minute ) {
                     vm.invalidDate = true;
                     return false;
                 }
-                vm.hour=0;
-                if(time.period=='AM')vm.hour=time.hour;
-                else vm.hour=time.hour+12;
-                vm.bookTime.setHours(vm.hour);
+                // vm.hour=0;
+                // if(time.period=='AM')vm.hour=time.hour;
+                // else vm.hour=time.hour+12;
+                vm.bookTime.setHours(parseInt(time.hour));
                 vm.bookTime.setMinutes(time.minute);
                 vm.bookTime.setSeconds(0);
                 vm.bookTime.setMilliseconds(0);
+                console.log(vm.bookTime)
                 vm.startDiff = vm.bookTime.getTime() - vm.now.getTime();
                 vm.startHours = Math.floor(vm.startDiff / 1000 / 60 / 60);
                 if(vm.startHours<2){
@@ -425,7 +448,8 @@
                     toaster.pop('error','Booking can not start before 2 hours from now','');
                     return false;
                 }
-                if (!vm.time.hour || !vm.time.minute || !vm.time.period) {
+                //|| !vm.time.period
+                if (!vm.time.hour || !vm.time.minute ) {
                     vm.invalidDate = true;
                     toaster.pop('error','Choose a time for your booking','');
                     return false;
@@ -464,9 +488,11 @@
         function activate() {
             // $scope.mCtrl.checkToken();
             if(localStorage.getItem("loggedIn")==1){
-                $rootScope.userAddress = JSON.parse(localStorage.getItem('userAddress'));
-                  $rootScope.userCards = JSON.parse(localStorage.getItem('userCards'));
-                  $rootScope.userProfile = JSON.parse(localStorage.getItem('userProfile'));
+                if(localStorage.getItem('userAddress'))$rootScope.userAddress = JSON.parse(localStorage.getItem('userAddress'));
+                else $rootScope.userCards=[];
+                if(localStorage.getItem('userCards'))$rootScope.userCards = JSON.parse(localStorage.getItem('userCards'));
+                else $rootScope.userCards=[];
+                $rootScope.userProfile = JSON.parse(localStorage.getItem('userProfile'));
 
                 $scope.mCtrl.checkPortalToken();
                 $rootScope.loggedIn=true;
@@ -524,6 +550,8 @@
                 $rootScope.address_id = $rootScope.userAddress[c].address_id;
                 console.log($rootScope.address_id);
                 localStorage.setItem("address_id",$rootScope.address_id);
+                $rootScope.selectedAddress = $rootScope.userAddress[c];
+                localStorage.setItem("selectedAddress",JSON.stringify($rootScope.selectedAddress));
                 // vm.savedCard=c;
             };
 
@@ -748,6 +776,8 @@
                                 $rootScope.address_id=data.user_address[data.user_address.length-1].address_id;
                                 localStorage.setItem("address_id",$rootScope.address_id);
                                 vm.savedAddress=($rootScope.userAddress.length-1).toString();
+                                $rootScope.selectedAddress = $rootScope.userAddress[$rootScope.userAddress.length-1];
+                                localStorage.setItem("selectedAddress",JSON.stringify($rootScope.selectedAddress));
                                 if(i){
                                     $rootScope.address_id=data.address_id;
                                     localStorage.setItem("address_id",$rootScope.address_id);
@@ -985,8 +1015,10 @@
         function activate() {
             // $scope.mCtrl.checkToken();
             if(localStorage.getItem("loggedIn")==1){
-                $rootScope.userAddress = JSON.parse(localStorage.getItem('userAddress'));
-                $rootScope.userCards = JSON.parse(localStorage.getItem('userCards'));
+                if(localStorage.getItem('userAddress'))$rootScope.userAddress = JSON.parse(localStorage.getItem('userAddress'));
+                else $rootScope.userCards=[];
+                if(localStorage.getItem('userCards'))$rootScope.userCards = JSON.parse(localStorage.getItem('userCards'));
+                else $rootScope.userCards=[];
                 $rootScope.userProfile = JSON.parse(localStorage.getItem('userProfile'));
 
                 $scope.mCtrl.checkPortalToken();
@@ -1071,7 +1103,7 @@
                 }
 
                 localStorage.setItem("card_id",$rootScope.card_id);
-                vm.bookArtist();
+                vm.checkLocation();
             };
 
 
@@ -1140,12 +1172,48 @@
                                             ngDialog.close();
                                             $state.reload();
                                         }
-                                        else vm.bookArtist();
+                                        else vm.checkLocation();
                                     }
                                 })
                             })
                     }
                 }
+            };
+            vm.checkLocation = function(){
+                // if(localStorage.getItem('selectedAddress'))
+                //     $rootScope.selectedAddress = JSON.parse(localStorage.getItem('selectedAddress'));
+                // else{
+                    $rootScope.savedAddress=vm.address;
+                // }
+                vm.locationObj = JSON.parse(localStorage.getItem('addressComponents'));
+                console.log(vm.locationObj);
+                if(vm.locationObj!=null) {
+                    $.post(api.url + "check_location", {
+                        "latitude": $rootScope.savedAddress.latitude,
+                        "longitude": $rootScope.savedAddress.longitude
+                    }).success(function (data, status) {
+                        if (typeof data === 'string')
+                            var data = JSON.parse(data);
+                        console.log(data);
+                        cfpLoadingBar.complete();
+                        if (data.is_error == 0) {
+                            vm.notServing = false;
+                            $timeout(function () {
+                                vm.area_id = data.area_info.area_id;
+                                vm.bookArtist();
+                            });
+                        }
+                        else{
+                            toaster.pop("error","We don't serve in this area","");
+                            vm.notServing = true;
+                            vm.locationSelected = false;
+                        }
+
+                    })
+                }
+
+
+                
             };
             vm.bookArtist = function () {
                 cfpLoadingBar.start();
@@ -1162,10 +1230,11 @@
                     "card_id":$rootScope.card_id,
                     "address_id":$rootScope.address_id,
                     "service_id":vm.service.service_id,
+                    "user_name":$rootScope.userProfile.user_name,
                     "user_mobile":$rootScope.userProfile.user_mobile,
-                    "user_email":$rootScope.userProfile.user_email||"asd@sdf.sdf",
-                    "start_time":bookTime
-
+                    "user_email":$rootScope.userProfile.user_email,
+                    "start_time":bookTime,
+                    "area_id":vm.area_id
                 };
                 if(as_ids){
                     data.as_id=as_ids;
@@ -1220,13 +1289,13 @@
             // $scope.mCtrl.checkToken();
             // $scope.mCtrl.checkPortalToken();
 
-            vm.today = moment(new Date()).format("DD/MM/YYYY");
-            vm.totalPrice = 0;
-            vm.category = JSON.parse(localStorage.getItem("selectedCategory"));
-            vm.service = JSON.parse(localStorage.getItem("selectedService"));
-            vm.additionalServices = JSON.parse(localStorage.getItem("additionalServices"));
-            vm.totalPrice = localStorage.getItem("totalPrice");
-            vm.bookingTime = new Date(localStorage.getItem("bookingTime")).toISOString();
+            // vm.today = moment(new Date()).format("DD/MM/YYYY");
+            // vm.totalPrice = 0;
+            // vm.category = JSON.parse(localStorage.getItem("selectedCategory"));
+            // vm.service = JSON.parse(localStorage.getItem("selectedService"));
+            // vm.additionalServices = JSON.parse(localStorage.getItem("additionalServices"));
+            // vm.totalPrice = localStorage.getItem("totalPrice");
+            // vm.bookingTime = new Date(localStorage.getItem("bookingTime")).toISOString();
             vm.goToThanks = function () {
                 $state.go("app.thanks");
             };

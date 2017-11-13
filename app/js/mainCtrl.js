@@ -108,9 +108,11 @@
       if (j + 1 == 10) $rootScope.months[j].month_name = 'Oct';
       if (j + 1 == 11) $rootScope.months[j].month_name = 'Nov';
       if (j + 1 == 12) $rootScope.months[j].month_name = 'Dec';
-      if(j>9)$rootScope.months[j].month = j + 1;
+      if(j<9){
+          $rootScope.months[j].month = '0'+(j + 1).toString();
+      }
       else {
-        $rootScope.months[j].month = '0'+(j + 1).toString();
+          $rootScope.months[j].month = j + 1;
       }
     }
     var currentYear = 1900 + d.getYear();
@@ -306,7 +308,7 @@
                                 localStorage.setItem('userCountries', JSON.stringify(data.countries));
                                 vm.countries = data.countries;
                             }
-                            localStorage.setItem("categories",JSON.stringify(data.categories));
+                            // localStorage.setItem("categories",JSON.stringify(data.categories));
                             localStorage.setItem('loggedIn',1);
                             if(i){$state.reload();}
                             else $state.go("app.categories");
@@ -408,11 +410,13 @@
                       localStorage.setItem('userCountries', JSON.stringify(data.countries));
                       vm.countries = data.countries;
                   }
-                  localStorage.setItem("categories",JSON.stringify(data.categories));
+                  // localStorage.setItem("categories",JSON.stringify(data.categories));
                   $rootScope.loggedIn = true;
                   localStorage.setItem('loggedIn',1);
-                  $rootScope.userAddress = JSON.parse(localStorage.getItem('userAddress'));
-                  $rootScope.userCards = JSON.parse(localStorage.getItem('userCards'));
+                  if(localStorage.getItem('userAddress'))$rootScope.userAddress = JSON.parse(localStorage.getItem('userAddress'));
+                  else $rootScope.userCards=[];
+                  if(localStorage.getItem('userCards'))$rootScope.userCards = JSON.parse(localStorage.getItem('userCards'));
+                  else $rootScope.userCards=[];
                   $rootScope.userProfile = JSON.parse(localStorage.getItem('userProfile'));
 
               }
