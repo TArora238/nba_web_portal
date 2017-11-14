@@ -98,4 +98,12 @@
     .locationDiv label{
         font-size: 14px;
     }
+    .autoDetect{
+        padding: 9.5px 15px;
+    }
+
+    .autoDetect img{
+        width:14px;
+        margin-right: 0px;
+    }
 }

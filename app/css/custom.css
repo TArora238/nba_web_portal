@@ -683,7 +683,7 @@ label,div,h1,h2,h3,h4,h5,h6,button,a,input,p{font-family: 'segoe'!important;}
 .socialLinks img{
     width: 30px;
 }
-.singInImage{
+.signInImage{
     background: url("../img/PNG/login_bg.jpg");
     background-repeat: no-repeat;
     background-size: cover;
@@ -712,6 +712,7 @@ label,div,h1,h2,h3,h4,h5,h6,button,a,input,p{font-family: 'segoe'!important;}
 }
 .autoDetect img{
     width:14px;
+    margin-right: 10px;
 }
 .locationDiv h3{color: #000;font-weight: bold}
 .locationDiv label{color: #909090;font-size: 16px;margin: 2vh auto 3vh;line-height: 18px;}

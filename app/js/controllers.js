@@ -492,7 +492,7 @@
             // $scope.mCtrl.checkToken();
             if(localStorage.getItem("loggedIn")==1){
                 if(localStorage.getItem('userAddress'))$rootScope.userAddress = JSON.parse(localStorage.getItem('userAddress'));
-                else $rootScope.userCards=[];
+                else $rootScope.userAddress=[];
                 if(localStorage.getItem('userCards'))$rootScope.userCards = JSON.parse(localStorage.getItem('userCards'));
                 else $rootScope.userCards=[];
                 $rootScope.userProfile = JSON.parse(localStorage.getItem('userProfile'));
@@ -702,6 +702,8 @@
                                     $scope.mCtrl.countries = data.countries;
                                 }
                                 localStorage.setItem('loggedIn',1);
+                                console.log("verify otp process");
+                                vm.addAddressPopMode=0;
                                 vm.addAddress();
                             }
                         })
@@ -785,7 +787,9 @@
                                     $rootScope.address_id=data.address_id;
                                     localStorage.setItem("address_id",$rootScope.address_id);
                                     ngDialog.close();
-                                    $state.reload();
+                                    if(vm.addAddressPopMode==1)$state.reload();
+                                    if(vm.addAddressPopMode==0)$state.go('app.payment');
+
                                 }
                                 else $state.go('app.payment');
                             }
@@ -793,6 +797,7 @@
                     });
             };
             vm.addAddressPop = function () {
+                vm.addAddressPopMode=1;
                 localStorage.removeItem('addressComponents');
                 vm.ngDialogPop('addAddressModal','biggerPop');
                 vm.locationSelected = false;
@@ -974,6 +979,7 @@
                         toaster.pop("error",'Enter a valid address label','');
                         return false;
                     }
+                    vm.addAddressPopMode=0;
                     vm.addAddress();
                     return false;
                 }
@@ -1019,7 +1025,7 @@
             // $scope.mCtrl.checkToken();
             if(localStorage.getItem("loggedIn")==1){
                 if(localStorage.getItem('userAddress'))$rootScope.userAddress = JSON.parse(localStorage.getItem('userAddress'));
-                else $rootScope.userCards=[];
+                else $rootScope.userAddress=[];
                 if(localStorage.getItem('userCards'))$rootScope.userCards = JSON.parse(localStorage.getItem('userCards'));
                 else $rootScope.userCards=[];
                 $rootScope.userProfile = JSON.parse(localStorage.getItem('userProfile'));
@@ -1226,7 +1232,9 @@
                     as_ids+=vm.additionalServices[i].as_id;
                     if(i<vm.additionalServices.length-1)as_ids+=',';
                 }
-                vm.personal = localStorage.getItem("personalData");
+                vm.personal = JSON.parse(localStorage.getItem("personalData"));
+                console.log($rootScope.userProfile.user_email);
+                console.log(vm.personal);
                 $rootScope.address_id=localStorage.getItem("address_id");
                 var data ={
                     "access_token": localStorage.getItem('portalToken'),
