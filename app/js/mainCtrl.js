@@ -336,7 +336,14 @@
 
       vm.hitInProgress = false;
 
-      
+        $rootScope.currentState = function() {
+            if ($state.current.name == 'app.subService') vm.bookingStep = 1;
+            if ($state.current.name == 'app.bookingTime') vm.bookingStep = 2;
+            if ($state.current.name == 'app.details') vm.bookingStep = 3;
+            if ($state.current.name == 'app.payment') vm.bookingStep = 4;
+        };
+        $rootScope.currentState();
+
         vm.flagPopUps = function (flag, error) {
             cfpLoadingBar.complete();
             vm.hitInProgress = false;

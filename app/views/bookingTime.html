@@ -1,7 +1,7 @@
 <div class="bookingTimeDiv" ng-controller="BookingTimeController as book">
     <div class="animated fadeIn">
         <div class="navBar col-md-12 col-xs-12 col-sm-12 col-lg-12">
-
+            <div ng-include="'app/views/partials/menuStep.html'"></div>
         </div>
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 contentDiv">
             <div class="container">
@@ -57,7 +57,7 @@
                                 <label>{{book.selectedDay|date:'MMMM dd, yyyy | hh:mm a'}}</label>
                             </div>
                         </div>
-                        <button class="btn btnDefault w-100 m-t-30" ng-click="book.goToDetails()">Next</button>
+                        <button class="btn btnDefault w-100 m-t-30" ng-click="book.goToDetails()" ng-disabled="mCtrl.hitInProgress">Next</button>
                     </div>
                 </div>
             </div>

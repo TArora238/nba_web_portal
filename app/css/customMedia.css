@@ -106,4 +106,7 @@
         width:14px;
         margin-right: 0px;
     }
+    div.bookingStep{
+        padding: 0;
+    }
 }

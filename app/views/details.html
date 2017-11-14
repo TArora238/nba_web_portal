@@ -1,7 +1,7 @@
 <div class="detailsDiv" ng-controller="DetailsController as details">
     <div class="animated fadeIn">
         <div class="navBar col-md-12 col-xs-12 col-sm-12 col-lg-12">
-
+            <div ng-include="'app/views/partials/menuStep.html'"></div>
         </div>
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 contentDiv">
             <div class="container">
@@ -134,7 +134,7 @@
                                 <label>{{details.bookingTime|date:'MMMM dd, yyyy | hh:mm a'}}</label>
                             </div>
                         </div>
-                        <button class="btn btnDefault w-100 m-t-30" ng-click="details.goToPayment()">Next</button>
+                        <button class="btn btnDefault w-100 m-t-30" ng-click="details.goToPayment()"  ng-disabled="mCtrl.hitInProgress">Next</button>
                     </div>
                 </div>
             </div>
@@ -248,7 +248,7 @@
                             <button type="button" ng-click="closeThisDialog('button')"
                                     class="btn btn-default pull-left btn-cancel">Cancel
                             </button>
-                            <button type="submit" class="btn btn-primary pull-right btn-pop">Add Address
+                            <button type="submit" class="btn btn-primary pull-right btn-pop"  ng-disabled="mCtrl.hitInProgress">Add Address
                             </button>
                         </form>
                     </div>

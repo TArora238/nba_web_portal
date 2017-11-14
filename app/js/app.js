@@ -702,6 +702,7 @@
                 $window.scrollTo(0, 0);
                 $timeout.cancel($rootScope.thBar);
                 cfpLoadingBar.complete();
+                $rootScope.currentState();
                 // Save the route title
                 $rootScope.currTitle = $state.current.title;
             });

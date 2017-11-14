@@ -692,7 +692,24 @@ label,div,h1,h2,h3,h4,h5,h6,button,a,input,p{font-family: 'segoe'!important;}
 
 /*******************************************************/
 
-
+.connecting-line{
+    position: absolute;
+    padding-top: 25px;
+    width: 65%;
+    left:17.5%;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+div.bookingStep label,li.bookingStep label{
+    color: #909090;
+    font-size: 12px;
+}
+li.bookingStep label{
+    padding: 15px 10px 0;
+    background-color: #dce5eb;
+}
+.bookingStep .fa-circle{
+    color: #ee7670;
+}
 .locationDiv{
     background: url("../img/PNG/location_bg.jpg");
     background-repeat: no-repeat;

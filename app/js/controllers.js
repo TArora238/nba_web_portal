@@ -446,6 +446,7 @@
                 }
             };
             vm.goToDetails = function () {
+                $scope.mCtrl.hitInProgress = true;
                 if(vm.startHours<2){
                     vm.invalidDate = true;
                     toaster.pop('error','Booking can not start before 2 hours from now','');
@@ -501,6 +502,7 @@
                 $rootScope.loggedIn=true;
             }
             else $rootScope.loggedIn = false;
+            $scope.mCtrl.hitInProgress = false;
             vm.totalPrice = 0;
             vm.category = JSON.parse(localStorage.getItem("selectedCategory"));
             vm.service = JSON.parse(localStorage.getItem("selectedService"));
@@ -668,7 +670,7 @@
                 cfpLoadingBar.start();
                 vm.OTP_formatted = '';
                 vm.OTP_formatted = vm.OTP_formatted + vm.OTP.a + vm.OTP.b + vm.OTP.c + vm.OTP.d;
-
+                $scope.mCtrl.hitInProgress = true;
                 $.post(api.url + "verify_otp", {
                     user_mobile: vm.code + '-' + vm.personal.phone.replace(/[^0-9]/g, ""),
                     otp: vm.OTP_formatted,
@@ -684,6 +686,7 @@
                         console.log(data);
                         //vm.loading=false;
                         $timeout(function() {
+                            $scope.mCtrl.hitInProgress = false;
                             $scope.mCtrl.flagPopUps(data.flag, data.is_error);
                             if (data.is_error == 0) {
                                 // $rootScope.setLoginData(data, 1);
@@ -710,6 +713,7 @@
                     })
             };
             vm.addAddress = function (i) {
+
                 if(i&&localStorage.getItem("addressComponents")==null){
                     toaster.pop("error",'Choose a valid location','');
                     return false;
@@ -755,6 +759,7 @@
                     }
                 }
                 else vm.address.country_id=1;
+                $scope.mCtrl.hitInProgress = true;
                 var data = {
                     "access_token": localStorage.getItem('portalToken'),
                     "post_code": vm.address.postal_code,
@@ -774,6 +779,7 @@
                             var data = JSON.parse(data);
                         console.log(data);
                         $timeout(function() {
+                            $scope.mCtrl.hitInProgress = false;
                             $scope.mCtrl.flagPopUps(data.flag, data.is_error);
                             if (data.is_error == 0) {
                                 if (data.user_address.length > 0) localStorage.setItem('userAddress', JSON.stringify(data.user_address));
@@ -1033,7 +1039,7 @@
                 $scope.mCtrl.checkPortalToken();
                 $rootScope.loggedIn=true;
             }
-
+            $scope.mCtrl.hitInProgress = false;
             vm.today = moment(new Date()).format("DD/MM/YYYY");
             vm.totalPrice = 0;
             vm.category = JSON.parse(localStorage.getItem("selectedCategory"));
@@ -1154,6 +1160,7 @@
                                     var data = JSON.parse(data);
                                 console.log(data);
                                 $timeout(function() {
+                                    $scope.mCtrl.hitInProgress = false;
                                     $scope.mCtrl.flagPopUps(data.flag, data.is_error);
                                     if (data.is_error == 0) {
                                         if (data.user_cards.length > 0) {
@@ -1225,6 +1232,7 @@
                 
             };
             vm.bookArtist = function () {
+                $scope.mCtrl.hitInProgress = true;
                 cfpLoadingBar.start();
                 var bookTime = moment(vm.bookingTime).format("YYYY-MM-DD HH:MM");
                 var as_ids = '';
@@ -1255,6 +1263,7 @@
                         if (typeof data === 'string')
                             var data = JSON.parse(data);
                         console.log(data);
+                        $scope.mCtrl.hitInProgress = false;
                         //$scope.loading=false;
                         cfpLoadingBar.complete();
                         $timeout(function() {

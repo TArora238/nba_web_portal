@@ -11,12 +11,12 @@
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 contentDiv">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-4" ng-repeat="data in cat.categories">
+                    <div class="col-lg-4" ng-repeat="data in cat.categories"  ng-click="cat.chooseCat(data)">
                         <div class="col-lg-12 servDiv" >
                             <img ng-src="{{data.category_image}}" class="w-100">
                             <h4>{{data.category_name}}</h4>
                             <label>{{data.category_description}}</label>
-                            <button class="btn btnDefault w-100" ng-click="cat.chooseCat(data)">Select</button>
+                            <button class="btn btnDefault w-100">Select</button>
                         </div>
                     </div>
                 </div>

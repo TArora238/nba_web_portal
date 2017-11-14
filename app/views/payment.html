@@ -1,7 +1,7 @@
 <div class="paymentDiv" ng-controller="PaymentController as payment">
     <div class="animated fadeIn">
         <div class="navBar col-md-12 col-xs-12 col-sm-12 col-lg-12">
-
+            <div ng-include="'app/views/partials/menuStep.html'"></div>
         </div>
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 contentDiv">
             <div class="container">
@@ -117,7 +117,7 @@
                                 <label>{{payment.address.apt_address}} {{payment.address.city}}</label>
                             </div>
                         </div>
-                        <button class="btn btnDefault w-100 m-t-30" ng-click="payment.goToThanks()">Next</button>
+                        <button class="btn btnDefault w-100 m-t-30" ng-click="payment.goToThanks()"  ng-disabled="mCtrl.hitInProgress">Next</button>
                     </div>
                 </div>
             </div>
@@ -168,7 +168,7 @@
                     <button type="button" ng-click="closeThisDialog('button')"
                             class="btn btn-default pull-left btn-cancel">Cancel
                     </button>
-                    <button type="submit" class="btn btn-primary pull-right btn-pop">Add Card
+                    <button type="submit" class="btn btn-primary pull-right btn-pop"  ng-disabled="mCtrl.hitInProgress">Add Card
                     </button>
                 </form>
 

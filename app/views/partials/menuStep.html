@@ -1,0 +1,47 @@
+<div class="row text-center">
+    <div class="col-lg-offset-3 col-lg-6 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-xs-12">
+        <div class="" style="overflow: hidden">
+            <div class="connecting-line"></div>
+            <ul class="nav" role="tablist">
+                <li class="bookingStep col-lg-3 col-xs-3">
+                    <label>
+                        <span class="round-tab" ng-switch="bookingStep>0">
+                            <i class="fa" ng-class="{'fa-circle':mCtrl.bookingStep==1,'fa-check':mCtrl.bookingStep>0}"></i>
+                        </span>
+                    </label>
+                </li>
+                <li class="bookingStep col-lg-3 col-xs-3">
+                    <label><span class="round-tab">
+                        <i class="fa" ng-class="{'fa-circle':mCtrl.bookingStep==2,'fa-check':mCtrl.bookingStep>1,'fa-circle-thin':mCtrl.bookingStep<=1}"></i>
+                    </span></label>
+                </li>
+                <li class="bookingStep col-lg-3 col-xs-3">
+                    <label><span class="round-tab">
+                        <i class="fa" ng-class="{'fa-circle':mCtrl.bookingStep==3,'fa-check':mCtrl.bookingStep>2,'fa-circle-thin':mCtrl.bookingStep<=2}"></i>
+                    </span></label>
+                </li>
+                <li class="bookingStep col-lg-3 col-xs-3">
+                    <label><span class="round-tab">
+                        <i class="fa" ng-class="{'fa-circle':mCtrl.bookingStep==4,'fa-check':mCtrl.bookingStep>3,'fa-circle-thin':mCtrl.bookingStep<=3}"></i>
+                    </span></label>
+                </li>
+            </ul>
+
+        </div>
+        <div class="" style="display:flex">
+            <div class="bookingStep col-lg-3 col-xs-3">
+                <label class="bookingStepText">Services</label>
+            </div>
+            <div class="disabled bookingStep col-lg-3 col-xs-3">
+                <label class="bookingStepText">Booking Time</label>
+            </div>
+            <div class="disabled bookingStep col-lg-3 col-xs-3">
+                <label class="bookingStepText">Your Details</label>
+            </div>
+            <div class="disabled bookingStep col-lg-3 col-xs-3">
+                <label class="bookingStepText">Payment</label>
+            </div>
+            </ul>
+        </div>
+    </div>
+</div>
