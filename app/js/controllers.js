@@ -512,6 +512,7 @@
             vm.code='+44';
             vm.codes=['+44','+91'];
             vm.personal={};
+
             if(localStorage.getItem('addressComponents')!=null){
                 vm.locationObj = JSON.parse(localStorage.getItem('addressComponents'));
                 vm.address = vm.locationObj;
@@ -550,6 +551,7 @@
 
             }
             else vm.savedAddress='';
+
             vm.addressSelect = function (c) {
                 console.log(c);
                 $rootScope.address_id = $rootScope.userAddress[c].address_id;
@@ -794,10 +796,10 @@
                                     localStorage.setItem("address_id",$rootScope.address_id);
                                     ngDialog.close();
                                     if(vm.addAddressPopMode==1)$state.reload();
-                                    if(vm.addAddressPopMode==0)$state.go('app.payment');
+                                    if(vm.addAddressPopMode==0)vm.saveProfileData();
 
                                 }
-                                else $state.go('app.payment');
+                                else vm.saveProfileData()
                             }
                         })
                     });
@@ -996,10 +998,22 @@
                 }
 
                 localStorage.setItem("address_id",$rootScope.address_id);
-                $state.go('app.payment');
+                vm.saveProfileData();
             };
             vm.chooseCode = function (c) {
                 vm.code=c;
+            };
+            vm.saveProfileData = function () {
+                $.post(api.url + "edit_user_profile", {
+                    "access_token": localStorage.getItem('portalToken'),
+                    "user_mobile": vm.code + '-' + vm.personal.phone.replace(/[^0-9]/g, ""),
+                    "user_email": vm.personal.email,
+                    "user_name": vm.personal.fullName
+                })
+                    .success(function (data,status) {
+                        if (data.user_profile) localStorage.setItem('userProfile', JSON.stringify(data.user_profile));
+                        $state.go("app.payment");
+                    });
             }
         }
     }

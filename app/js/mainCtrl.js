@@ -218,7 +218,21 @@
         };
 
       vm.signInFn = function (i) {
+          if(i==2){
+              if(!vm.login.fullName){
+                  toaster.pop("error","Enter a valid name","");
+                  return false;
+              }
+              if(!vm.login.email){
+                  toaster.pop("error","Enter a valid email","");
+                  return false;
+              }
+          }
           var mob = vm.login.phone.replace(/[^0-9]/g, "");
+          if(!mob){
+              toaster.pop("error","Enter a valid mobile","");
+              return false;
+          }
           cfpLoadingBar.start();
           $.post(api.url + "send_otp", {
               user_mobile: vm.code + '-' + mob,
@@ -263,14 +277,17 @@
                           }, 30000);
 
                           if(i==2){
+                              vm.signInMode=1;
                               localStorage.setItem("personalData",JSON.stringify(vm.login));
                           }
+                          else vm.signInMode=0;
                           ngDialog.close();
                           vm.ngDialogPop("otp_modal",'biggerPop');
                       }
                   });
               })
       };
+
         vm.verifyOTPLogin = function (i) {
             cfpLoadingBar.start();
             vm.OTP_formatted = '';
@@ -310,8 +327,19 @@
                             }
                             // localStorage.setItem("categories",JSON.stringify(data.categories));
                             localStorage.setItem('loggedIn',1);
-                            if(i){$state.reload();}
-                            else $state.go("app.location");
+                            // if(i){$state.reload();}
+                            if(vm.signInMode==1){
+                                $.post(api.url + "edit_user_profile", {
+                                    "access_token": localStorage.getItem('portalToken'),
+                                    "user_mobile": vm.code + '-' + vm.login.phone.replace(/[^0-9]/g, ""),
+                                    "user_email": vm.login.email,
+                                    "user_name": vm.login.fullName
+                                })
+                                .success(function (data,status) {
+                                    if (data.user_profile) localStorage.setItem('userProfile', JSON.stringify(data.user_profile));
+                                    $state.go("app.location");
+                                });
+                            }
                         }
                     })
                 })

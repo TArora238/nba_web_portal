@@ -70,7 +70,34 @@
                                 </form>
                             </uib-tab>
                             <uib-tab heading="Sign Up">
-
+                                <form name="mCtrl.signUpForm" ng-submit="mCtrl.signUpForm.$submitted&&mCtrl.signInFn(2)">
+                                    <div class="form-group">
+                                        <label>Full Name</label>
+                                        <input name="fullName" minlength="2" class="form-control" ng-model="mCtrl.login.fullName" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input name="email" class="form-control" ng-pattern="mCtrl.emailPattern" required ng-model="mCtrl.login.email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Enter your phone number to continue</label>
+                                        <div class="input-group">
+                                            <div class="input-group-btn dropdown" uib-dropdown="" style="">
+                                                <button class="btn btn-default dropdown-toggle" type="button" uib-dropdown-toggle=""
+                                                        aria-haspopup="true" aria-expanded="false">{{mCtrl.code}}
+                                                    <span class="caret"></span></button>
+                                                <ul class="dropdown-menu">
+                                                    <li ng-repeat="code in mCtrl.codes">
+                                                        <a ng-click="mCtrl.chooseCode(code)">{{code}}</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <input class="form-control" type="text" ng-model="mCtrl.login.phone" maxlength=15 minlength=9
+                                                   onkeypress="return isNumberKey(event)" masked="" data-inputmask="'mask': '(999) 999-9999'">
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btnDefault w-100">Continue</button>
+                                </form>
                             </uib-tab>
                         </uib-tabset>
                         <div class="termsLink col-lg-12 text-center"><a class="w-100 text-center">By continuing, you agree to <span style="color: #ee7670">Terms & Conditions</span></a></div>
