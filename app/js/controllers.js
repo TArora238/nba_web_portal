@@ -47,6 +47,105 @@
 })();
 
 
+/**=========================================================
+ * Module: Terms
+ =========================================================*/
+
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.customers')
+        .controller('TermsController', TermsController);
+
+    TermsController.$inject = ['$http', '$state', '$rootScope', 'toaster', '$scope', 'cfpLoadingBar', 'api', '$timeout'];
+
+    function TermsController($http, $state, $rootScope, toaster, $scope, cfpLoadingBar, api, $timeout) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+            var user = localStorage.getItem("user");
+            localStorage.clear();
+            localStorage.setItem("user",user);
+            localStorage.setItem("loggedIn",0);
+        }
+    }
+})();
+
+
+/**=========================================================
+ * Module: FAQs
+ =========================================================*/
+
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.customers')
+        .controller('FAQController', FAQController);
+
+    FAQController.$inject = ['$http', '$state', '$rootScope', 'toaster', '$scope', 'cfpLoadingBar', 'api', '$timeout'];
+
+    function FAQController($http, $state, $rootScope, toaster, $scope, cfpLoadingBar, api, $timeout) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+            var user = localStorage.getItem("user");
+            localStorage.clear();
+            localStorage.setItem("user",user);
+            localStorage.setItem("loggedIn",0);
+        }
+    }
+})();
+
+
+/**=========================================================
+ * Module: Support
+ =========================================================*/
+
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.customers')
+        .controller('SupportController', SupportController);
+
+    SupportController.$inject = ['$http', '$state', '$rootScope', 'toaster', '$scope', 'cfpLoadingBar', 'api', '$timeout'];
+
+    function SupportController($http, $state, $rootScope, toaster, $scope, cfpLoadingBar, api, $timeout) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+            var user = localStorage.getItem("user");
+            localStorage.clear();
+            localStorage.setItem("user",user);
+            localStorage.setItem("loggedIn",0);
+        }
+    }
+})();
+
+
 
 /**=========================================================
  * Module: Location

@@ -121,6 +121,24 @@
               resolve: helper.resolveFor('modernizr', 'icons','loaders.css','inputmask', 'ngDialog', 'spinkit'),
               templateUrl: 'app/pages/home.html'
           })
+          .state('faq', {
+              url: '/faq',
+              title: 'FAQ',
+              resolve: helper.resolveFor('modernizr', 'icons','loaders.css','inputmask', 'ngDialog', 'spinkit'),
+              templateUrl: 'app/pages/faq.html'
+          })
+          .state('terms', {
+              url: '/terms',
+              title: 'Terms',
+              resolve: helper.resolveFor('modernizr', 'icons','loaders.css','inputmask', 'ngDialog', 'spinkit'),
+              templateUrl: 'app/pages/terms.html'
+          })
+          .state('support', {
+              url: '/support',
+              title: 'Support',
+              resolve: helper.resolveFor('modernizr', 'icons','loaders.css','inputmask', 'ngDialog', 'spinkit'),
+              templateUrl: 'app/pages/support.html'
+          })
           .state('app', {
               url: '/app',
               abstract: true,
