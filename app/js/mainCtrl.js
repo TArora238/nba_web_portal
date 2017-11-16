@@ -339,7 +339,7 @@
                                     if (data.user_profile) localStorage.setItem('userProfile', JSON.stringify(data.user_profile));
                                     $state.go("app.location");
                                 });
-                            }
+                            }else $state.go("app.location");
                         }
                     })
                 })
