@@ -683,7 +683,10 @@ label,div,h1,h2,h3,h4,h5,h6,button,a,input,p{font-family: 'segoe'!important;}
     background-repeat: no-repeat;
     background-size: contain;
 }
-
+.phone_frame ul{
+    width: 184px;
+    height: 325px;
+}
 
 
 
