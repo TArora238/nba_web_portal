@@ -10,9 +10,9 @@
     .module('app.customers')
     .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$http', '$state', '$rootScope', 'toaster', '$scope', 'cfpLoadingBar', 'api', '$timeout'];
+    HomeController.$inject = ['$http', '$state', '$rootScope', 'toaster', '$scope', 'cfpLoadingBar', 'api', '$timeout','anchorSmoothScroll'];
 
-  function HomeController($http, $state, $rootScope, toaster, $scope, cfpLoadingBar, api, $timeout) {
+  function HomeController($http, $state, $rootScope, toaster, $scope, cfpLoadingBar, api, $timeout,anchorSmoothScroll) {
     var vm = this;
 
     activate();
@@ -29,6 +29,30 @@
       }
       vm.services=[false,false,false,false,false,false];
       vm.why=[false,false,false];
+      vm.how=[true,false,false,false];
+        $scope.carouselIndex = 0;
+        $scope.$watch('carouselIndex',function(newVal){
+            console.log(newVal);
+            vm.changeSlide(newVal);
+        });
+      vm.changeSlide = function (a) {
+          $scope.carouselIndex = a;
+          vm.how=[false,false,false,false];
+          vm.how[a]=true;
+      };
+      vm.slides = [{
+          id:0,
+          img:"app/img/PNG/screen_1.jpg"
+      },{
+          id:1,
+          img:"app/img/PNG/screen_2.jpg"
+      },{
+          id:2,
+          img:"app/img/PNG/screen_1.jpg"
+      },{
+          id:3,
+          img:"app/img/PNG/screen_2.jpg"
+      }];
       vm.blog=[false,false,false];
         vm.ngDialogPop = function(template, className) {
             ngDialog.openConfirm({
@@ -38,6 +62,7 @@
             }).then(function(value) {}, function(reason) {});
 
         };
+
       var user = localStorage.getItem("user");
       localStorage.clear();
       localStorage.setItem("user",user);

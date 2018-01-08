@@ -127,6 +127,55 @@
                 </div>
             </div>
         </div>
+        <div class="row whyDiv howDiv text-center"  id="works">
+            <div class="container">
+                <h3 class="text-center">How it works </h3>
+                <h4></h4>
+                <div class="col-lg-12" style="display:flex;">
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                        <div class="col-lg-12">
+                            <ul class="sectionList text-left">
+                                <li class="sectionSlide" ng-class="{'active':home.how[0]}" >
+                                    <i class="fa fa-play"></i>
+                                    <div><h4><a ng-click="home.changeSlide(0)" class="ls-linkto-1">Lorem ipsum dolor sit amet</a></h4>
+                                        <p>Lorem ipsum dolor sit amet, in vix choro viderer invidunt. No has maiestatis mnesarchum liberavisse.</p> </div>
+                                </li>
+                                <li class="sectionSlide" ng-class="{'active':home.how[1]}" >
+                                    <i class="fa fa-play"></i>
+                                    <div><h4><a ng-click="home.changeSlide(1)" class="ls-linkto-2">Lorem ipsum dolor sit amet</a></h4>
+                                        <p>Lorem ipsum dolor sit amet, in vix choro viderer invidunt. No has maiestatis mnesarchum liberavisse.</p> </div>
+                                </li>
+                                <li class="sectionSlide" ng-class="{'active':home.how[2]}" >
+                                    <i class="fa fa-play"></i>
+                                    <div><h4><a ng-click="home.changeSlide(2)" class="ls-linkto-3">Lorem ipsum dolor sit amet</a></h4>
+                                        <p>Lorem ipsum dolor sit amet, in vix choro viderer invidunt. No has maiestatis mnesarchum liberavisse.</p> </div>
+                                </li>
+                                <li class="sectionSlide" ng-class="{'active':home.how[3]}" >
+                                    <i class="fa fa-play"></i>
+                                    <div><h4><a ng-click="home.changeSlide(3)" class="ls-linkto-4">Lorem ipsum dolor sit amet</a></h4>
+                                        <p>Lorem ipsum dolor sit amet, in vix choro viderer invidunt. No has maiestatis mnesarchum liberavisse.</p> </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <div class="row" style="height: 100%">
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-8 phone_frame">
+                                <ul style="height: 100%;" class="list-unstyled carousel1" rn-carousel=""
+                                    rn-carousel-index="carouselIndex" rn-carousel-auto-slide="1">
+                                    <li ng-repeat="slide in home.slides track by slide.id" ng-class="'id-' + slide.id">
+                                        <div class="bgimage" ng-style="{'background-image': 'url(' + slide.img + ')'}"></div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row stylistsDiv">
             <div class="container">
                 <h3 class="text-center">NowBeauty Stylists</h3>

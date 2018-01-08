@@ -118,7 +118,7 @@
           .state('home', {
               url: '/home',
               title: 'Home',
-              resolve: helper.resolveFor('modernizr', 'icons','loaders.css','inputmask', 'ngDialog', 'spinkit'),
+              resolve: helper.resolveFor('modernizr', 'icons','loaders.css','inputmask', 'ngDialog', 'spinkit','angular-carousel'),
               templateUrl: 'app/pages/home.html'
           })
           .state('faq', {

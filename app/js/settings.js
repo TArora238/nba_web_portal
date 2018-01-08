@@ -27,7 +27,7 @@
       // -----------------------------------
       $rootScope.app = {
         name: 'Now Beauty',
-        description: '',
+        description: 'Portal',
         year: ((new Date()).getFullYear()),
         layout: {
           isFixed: true,

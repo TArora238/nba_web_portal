@@ -473,7 +473,7 @@ angular.module('angular-carousel').run(['$templateCache', function($templateCach
                                     if (!locked && !pressed) {
                                         scope.nextSlide();
                                     }
-                                }, duration * 1000);
+                                }, duration * 4000);
                             };
                         }
 

@@ -559,7 +559,7 @@ label,div,h1,h2,h3,h4,h5,h6,button,a,input,p{font-family: 'segoe'!important;}
     color:#000!important;
 }
 
-.missionDiv,.serviceDiv,.stylistsDiv,.footerDiv{padding: 10vh 0;}
+.missionDiv,.serviceDiv,.stylistsDiv,.footerDiv,.howDiv{padding: 10vh 0;}
 
 .homeBG{
     background:url(../img/PNG/bg.jpg);
@@ -585,12 +585,12 @@ label,div,h1,h2,h3,h4,h5,h6,button,a,input,p{font-family: 'segoe'!important;}
     color: #000;
     line-height: 25px;
 }
-.serviceDiv h3{
+.serviceDiv h3,.howDiv h3{
     color: #000;
     font-size: 3rem;
     font-weight: bold;
 }
-.serviceDiv h4{
+.serviceDiv h4,.howDiv>.container>h4{
     color: #909090;
     text-align: center;
     margin: 5vh auto 10vh;
@@ -644,6 +644,51 @@ label,div,h1,h2,h3,h4,h5,h6,button,a,input,p{font-family: 'segoe'!important;}
     transform: scale(1.2);
     transition: all 0.8s ease-in-out;
 }
+.sectionList {
+    list-style: none!important;
+}
+.sectionSlide div{
+    padding-left: 7px;
+}
+.sectionSlide {
+    display: flex;
+    width: 70%;
+    float: left;
+    margin: 10px auto 20px;
+}
+.sectionSlide h4 {
+    margin-top: 0;
+}
+
+.sectionSlide h4,.sectionSlide h4 a,.sectionSlide p {
+    color: #777777;
+}
+.sectionSlide.active p {
+    color: black;
+}
+.sectionSlide i {
+    opacity: 0;
+    float:left;
+    font-size: 1.5em;
+}
+.sectionSlide.active i,.sectionSlide.active h4 a,.sectionSlide h4 a:hover {
+    opacity: 1;
+    color: #ee7670!important;
+    fill: #ee7670!important;
+}
+.phone_frame{
+    height: 425px;
+    padding: 50px 32px;
+    background: url("../img/PNG/photo_frame.png") center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+
+
+
+
+
 .stylistsDiv{
     background: url("../img/PNG/nb_stylists.jpg");
     background-color: #000;
