@@ -123,11 +123,11 @@
                             <div class="whiteHeader p-15">
                                 <h4>Booking Summary</h4>
                             </div>
-                            <div class="p-15">
-                                <h2><i class="fa fa-gbp"></i>{{details.totalPrice}}</h2>
+                            <div class="p-15" style="display: table">
+                                <h2><i class="fa fa-gbp"></i> {{details.totalPrice}}</h2>
                                 <h4>{{details.service.service_name}} - {{details.category.category_name}}</h4>
-                                <label ng-if="details.additionalServices.length>0"
-                                       ng-repeat="data in details.additionalServices">+ {{data.as_name}}</label>
+                                <label ng-if="details.additionalServices.length>0" class="col-lg-12"
+                                       ng-repeat="data in details.additionalServices">- {{data.as_name}}</label>
                             </div>
                             <div class="greyFooter p-15">
                                 <h4 class="m-t-0">{{details.bookingTime|date:'EEEE'}}</h4>

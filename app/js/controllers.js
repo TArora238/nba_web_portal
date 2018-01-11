@@ -226,6 +226,11 @@
                   if (data.is_error == 0) {
                       vm.notServing = false;
                       $timeout(function () {
+                          if(data.categories.length==0){
+                              toaster.pop("error","We don't serve in this area","");
+                              vm.notServing = true;
+                              return false;
+                          }
                           vm.categories = data.categories;
                           cfpLoadingBar.start();
                           localStorage.setItem("categories", JSON.stringify(vm.categories));
@@ -425,36 +430,61 @@
       vm.location="London,UK";
       vm.category = JSON.parse(localStorage.getItem("selectedCategory"));
       vm.choosingSubServ=1;
+      vm.additionalServices=[];
       vm.chooseService = function (d) {
           vm.service=d;
-          if(vm.service.additional_services.length==0){
+          if(vm.service.header.length==0){
+              console.log(vm.service);
               localStorage.setItem("selectedService",JSON.stringify(d));
               $state.go("app.bookingTime");
           }
           else{
               localStorage.setItem("selectedService",JSON.stringify(vm.service));
-              for (var i=0;i<vm.service.additional_services.length;i++){
-                  vm.service.additional_services[i].check=false;
+              console.log(vm.service);
+              for (var i=0;i<vm.service.header.length;i++){
+                  vm.additionalServices[i]=[];
+                  for(var j=0;j<vm.service.header[i].additional_services.length;j++){
+                      vm.service.header[i].additional_services[j].check=false;
+                  }
               }
               vm.choosingSubServ=0;
           }
       };
       localStorage.setItem("additionalServices",JSON.stringify([]));
-      vm.additionalServices=[];
-      vm.chooseAddService = function (d,c,i) {
-          console.log(d,c,i);
-          if(c){
-              if(vm.additionalServices.indexOf(i)<0)vm.additionalServices.push(i);
-          }
-          else {
-              console.log(i);
-              for(var j=0;j<vm.additionalServices.length;j++){
-                  if(vm.additionalServices[j]==i)vm.additionalServices.splice(j,1);
+
+      vm.chooseAddService = function (add_serv,check,index,can_multiple,headerIndex) {
+          console.log(add_serv,check,index,can_multiple,headerIndex);
+          if(check){
+              if(can_multiple){
+                  if(vm.additionalServices[headerIndex].indexOf(index)<0)vm.additionalServices[headerIndex].push(index);
               }
+              else{
+                  vm.additionalServices[headerIndex][0]=index;
+                  for(var j=0;j<vm.service.header[headerIndex].additional_services.length;j++){
+                      if(j!=index)vm.service.header[headerIndex].additional_services[j].check=false;
+                      else vm.service.header[headerIndex].additional_services[j].check=true;
 
-
+                  }
+                  console.log(vm.service.header[headerIndex].additional_services);
+              }
               console.log(vm.additionalServices);
           }
+          else {
+
+              console.log(index);
+              if(can_multiple){
+                  for(var j=0;j<vm.additionalServices[headerIndex].length;j++){
+                      if(vm.additionalServices[j]==index)vm.additionalServices[headerIndex].splice(j,1);
+                  }
+              }
+              else{
+                  vm.additionalServices[headerIndex]=[];
+                  for(var j=0;j<vm.service.header[headerIndex].additional_services.length;j++){
+                      vm.service.header[headerIndex].additional_services[j].check=false;
+                  }
+              }
+          }
+          console.log(vm.additionalServices);
       };
       vm.resetService = function () {
           vm.choosingSubServ=1;
@@ -463,8 +493,14 @@
       vm.continueToBookingTime = function () {
           console.log(vm.additionalServices);
           vm.addOnServices=[];
-          for(var j=0;j<vm.additionalServices.length;j++){
-              vm.addOnServices.push(vm.service.additional_services[vm.additionalServices[j]]);
+          for (var i=0;i<vm.service.header.length;i++){
+              for(var j=0;j<vm.service.header[i].additional_services.length;j++){
+                  vm.service.header[i].additional_services[j].check=false;
+              }
+          }
+          for(var i=0;i<vm.additionalServices.length;i++){
+              for(var j=0;j<vm.additionalServices[i].length;j++)
+              vm.addOnServices.push(vm.service.header[i].additional_services[vm.additionalServices[i][j]]);
           }
           localStorage.setItem("additionalServices",JSON.stringify(vm.addOnServices));
           $state.go("app.bookingTime");
@@ -515,7 +551,7 @@
                 vm.selectedDay.setMilliseconds(0);
             }
             vm.show = true;
-            vm.today = moment(new Date()).format("DD/MM/YYYY");
+            vm.today = moment(new Date()).format("MM/DD/YYYY");
             vm.totalPrice = 0;
             vm.category = JSON.parse(localStorage.getItem("selectedCategory"));
             vm.service = JSON.parse(localStorage.getItem("selectedService"));
@@ -819,6 +855,7 @@
                                 ngDialog.close();
                                 vm.otpSent = 0;
                                 if (data.access_token) localStorage.setItem('portalToken', data.access_token);
+                                if (data.user_profile.access_token) localStorage.setItem('portalToken', data.user_profile.access_token);
                                 if (data.user_address.length > 0) localStorage.setItem('userAddress', JSON.stringify(data.user_address))
                                 else localStorage.setItem('userAddress',[]);
                                 if (data.user_cards.length > 0) localStorage.setItem('userCards', JSON.stringify(data.user_cards))
@@ -951,6 +988,12 @@
                         if (data.is_error == 0) {
                             vm.notServing = false;
                             $timeout(function () {
+                                if(data.categories.length==0){
+                                    toaster.pop("error","We don't serve in this area","");
+                                    vm.notServing = true;
+                                    vm.locationSelected = false;
+                                    return false;
+                                }
                                 vm.locationSelected = true;
                                 vm.locationObj = JSON.parse(localStorage.getItem('addressComponents'));
                                 vm.address = vm.locationObj;
@@ -1351,8 +1394,16 @@
                         console.log(data);
                         cfpLoadingBar.complete();
                         if (data.is_error == 0) {
+
                             vm.notServing = false;
+
                             $timeout(function () {
+                                if(data.categories.length==0){
+                                    toaster.pop("error","We don't serve in this area","");
+                                    vm.notServing = true;
+                                    vm.locationSelected = false;
+                                    return false;
+                                }
                                 vm.area_id = data.area_info.area_id;
                                 vm.bookArtist();
                             });
@@ -1365,19 +1416,62 @@
 
                     })
                 }
+            };
+            vm.promo = '';
+            vm.specialInst = '';
+            vm.coupon =  '';
+            vm.removePromo = function () {
+                vm.promo = '';
+                vm.coupon = '';
+                vm.totalPrice = vm.originalTotalPrice;
+            };
+            vm.checkPromo = function () {
+                if(!vm.promo){
+                    toaster.pop("error","Enter a promo code","");
+                    return false;
+                }
+                $scope.mCtrl.hitInProgress = true;
+                vm.coupon =  '';
+                $.post(api.url + "check_code", {
+                    access_token:localStorage.getItem('portalToken'),
+                    coupon:vm.promo
+                })
+                    .success(function(data, status) {
+                        if (typeof data === 'string')
+                            var data = JSON.parse(data);
+                        console.log(data);
+                        $scope.mCtrl.hitInProgress = false;
+                        $timeout(function() {
+                            if (data.is_error == 0) {
+                                vm.promoResponse = 'Promo code "'+vm.promo+'" applied successfully';
+                                console.log(data);
+                                vm.coupon = vm.promo;
+                                vm.promo_value = data.promo_value;
+                                vm.promo_type = data.promo_type;
+                                vm.originalTotalPrice = vm.totalPrice;
+                                if(vm.promo_type == 1 ) vm.totalPrice -= vm.promo_value;
+                                if(vm.promo_type == 2 ) vm.totalPrice -= (vm.promo_value/100)*vm.totalPrice;
 
-
-                
+                            }
+                            else {
+                                toaster.pop("error","Invalid Code","");
+                                vm.coupon='';
+                            }
+                        });
+                    });
             };
             vm.bookArtist = function () {
                 $scope.mCtrl.hitInProgress = true;
                 cfpLoadingBar.start();
                 var bookTime = moment(vm.bookingTime).format("YYYY-MM-DD HH:MM");
                 var as_ids = '';
+                console.log(vm.additionalServices);
                 for(var i=0;i<vm.additionalServices.length;i++ ){
                     as_ids+=vm.additionalServices[i].as_id;
                     if(i<vm.additionalServices.length-1)as_ids+=',';
                 }
+                console.log(as_ids);
+                // return false;
                 vm.personal = JSON.parse(localStorage.getItem("personalData"));
                 console.log($rootScope.userProfile.user_email);
                 console.log(vm.personal);
@@ -1393,9 +1487,9 @@
                     "start_time":bookTime,
                     "area_id":vm.area_id
                 };
-                if(as_ids){
-                    data.as_id=as_ids;
-                }
+                if(vm.specialInst){data.additional_comment = vm.specialInst}
+                if(vm.coupon){data.coupon = vm.coupon}
+                if(as_ids){ data.as_id=as_ids;}
                 $.post(api.url + "book_artist", data)
                     .success(function(data, status) {
                         if (typeof data === 'string')
@@ -1408,6 +1502,10 @@
                             $scope.mCtrl.flagPopUps(data.flag, data.is_error);
                             if (data.is_error == 0) {
                                 $state.go("app.thanks");
+                            }
+                            else{
+                                toaster.pop("error",data.err,'');
+                                return false;
                             }
                         });
                     });

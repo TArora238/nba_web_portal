@@ -367,6 +367,7 @@
                             ngDialog.close();
                             vm.otpSent = 0;
                             if (data.access_token) localStorage.setItem('portalToken', data.access_token);
+                            if (data.user_profile.access_token) localStorage.setItem('portalToken', data.user_profile.access_token);
                             if (data.user_address.length > 0) localStorage.setItem('userAddress', JSON.stringify(data.user_address))
                             else localStorage.setItem('userAddress',[]);
                             if (data.user_cards.length > 0) localStorage.setItem('userCards', JSON.stringify(data.user_cards))

@@ -1,6 +1,5 @@
 <div class="subServiceDiv" ng-controller="SubServiceController as subServ">
     <div class="animated fadeIn">
-
         <div class="navBar col-md-12 col-xs-12 col-sm-12 col-lg-12">
             <div class="navLink" style="display: flex;height: 100%;vertical-align: middle;align-items: center;">
                 <a ui-sref="app.categories" style="display: flex"><i class="fa fa-caret-left fa-2x" style="color: #ee7670"></i>
@@ -32,14 +31,19 @@
                                 <a ng-click="subServ.resetService()" class="col-lg-1 col-md-1 col-sm-1 col-xs-1 pull-right p-0"><i class="fa fa-times"></i></a>
                             </div>
                             <div class="col-lg-12 col-xs-12 p-15" style="border-bottom: 1px solid #dddddd ">
-                                <div class="col-lg-12 col-xs-12" ng-repeat="data in subServ.service.additional_services">
-                                    <div class="checkbox c-checkbox needsclick text-left">
-                                        <label>
-                                            <input type="checkbox" value="" ng-model="data.check" ng-click="subServ.chooseAddService(data,data.check,$index)" />
-                                            <span class="fa fa-check"></span>{{data.as_name}}
-                                        </label>
-                                        <button class="btn btn-xs pull-right" style="background: black;color: white">+ <i class="fa fa-gbp"></i>{{data.as_price}}</button>
+                                <div class="col-lg-12 col-xs-12" ng-repeat="header in subServ.service.header">
+                                    <label class="p-0 text-left col-lg-4 col-md-4 col-sm-4 col-xs-6">{{header.heading}}</label>
+                                    <div class="clearfix"></div>
+                                    <div ng-repeat="add in header.additional_services">
+                                        <div class="checkbox c-checkbox needsclick text-left">
+                                            <label>
+                                                <input type="checkbox" value="" ng-model="add.check" ng-click="subServ.chooseAddService(add,add.check,$index,header.can_select_multiple,$parent.$index)" />
+                                                <span class="fa fa-check"></span>{{add.as_name}}
+                                            </label>
+                                            <button class="btn btn-xs pull-right" style="background: black;color: white">+ <i class="fa fa-gbp"></i>{{add.as_price}}</button>
+                                        </div>
                                     </div>
+
                                 </div>
                             </div>
                             <div class="col-lg-12 col-xs-12 p-15 text-center">
