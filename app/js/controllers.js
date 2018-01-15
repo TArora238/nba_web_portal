@@ -1,6 +1,5 @@
 /**=========================================================
- * Module: access-login.js
- * Demo for login api
+ * Module: Home Controller
  =========================================================*/
 
 (function() {
@@ -71,6 +70,40 @@
   }
 })();
 
+
+
+
+/**=========================================================
+ * Module: About Us
+ =========================================================*/
+
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.customers')
+        .controller('AboutController', AboutController);
+
+    AboutController.$inject = ['$http', '$state', '$rootScope', 'toaster', '$scope', 'cfpLoadingBar', 'api', '$timeout'];
+
+    function AboutController($http, $state, $rootScope, toaster, $scope, cfpLoadingBar, api, $timeout) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+            var user = localStorage.getItem("user");
+            localStorage.clear();
+            localStorage.setItem("user",user);
+            localStorage.setItem("loggedIn",0);
+        }
+    }
+})();
 
 /**=========================================================
  * Module: Terms
@@ -569,7 +602,7 @@
             vm.hours=[];
             vm.minutes=['00','30'];
             vm.periods=['AM','PM'];
-            for(var i=0;i<24;i++){
+            for(var i=7;i<22;i++){
                 if(i<10)vm.hours[i]='0'+i;
                 else vm.hours[i]=i;
             }

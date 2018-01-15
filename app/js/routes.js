@@ -121,6 +121,12 @@
               resolve: helper.resolveFor('modernizr', 'icons','loaders.css','inputmask', 'ngDialog', 'spinkit','angular-carousel'),
               templateUrl: 'app/pages/home.html'
           })
+          .state('about', {
+              url: '/about',
+              title: 'About Us',
+              resolve: helper.resolveFor('modernizr', 'icons','loaders.css','inputmask', 'ngDialog', 'spinkit','angular-carousel'),
+              templateUrl: 'app/pages/aboutUs.html'
+          })
           .state('faq', {
               url: '/faq',
               title: 'FAQ',

@@ -562,7 +562,8 @@ label,div,h1,h2,h3,h4,h5,h6,button,a,input,p{font-family: 'segoe'!important;}
 .missionDiv,.serviceDiv,.stylistsDiv,.footerDiv,.howDiv{padding: 10vh 0;}
 
 .homeBG{
-    background:url(../img/PNG/bg.jpg);
+    background:url(../img/PNG/homeBG.jpg);
+    background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
@@ -575,14 +576,14 @@ label,div,h1,h2,h3,h4,h5,h6,button,a,input,p{font-family: 'segoe'!important;}
     font-size: 4rem;
     font-weight: bold;
     text-align: right;
-    color: #000;
+    color: #ee7670;
 }
 .homeBG p{
     margin-top: 20px;
-    opacity: 0.5;
+    opacity: 0.8;
     font-size: 20px;
     text-align: right;
-    color: #000;
+    color: #fff;
     line-height: 25px;
 }
 .serviceDiv h3,.howDiv h3{
@@ -732,10 +733,29 @@ label,div,h1,h2,h3,h4,h5,h6,button,a,input,p{font-family: 'segoe'!important;}
     width: 30px;
 }
 .signInImage{
-    background: url("../img/PNG/login_bg.jpg");
+    background: url("../img/PNG/signInUp.JPG");
     background-repeat: no-repeat;
     background-size: cover;
-    height: 200px;
+    height: 300px;
+    background-position-y: 50%;
+}
+
+.aboutBG{
+    background:url(../img/PNG/bg.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 60vh;
+    /*padding-top: 200px;*/
+    background-position-x: 60%;
+    display: flex;
+    align-items: center;
+}
+.aboutBG h2{
+    font-size: 4rem;
+    font-weight: bold;
+    text-align: right;
+    color: #ee7670;
 }
 
 /*******************************************************/

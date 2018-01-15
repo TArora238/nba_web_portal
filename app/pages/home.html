@@ -10,7 +10,9 @@
                     <div class="col-sm-8 col-md-6 col-lg-6 text-right pull-right" style="max-width: 450px;">
                         <h2>Redefining Beauty by<br>embracing diversity</h2>
                         <div style="clear:both"></div>
-                        <p>Look your best 24/7. Natural hair & make-up services delivered to you by expert stylists.</p>
+                        <p>Look your best effortlessly.
+                            <br>From Braids to Blow-dries to Make-up,
+                            find and book an expert stylist to your door!</p>
                         <button class="btn btnDefault m-t-20" ui-sref="app.location">Book an Appointment</button>
                     </div>
                 </div>
@@ -40,7 +42,7 @@
                              ng-mouseover="home.services[0]=true" ng-mouseleave="home.services[0]=false">
                             <img src="app/img/PNG/twists_out.jpg">
                             <div class="serviceLabelText" ng-class="{'activeService':home.services[0]}">
-                                <label class="text-center w-100">Twists Out</label>
+                                <label class="text-center w-100">Plaits</label>
                             </div>
                         </div>
                     </div>
@@ -49,7 +51,7 @@
                              ng-mouseover="home.services[1]=true" ng-mouseleave="home.services[1]=false">
                             <img src="app/img/PNG/braids.jpg">
                             <div class="serviceLabelText" ng-class="{'activeService':home.services[1]}">
-                                <label class="text-center w-100">Braids</label>
+                                <label class="text-center w-100">Make Up</label>
                             </div>
                         </div>
                     </div>
@@ -57,7 +59,7 @@
                         <div class="col-lg-12" ng-mouseover="home.services[2]=true" ng-mouseleave="home.services[2]=false">
                             <img src="app/img/PNG/cochet.jpg">
                             <div class="serviceLabelText" ng-class="{'activeService':home.services[2]}">
-                                <label class="text-center w-100">Cochet</label>
+                                <label class="text-center w-100">Natural Hair</label>
                             </div>
                         </div>
                     </div>
@@ -65,7 +67,7 @@
                         <div class="col-lg-12" ng-mouseover="home.services[3]=true" ng-mouseleave="home.services[3]=false">
                             <img src="app/img/PNG/make_up.jpg">
                             <div class="serviceLabelText" ng-class="{'activeService':home.services[3]}">
-                                <label class="text-center w-100">Make Up</label>
+                                <label class="text-center w-100">Weaves</label>
                             </div>
                         </div>
                     </div>
@@ -81,11 +83,10 @@
                         <div class="col-lg-12" ng-mouseover="home.services[5]=true" ng-mouseleave="home.services[5]=false">
                             <img src="app/img/PNG/weaves.jpg">
                             <div class="serviceLabelText" ng-class="{'activeService':home.services[5]}">
-                                <label class="text-center w-100">Weaves</label>
+                                <label class="text-center w-100">Braids</label>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -221,30 +222,8 @@
                 </div>
             </div>
         </div>
-        <div class="row footerDiv">
-            <div class="container text-center">
-                <img src="app/img/SVG/logo_white.svg">
-                <hr>
-                <div class="col-lg-12 p-0">
-                    <div class=" col-md-4 col-sm-4 col-xs-12 col-lg-4 p-0">
-                        <label class="col-xs-12">Email: info@nowbeauty.com</label>
-                        <label class="col-xs-12">Phone: (123) 334-2290</label>
-                    </div>
-                    <div class="col-md-4 col-sm-4 col-xs-12 col-lg-4 p-0">
-                        <a class="socialLinks"><img src="app/img/PNG/social/facebook.png"></a>
-                        <a class="socialLinks"><img src="app/img/PNG/social/insta.png"></a>
-                        <a class="socialLinks"><img src="app/img/PNG/social/pint.png"></a>
-                        <a class="socialLinks"><img src="app/img/PNG/social/twitter.png"></a>
-                        <a class="socialLinks"><img src="app/img/PNG/social/linked.png"></a>
-                    </div>
-                    <div class="col-md-4 col-sm-4 col-xs-12 col-lg-4 p-0">
-                        <a class="col-lg-3 col-xs-4 text-left">FAQs</a>
-                        <a class="col-lg-5 col-xs-8 text-right">Terms & Conditions</a>
-                        <a class="col-lg-4 col-xs-6 pull-right text-right">Privacy Policy</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <footer ng-include="'app/views/partials/footer.html'"></footer>
+
     </section>
 
 </div>
