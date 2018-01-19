@@ -1,0 +1,81 @@
+<div class="joinUsDiv" ng-controller="ArtistController as artist">
+    <div class="animated fadeIn">
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+            <div class="container">
+                <div class="row locationMob" style="padding: 30px">
+                    <div class="panel col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center pull-right p-20">
+                        <h3>Sign Up to continue</h3>
+                        <form enctype="multipart/form-data" name="artist.profileData" ng-submit="artist.profileData.$submitted&&artist.addArtistFn()">
+                            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <label>Name</label>
+                                <input name="artist.userName" maxlength=25 type="text" ng-model="artist.profile.artist_name"  class="form-control" required/>
+                            </div>
+                            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <label>Phone Number</label>
+                                <div class="input-group">
+                                    <div class="input-group-btn dropdown" uib-dropdown="" style="">
+                                        <button class="btn btn-default dropdown-toggle" type="button" uib-dropdown-toggle=""
+                                                aria-haspopup="true" aria-expanded="false">{{mCtrl.code}}
+                                            <span class="caret"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li ng-repeat="code in mCtrl.codes">
+                                                <a ng-click="mCtrl.chooseCode(code)">{{code}}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <input type="text" maxlength=15 minlength=9 onkeypress="return isNumberKey(event)" masked="" data-inputmask="'mask': '(999) 999-9999'"
+                                           ng-model="artist.profile.artist_mobile" class="form-control" required name="artist.userPhone" />
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <label>Email</label>
+                                <input name="artist.userEmail" type="email" ng-model="artist.profile.artist_email" ng-pattern="emailPattern"  class="form-control" required/>
+                            </div>
+                            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <label>Profile Picture</label>
+                                <div class="clearfix"></div>
+                                <a  style="margin-top:0px;margin-right:0px;font-size:0;opacity: 1">
+                                    <img style="width: 200px" id="proPic" ng-src="{{artist.myCroppedImage}}" class="img-circle">
+                                </a>
+                                <input type="file" style="visibility: hidden;" class="upload fileUpload" name="profilePic" onchange="angular.element(this).scope().fileUpload(this.files)" id="fileInput"
+                                       data-button-text="Single" uploader="uploader" accept="image/*" />
+                                <!--<div class="clearfix"></div>-->
+                                <label class="col-lg-12">{{artist.profile.fileName}}</label>
+                                <a class="btn btn-default" style="background: #ee7670" ng-click="artist.uploadFile()">Upload Profile Picture</a>
+                            </div>
+                            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <label>Experience (Years)</label>
+                                <select ng-model="artist.profile.experience_type" class="form-control" ng-change="artist.experienceSelect(artist.profile.experience_type);" style="height:40px;">
+                                    <option value="">Select your experience</option>
+                                    <option ng-value="experience_type.experience_id" ng-repeat="experience_type in mCtrl.experience_types" ng-selected="{{$index==0}}">{{experience_type.experience}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label class="col-lg-12 col-xs-12 p-0">Skills</label>
+                                <div class="checkbox c-checkbox col-lg-6 col-xs-12" ng-repeat="skill in mCtrl.skills" >
+                                    <label class="needsclick">
+                                        <input class="needsclick" type="checkbox" name="checkbox" ng-click="artist.toggleMultiple(skill.skill_id);"  ng-model="checkbox" ng-checked="artist.exists(skill.skill_id)" />
+                                        <span class="fa fa-check"></span>{{skill.skill}}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label>About the artist</label>
+                                <textarea name="artist.userEmail" ng-model="artist.profile.artist_about"  class="form-control form-textarea" required></textarea>
+                            </div>
+                            <button type="button" ng-click="closeThisDialog('button')"
+                                    class="btn btn-default pull-left btn-cancel">Cancel
+                            </button>
+                            <button type="submit" class="btn btn-primary pull-right btn-pop" style="text-transform:capitalize">Add
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

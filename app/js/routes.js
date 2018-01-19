@@ -152,12 +152,31 @@
               resolve: helper.resolveFor( 'modernizr','inputmask', 'ngDialog', 'icons',  'animo',  'toaster', 'loaders.css', 'spinkit','easypiechart')
               // 'fastclick','screenfull','sparklines', 'slimscroll', 'easypiechart','whirl',
           })
+            .state('app.signIn', {
+                url: '/signIn',
+                title: 'Sign In',
+                templateUrl: 'app/views/signIn.html',
+                resolve:helper.resolveFor('icons')
+            })
+            .state('app.signUp', {
+                url: '/signUp',
+                title: 'Sign Up',
+                templateUrl: 'app/views/signUp.html',
+                resolve:helper.resolveFor('icons')
+            })
+            .state('app.joinUs', {
+                url: '/joinUs',
+                title: 'Join Us',
+                templateUrl: 'app/views/joinUs.html',
+                resolve:helper.resolveFor('icons','ngImgCrop')
+            })
             .state('app.location', {
                 url: '/location',
                 title: 'Location',
                 templateUrl: 'app/views/location.html',
                 resolve:helper.resolveFor('icons')
             })
+
             .state('app.categories', {
                 url: '/categories',
                 title: 'Categories',

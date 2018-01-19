@@ -778,6 +778,24 @@ li.bookingStep label{
 .bookingStep .fa-circle{
     color: #ee7670;
 }
+.signInDiv{
+    background: url("../img/PNG/signInUp.JPG") left;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #000;
+    background-position-x: 60%;
+    height: calc(100vh - 70px);
+    display: flex;
+    align-items: center;
+}
+.joinUsDiv{
+    background: url("../img/PNG/signInUp.JPG") left;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #000;
+    background-position-x: 60%;
+    height: calc(100vh - 70px);
+}
 .locationDiv{
     background: url("../img/PNG/location_bg.jpg");
     background-repeat: no-repeat;
@@ -799,8 +817,9 @@ li.bookingStep label{
     width:14px;
     margin-right: 10px;
 }
-.locationDiv h3{color: #000;font-weight: bold}
+.signInDiv h3,.locationDiv h3,.joinUsDiv h3{color: #000;font-weight: bold}
 .locationDiv label{color: #909090;font-size: 16px;margin: 2vh auto 3vh;line-height: 18px;}
+.signInDiv label,.joinUsDiv label{color: #909090;font-size: 16px;margin: 1.5vh auto 1vh;line-height: 18px;width: 100%;text-align: left}
 .input-group-addon{
     background-color: white;
     border-right: none;

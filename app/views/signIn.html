@@ -1,0 +1,36 @@
+<div class="signInDiv" ng-controller="LoginController as log">
+    <div class="animated fadeIn">
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+            <div class="container">
+                <div class="row locationMob">
+                    <div class="panel col-xs-12 col-sm-8 col-md-6 col-lg-6 text-center pull-right p-20"
+                         style="max-width: 450px;">
+                        <h3>Sign In to continue</h3>
+                        <form name="mCtrl.signInForm" ng-submit="mCtrl.signInForm.$submitted&&mCtrl.signInFn()">
+                            <div class="form-group">
+                                <label class="text-left">Phone number</label>
+                                <div class="input-group">
+                                    <div class="input-group-btn dropdown" uib-dropdown="" style="">
+                                        <button class="btn btn-default dropdown-toggle" type="button" uib-dropdown-toggle=""
+                                                aria-haspopup="true" aria-expanded="false">{{mCtrl.code}}
+                                            <span class="caret"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li ng-repeat="code in mCtrl.codes">
+                                                <a ng-click="mCtrl.chooseCode(code)">{{code}}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <input class="form-control" type="text" ng-model="mCtrl.login.phone" maxlength=15 minlength=9
+                                           onkeypress="return isNumberKey(event)" masked="" data-inputmask="'mask': '(999) 999-9999'">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btnDefault w-100">Continue</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

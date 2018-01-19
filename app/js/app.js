@@ -652,10 +652,13 @@
           // console.log(a[1]);
           var a = a[1];
           // console.log(a);
-          if(a=='pfPatients'||a=='pfPatientProfile'||a=='pfContractDetails'||a=='pfFinanceInfo'||a=='choosePFPlan'||a=='pfAddPatient'||a=='pfNewPatient'||a=='pfAddedPatient'||a=='pfPatientPayment'||a=='pfPatientContract'){
-            $rootScope.pfTab = 1;
+          if(a=='signIn'||a=='signUp'){
+
+            $rootScope.signInUp = 1;
+            if(a=='signIn')$rootScope.signUp=0;
+            if(a=='signUp')$rootScope.signUp=1;
           }
-          else {$rootScope.pfTab = 0;}
+          else {$rootScope.signInUp = 0;}
         }
         // Uncomment this to disable template cache
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
@@ -705,6 +708,15 @@
                 $rootScope.currentState();
                 // Save the route title
                 $rootScope.currTitle = $state.current.title;
+                console.log(toState);
+                var a = toState.name;
+                if(a=='app.signIn'||a=='app.signUp'){
+
+                    $rootScope.signInUp = 1;
+                    if(a=='app.signIn')$rootScope.signUp=0;
+                    if(a=='app.signUp')$rootScope.signUp=1;
+                }
+                else {$rootScope.signInUp = 0;}
             });
 
         // Load a title dynamically

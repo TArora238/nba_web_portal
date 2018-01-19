@@ -1,0 +1,44 @@
+<div class="signInDiv" ng-controller="LoginController as signUp">
+    <div class="animated fadeIn">
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+            <div class="container">
+                <div class="row locationMob">
+                    <div class="panel col-xs-12 col-sm-8 col-md-6 col-lg-6 text-center pull-right p-20"
+                         style="max-width: 450px;">
+                        <h3>Sign Up to continue</h3>
+                        <form name="mCtrl.signUpForm" ng-submit="mCtrl.signUpForm.$submitted&&mCtrl.signInFn(2)">
+                            <div class="form-group">
+                                <label class="text-left">Full Name</label>
+                                <input name="fullName" minlength="2" class="form-control" ng-model="mCtrl.login.fullName" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="text-left">Email</label>
+                                <input name="email" class="form-control" ng-pattern="mCtrl.emailPattern" required ng-model="mCtrl.login.email">
+                            </div>
+                            <div class="form-group">
+                                <label class="text-left">Phone Number</label>
+                                <div class="input-group">
+                                    <div class="input-group-btn dropdown" uib-dropdown="" style="">
+                                        <button class="btn btn-default dropdown-toggle" type="button" uib-dropdown-toggle=""
+                                                aria-haspopup="true" aria-expanded="false">{{mCtrl.code}}
+                                            <span class="caret"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li ng-repeat="code in mCtrl.codes">
+                                                <a ng-click="mCtrl.chooseCode(code)">{{code}}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <input class="form-control" type="text" ng-model="mCtrl.login.phone" maxlength=15 minlength=9
+                                           onkeypress="return isNumberKey(event)" masked="" data-inputmask="'mask': '(999) 999-9999'">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btnDefault w-100">Continue</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

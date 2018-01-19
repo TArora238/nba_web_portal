@@ -205,6 +205,225 @@
 
 
 
+
+/**=========================================================
+ * Module: Login Controller
+ =========================================================*/
+
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.customers')
+        .controller('LoginController', LoginController);
+
+    LoginController.$inject = ['$http', '$state', '$rootScope', 'toaster', '$scope', 'cfpLoadingBar', 'api', '$timeout'];
+
+    function LoginController($http, $state, $rootScope, toaster, $scope, cfpLoadingBar, api, $timeout) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+            var user = localStorage.getItem("user");
+            localStorage.clear();
+            localStorage.setItem("user",user);
+            localStorage.setItem("loggedIn",0);
+
+        }
+    }
+})();
+
+
+/**=========================================================
+ * Module: Artist Sign Up Controller
+ =========================================================*/
+
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.customers')
+        .controller('ArtistController', ArtistController);
+
+    ArtistController.$inject = ['$http', '$state', '$rootScope', 'toaster', '$scope', 'cfpLoadingBar', 'api', '$timeout'];
+
+    function ArtistController($http, $state, $rootScope, toaster, $scope, cfpLoadingBar, api, $timeout) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+            var user = localStorage.getItem("user");
+            localStorage.clear();
+            localStorage.setItem("user",user);
+            localStorage.setItem("loggedIn",0);
+            $.get( "http://54.218.55.240:3002/register_data")
+            .success(function(data, status) {
+                cfpLoadingBar.complete();
+                if (typeof data === 'string') data = JSON.parse(data);
+                console.log(data);
+                $timeout(function () {
+                    vm.document_types = data.document_types;
+                    vm.experience_types = data.experience_types;
+                    vm.skills = data.skills;
+                    console.log(data)
+                })
+            });
+            vm.profile = {};
+            vm.selected = [];
+            vm.toggleMultiple = function (item) {
+                var idx = vm.selected.indexOf(item);
+                if (idx > -1) {
+                    vm.selected.splice(idx, 1);
+                } else {
+                    vm.selected.push(item);
+                }
+                // console.log(vm.selected);
+            };
+            vm.exists = function (item) {
+                // console.log(item);
+                // console.log(vm.selected.indexOf(parseInt(item)) > -1);
+                return vm.selected.indexOf(parseInt(item)) > -1;
+            };
+            vm.experienceSelect = function(sT) {
+                vm.profile.artist_experience = sT;
+            };
+            vm.uploadFile = function() {
+                $('.fileUpload').trigger('click');
+            };
+            $scope.fileUpload = function(files) {
+                if (files.length > 0) {
+                    console.log(files);
+                    vm.fileToBeCropped = '';
+                    vm.myCroppedImage = '';
+                    vm.myImage = '';
+                    var reader = new FileReader(); // instance of the FileReader
+                    reader.readAsDataURL(files[0]); // read the local file
+                    vm.profile.fileName = files[0].name;
+                    reader.onloadend = function () {
+                        var f = this.result;
+                        $timeout(function () {
+                            vm.myImage = f;
+                            vm.ngDialogPop("imageCropPopUp", "bigPop");
+                        });
+                    };
+                }
+                else {
+                    toaster.pop('error', 'Please choose a file', '');
+
+                }
+            };
+            vm.saveCroppedPic = function () {
+                // ngDialog.close("ngdialog4");
+                var blob = $scope.mCtrl.dataURItoBlob(vm.myCroppedImage);
+                console.log(blob);
+                vm.file = blob;
+                console.log(vm.file);
+                vm.profile.file = vm.file;
+                $timeout(function () {
+                    console.log(vm.profile.file);
+                    if(!vm.profile.file){
+                        vm.profile.file = vm.file;
+                    }
+                    console.log(vm.profile.file);
+                }, 1000);
+            };
+            vm.addArtistFn = function () {
+
+                if (vm.profile.artist_name.trim().length == 0) {
+                    toaster.pop('warning', 'Enter a valid name', '');
+                    return false;
+                }
+                if (!vm.profile.artist_mobile) {
+                    toaster.pop('warning', 'Enter a valid mobile', '');
+                    return false;
+                } else var mobile = vm.profile.artist_mobile.replace(/[^0-9]/g, "");
+                if (mobile.length < 9) {
+                    toaster.pop('warning', 'Enter a valid mobile', '');
+                    return false;
+                }
+                // var mobile='';
+                if (!mobile) {
+                    toaster.pop('warning', 'Enter a valid mobile', '');
+                    return false;
+                } else {
+                    mobile = vm.profile.artist_mobile.replace(/[^0-9]/g, "");
+                    if (mobile.length < 9) {
+                        toaster.pop('warning', 'Enter a valid mobile', '');
+                        return false;
+                    }
+                }
+                if (!vm.profile.artist_email || vm.profile.artist_email.trim().length == 0) {
+                    toaster.pop('warning', 'Enter a valid email', '');
+                    return false;
+                }
+                if (!vm.profile.artist_experience) {
+                    toaster.pop('warning', 'Enter a valid experience', '');
+                    return false;
+                }
+                if (vm.selected.length==0) {
+                    toaster.pop('warning', 'Select at least one skill', '');
+                    return false;
+                }
+                if(!vm.profile.file){
+                    toaster.pop('warning', 'Select a profile pic', '');
+                    return false;
+                }
+                var form = new FormData();
+                cfpLoadingBar.start();
+                vm.profile.artistSkills = '';
+                for(var i=0;i<vm.selected.length;i++){
+                    vm.profile.artistSkills+=vm.selected[i].toString();
+                    if(i<vm.selected.length-1)vm.profile.artistSkills+=',';
+                }
+                console.log(vm.profile.artistSkills);
+                form.append('access_token', localStorage.getItem("adminToken"));
+                form.append('artist_email', vm.profile.artist_email);
+                form.append('artist_name', vm.profile.artist_name);
+                form.append('artist_experience', vm.profile.artist_experience);
+                form.append('artist_about', vm.profile.artist_about);
+                // form.append('serving_areas', vm.profile.serving_areas);
+                form.append('artist_skills', vm.profile.artistSkills);
+                form.append('artist_mobile', vm.profile.countryCode+'-' + vm.profile.artist_mobile.replace(/[^0-9]/g, ""));
+                if(vm.profile.file)form.append("artist_image", vm.profile.file);
+                $http({
+                    url: api.url + 'add_artist',
+                    method: 'POST',
+                    data: form,
+                    transformRequest: false,
+                    headers: {
+                        'Content-Type': undefined
+                    }
+                })
+                    .then(function (data, status) {
+                        if (typeof data === 'string')
+                            var data = JSON.parse(data);
+                        $scope.mCtrl.flagPopUps(data.flag, data.is_error);
+                        console.log(data);
+                        var data = data.data;
+                        cfpLoadingBar.complete();
+                        if (data.is_error == 0) {
+                            $state.reload();
+                        }
+                    });
+            }
+
+        }
+    }
+})();
+
+
 /**=========================================================
  * Module: Location
 =========================================================*/
@@ -585,6 +804,8 @@
             }
             vm.show = true;
             vm.today = moment(new Date()).format("MM/DD/YYYY");
+            vm.tomorrow = moment(vm.today).add('days', 1);
+            vm.tomorrow = moment(vm.tomorrow).format("MM/DD/YYYY");
             vm.totalPrice = 0;
             vm.category = JSON.parse(localStorage.getItem("selectedCategory"));
             vm.service = JSON.parse(localStorage.getItem("selectedService"));
@@ -1465,7 +1686,7 @@
                 }
                 $scope.mCtrl.hitInProgress = true;
                 vm.coupon =  '';
-                $.post(api.url + "check_code", {
+                $.post("http://54.218.55.240:3003/check_code", {
                     access_token:localStorage.getItem('portalToken'),
                     coupon:vm.promo
                 })
