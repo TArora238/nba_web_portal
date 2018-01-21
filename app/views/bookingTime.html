@@ -22,7 +22,7 @@
                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 p-r-0 p-l-0">
                                         <select ng-model="book.time.hour" class="form-control" ng-class="{'invalidDate':book.invalidDate}" ng-change="book.check_time(book.time)" style="height:40px;">
                                             <option value="">Hours</option>
-                                            <option ng-value="hour" ng-repeat="hour in book.hours">{{hour}}</option>
+                                            <option ng-value="hour" ng-repeat="hour in book.hours track by $index">{{hour}}</option>
                                         </select>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 p-r-0">

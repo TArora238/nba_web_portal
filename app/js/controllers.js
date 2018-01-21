@@ -794,7 +794,12 @@
                 $rootScope.loggedIn=true;
             }
             else $rootScope.loggedIn = false;
+            vm.today = moment(new Date()).format("MM/DD/YYYY");
+            vm.tomorrowDate = moment(vm.today).add('days', 1);
+            vm.tomorrow = moment(vm.tomorrowDate).format("MM/DD/YYYY");
             vm.bookingTime = new Date();
+            vm.bookingTime.setDate(vm.bookingTime.getDate()+1);
+            console.log(vm.bookingTime);
             vm.selectedDay = new Date();
             if(vm.selectedDay.getMinutes()>0){
                 vm.selectedDay.setMinutes(0);
@@ -803,9 +808,6 @@
                 vm.selectedDay.setMilliseconds(0);
             }
             vm.show = true;
-            vm.today = moment(new Date()).format("MM/DD/YYYY");
-            vm.tomorrow = moment(vm.today).add('days', 1);
-            vm.tomorrow = moment(vm.tomorrow).format("MM/DD/YYYY");
             vm.totalPrice = 0;
             vm.category = JSON.parse(localStorage.getItem("selectedCategory"));
             vm.service = JSON.parse(localStorage.getItem("selectedService"));
@@ -824,9 +826,10 @@
             vm.minutes=['00','30'];
             vm.periods=['AM','PM'];
             for(var i=7;i<22;i++){
-                if(i<10)vm.hours[i]='0'+i;
-                else vm.hours[i]=i;
+                if(i<10)vm.hours[i-7]='0'+i;
+                else vm.hours[i-7]=i;
             }
+            console.log(vm.hours);
             vm.check_time = function (time) {
                 vm.now = new Date();
                 console.log(vm.bookingTime);
