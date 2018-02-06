@@ -789,12 +789,16 @@ li.bookingStep label{
     align-items: center;
 }
 .joinUsDiv{
-    background: url("../img/PNG/signInUp.JPG") left;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-color: #000;
-    background-position-x: 60%;
-    height: calc(100vh - 70px);
+    /*background: url("../img/PNG/signInUp.JPG") left;*/
+    /*background-repeat: no-repeat;*/
+    /*background-size: cover;*/
+    /*background-color: #000;*/
+    /*background-position-x: 60%;*/
+    /*height: calc(100vh - 70px);*/
+    background: #dce5eb;
+    display: table;
+    width:100%;
+    padding-top: 75px;
 }
 .locationDiv{
     background: url("../img/PNG/location_bg.jpg");

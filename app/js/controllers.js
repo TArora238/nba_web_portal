@@ -253,9 +253,9 @@
         .module('app.customers')
         .controller('ArtistController', ArtistController);
 
-    ArtistController.$inject = ['$http', '$state', '$rootScope', 'toaster', '$scope', 'cfpLoadingBar', 'api', '$timeout'];
+    ArtistController.$inject = ['$http', '$state', '$rootScope', 'toaster', '$scope', 'cfpLoadingBar', 'api', '$timeout','ngDialog'];
 
-    function ArtistController($http, $state, $rootScope, toaster, $scope, cfpLoadingBar, api, $timeout) {
+    function ArtistController($http, $state, $rootScope, toaster, $scope, cfpLoadingBar, api, $timeout,ngDialog) {
         var vm = this;
 
         activate();
@@ -268,6 +268,16 @@
             localStorage.clear();
             localStorage.setItem("user",user);
             localStorage.setItem("loggedIn",0);
+
+            vm.ngDialogPop = function(template, className) {
+                ngDialog.openConfirm({
+                    template: template,
+                    className: 'ngdialog-theme-default ' + className,
+                    scope: $scope
+                }).then(function(value) {}, function(reason) {});
+
+            };
+
             $.get( "http://54.218.55.240:3002/register_data")
             .success(function(data, status) {
                 cfpLoadingBar.complete();
@@ -281,6 +291,7 @@
                 })
             });
             vm.profile = {};
+            vm.profile.docs=[];
             vm.selected = [];
             vm.toggleMultiple = function (item) {
                 var idx = vm.selected.indexOf(item);
@@ -299,23 +310,75 @@
             vm.experienceSelect = function(sT) {
                 vm.profile.artist_experience = sT;
             };
-            vm.uploadFile = function() {
-                $('.fileUpload').trigger('click');
+            vm.selectDocType = function (dT,i) {
+                vm.profile.docs[i].doc_type = dT;
             };
-            $scope.fileUpload = function(files) {
+            vm.addDoc = function () {
+                if(vm.profile.docs.length<5){
+                    var d={
+                        doc:'',
+                        doc_type:'',
+                        doc_name:''
+                    };
+                    vm.profile.docs.push(d);
+                }
+                else{
+                    toaster.pop("error","You can select only 5 documents","");
+                    return false;
+                }
+            };
+            vm.selectDocPrompt = function (i) {
+                var t = '#doc_upload_'+i;
+                vm.docIndex=i;
+                console.log(t);
+                $timeout(function () {$(t).trigger('click');});
+            };
+            $scope.selectDoc = function (file) {
+                if(file.length>0){
+                    $timeout(function () {
+                        vm.profile.docs[vm.docIndex].doc_name = vm.profile.docs[vm.docIndex].doc_type+'_'+file[0].name;
+                        vm.profile.docs[vm.docIndex].doc = file[0];
+                        console.log(vm.profile.docs);
+                    });
+                    // var reader = new FileReader(); // instance of the FileReader
+                    // reader.readAsDataURL(file[0]); // read the local file
+                    // reader.onloadend = function () {
+                    //     var f = this.result;
+                    //     // console.log(f);
+                    //     $timeout(function () {
+                    //         vm.myImage = f;
+                    //         // console.log(vm.myImage);
+                    //         // vm.ngDialogPop("imageCropPopUp", "bigPop");
+                    //         vm.profile.docs[id].doc = vm.dataURItoBlob(f,name);
+                    //     });
+                    // };
+                }
+                else{
+                    toaster.pop('error', 'Please choose a file', '');
+                }
+            };
+            vm.uploadFile = function() {
+                $timeout(function () {$('.profileUpload').trigger('click');});
+            };
+            $scope.profileUpload = function(files) {
                 if (files.length > 0) {
                     console.log(files);
                     vm.fileToBeCropped = '';
                     vm.myCroppedImage = '';
                     vm.myImage = '';
+                    // vm.profile.profilePic = files[0];
                     var reader = new FileReader(); // instance of the FileReader
                     reader.readAsDataURL(files[0]); // read the local file
                     vm.profile.fileName = files[0].name;
                     reader.onloadend = function () {
                         var f = this.result;
+                        // console.log(f);
                         $timeout(function () {
+
                             vm.myImage = f;
-                            vm.ngDialogPop("imageCropPopUp", "bigPop");
+                            // console.log(vm.myImage);
+                            // vm.ngDialogPop("imageCropPopUp", "bigPop");
+                            vm.dataURItoBlob(f);
                         });
                     };
                 }
@@ -324,20 +387,42 @@
 
                 }
             };
-            vm.saveCroppedPic = function () {
-                // ngDialog.close("ngdialog4");
-                var blob = $scope.mCtrl.dataURItoBlob(vm.myCroppedImage);
+            // var handleFileSelect = function (evt) {
+            //     var file = vm.profile.profilePic;
+            //     var reader = new FileReader();
+            //     console.log("qw");
+            //     reader.onload = function (evt) {
+            //         $timeout(function () {
+            //             vm.myImage = evt.target.result;
+            //         });
+            //     };
+            //     reader.readAsDataURL(file);
+            // };
+            // angular.element(document.querySelector('#fileInput')).on('change', handleFileSelect);
+            // vm.saveCroppedPic = function () {
+            //     ngDialog.close();
+            //     vm.profile.profilePic = vm.dataURItoBlob(vm.myCroppedImage);
+            // };
+            vm.dataURItoBlob = function (dataURI) {
+                var byteString = atob(dataURI.split(',')[1]);
+                var ab = new ArrayBuffer(byteString.length);
+                var ia = new Uint8Array(ab);
+                for (var i = 0; i < byteString.length; i++) {
+                    ia[i] = byteString.charCodeAt(i);
+                }
+                var blob = new Blob([ab], {
+                    type: 'image/jpeg'
+                });
                 console.log(blob);
-                vm.file = blob;
-                console.log(vm.file);
-                vm.profile.file = vm.file;
-                $timeout(function () {
-                    console.log(vm.profile.file);
-                    if(!vm.profile.file){
-                        vm.profile.file = vm.file;
-                    }
-                    console.log(vm.profile.file);
-                }, 1000);
+
+                var file = new File([blob], name, {
+                    type: 'image/jpeg',
+                    lastModified: Date.now()
+                });
+                // vm.myImage = file;
+                vm.profile.profilePic = file;
+                console.log(file);
+                // return file;
             };
             vm.addArtistFn = function () {
 
@@ -376,9 +461,25 @@
                     toaster.pop('warning', 'Select at least one skill', '');
                     return false;
                 }
-                if(!vm.profile.file){
+                if(!vm.profile.profilePic){
                     toaster.pop('warning', 'Select a profile pic', '');
                     return false;
+                }
+                if(vm.profile.docs.length==0){
+                    toaster.pop('warning', 'Select at least one document', '');
+                    return false;
+                }
+                else{
+                    for(var i=0;i<vm.profile.docs.length;i++){
+                        if(!vm.profile.docs[i].doc){
+                            toaster.pop("error","Select document in row "+(i+1),"");
+                            return false;
+                        }
+                        if(!vm.profile.docs[i].doc_type){
+                            toaster.pop("error","Select document type in row "+(i+1),"");
+                            return false;
+                        }
+                    }
                 }
                 var form = new FormData();
                 cfpLoadingBar.start();
@@ -388,17 +489,25 @@
                     if(i<vm.selected.length-1)vm.profile.artistSkills+=',';
                 }
                 console.log(vm.profile.artistSkills);
-                form.append('access_token', localStorage.getItem("adminToken"));
+                // form.append('access_token', localStorage.getItem("adminToken"));
                 form.append('artist_email', vm.profile.artist_email);
                 form.append('artist_name', vm.profile.artist_name);
                 form.append('artist_experience', vm.profile.artist_experience);
                 form.append('artist_about', vm.profile.artist_about);
                 // form.append('serving_areas', vm.profile.serving_areas);
                 form.append('artist_skills', vm.profile.artistSkills);
-                form.append('artist_mobile', vm.profile.countryCode+'-' + vm.profile.artist_mobile.replace(/[^0-9]/g, ""));
-                if(vm.profile.file)form.append("artist_image", vm.profile.file);
+                form.append('artist_mobile', $scope.mCtrl.code+'-' + vm.profile.artist_mobile.replace(/[^0-9]/g, ""));
+                form.append("profile_pic", vm.profile.profilePic);
+                form.append("device_type", 0);
+                form.append("device_id", localStorage.getItem('user'));
+                form.append("app_version", "100");
+                form.append("device_token", "Website");
+                form.append("app_type", 0);
+                for(var i=0;i<vm.profile.docs.length;i++){
+                    form.append(vm.profile.docs[i].doc_name,vm.profile.docs[i].doc);
+                }
                 $http({
-                    url: api.url + 'add_artist',
+                    url: 'http://54.218.55.240:3002/register_artist',
                     method: 'POST',
                     data: form,
                     transformRequest: false,
@@ -409,12 +518,17 @@
                     .then(function (data, status) {
                         if (typeof data === 'string')
                             var data = JSON.parse(data);
-                        $scope.mCtrl.flagPopUps(data.flag, data.is_error);
+
                         console.log(data);
                         var data = data.data;
                         cfpLoadingBar.complete();
                         if (data.is_error == 0) {
-                            $state.reload();
+                            $state.go("registered");
+                        }
+                        else{
+                            // $scope.mCtrl.flagPopUps(data.flag, data.is_error);
+                            if(data.err)toaster.pop("error",data.err,"");
+                            else $scope.mCtrl.flagPopUps(data.flag, data.is_error);
                         }
                     });
             }
@@ -422,6 +536,36 @@
         }
     }
 })();
+
+
+
+/**=========================================================
+ * Module: Artist Registered Controller
+ =========================================================*/
+
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.customers')
+        .controller('RegisteredController', RegisteredController);
+
+    RegisteredController.$inject = ['$http', '$state', '$rootScope', 'toaster', '$scope', 'cfpLoadingBar', 'api', '$timeout','ngDialog'];
+
+    function RegisteredController($http, $state, $rootScope, toaster, $scope, cfpLoadingBar, api, $timeout,ngDialog) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+        }
+    }
+})();
+
 
 
 /**=========================================================
@@ -448,6 +592,8 @@
       // $scope.mCtrl.checkToken();
       // $scope.mCtrl.checkPortalToken();
         if(localStorage.getItem("loggedIn")==1){
+            $scope.mCtrl.checkToken();
+            $scope.mCtrl.checkPortalToken();
             if(localStorage.getItem('userAddress'))$rootScope.userAddress = JSON.parse(localStorage.getItem('userAddress'));
             else $rootScope.userCards=[];
             if(localStorage.getItem('userCards'))$rootScope.userCards = JSON.parse(localStorage.getItem('userCards'));
@@ -507,18 +653,21 @@
             }
       };
       vm.usePosition = function (position) {
+          console.log(position);
           var latlng = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
           var geocoder = new google.maps.Geocoder();
           geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+              console.log(results);
+              console.log(status);
               if (status == google.maps.GeocoderStatus.OK) {
-                  if (results[1]) {
+                  if (results[0]) {
                       $timeout(function () {
                           console.log(results);
-                          vm.location = results[1].formatted_address;
-                          var place_id = results[1].place_id;
-                          var latitude = results[1].geometry.location.lat();
-                          var longitude = results[1].geometry.location.lng();
-                          var addressComponents = results[1].address_components;
+                          vm.location = results[0].formatted_address;
+                          var place_id = results[0].place_id;
+                          var latitude = results[0].geometry.location.lat();
+                          var longitude = results[0].geometry.location.lng();
+                          var addressComponents = results[0].address_components;
                           console.log(addressComponents);
                           var addressObj={
                               street_route:''
@@ -610,6 +759,8 @@
     function activate() {
       // $scope.mCtrl.checkToken();
       if(localStorage.getItem("loggedIn")==1){
+          $scope.mCtrl.checkToken();
+          $scope.mCtrl.checkPortalToken();
           console.log(localStorage.getItem('userCards'));
           if(localStorage.getItem('userAddress'))$rootScope.userAddress = JSON.parse(localStorage.getItem('userAddress'));
           else $rootScope.userCards=[];
@@ -617,7 +768,7 @@
           else $rootScope.userCards=[];
           $rootScope.userProfile = JSON.parse(localStorage.getItem('userProfile'));
 
-          $scope.mCtrl.checkPortalToken();
+          // $scope.mCtrl.checkPortalToken();
           $rootScope.loggedIn=true;
       }
       else $rootScope.loggedIn = false;
@@ -668,13 +819,15 @@
       // $scope.mCtrl.checkToken();
       // $scope.mCtrl.checkPortalToken();
         if(localStorage.getItem("loggedIn")==1){
+            $scope.mCtrl.checkToken();
+            $scope.mCtrl.checkPortalToken();
             if(localStorage.getItem('userAddress'))$rootScope.userAddress = JSON.parse(localStorage.getItem('userAddress'));
             else $rootScope.userCards=[];
             if(localStorage.getItem('userCards'))$rootScope.userCards = JSON.parse(localStorage.getItem('userCards'));
             else $rootScope.userCards=[];
             $rootScope.userProfile = JSON.parse(localStorage.getItem('userProfile'));
 
-            $scope.mCtrl.checkPortalToken();
+            // $scope.mCtrl.checkPortalToken();
             $rootScope.loggedIn=true;
         }
         else $rootScope.loggedIn = false;
@@ -784,13 +937,15 @@
         function activate() {
             // $scope.mCtrl.checkToken();
             if(localStorage.getItem("loggedIn")==1){
+                $scope.mCtrl.checkToken();
+                $scope.mCtrl.checkPortalToken();
                 if(localStorage.getItem('userAddress'))$rootScope.userAddress = JSON.parse(localStorage.getItem('userAddress'));
                 else $rootScope.userCards=[];
                 if(localStorage.getItem('userCards'))$rootScope.userCards = JSON.parse(localStorage.getItem('userCards'));
                 else $rootScope.userCards=[];
                 $rootScope.userProfile = JSON.parse(localStorage.getItem('userProfile'));
 
-                $scope.mCtrl.checkPortalToken();
+                // $scope.mCtrl.checkPortalToken();
                 $rootScope.loggedIn=true;
             }
             else $rootScope.loggedIn = false;
@@ -909,13 +1064,15 @@
         function activate() {
             // $scope.mCtrl.checkToken();
             if(localStorage.getItem("loggedIn")==1){
+                $scope.mCtrl.checkToken();
+                $scope.mCtrl.checkPortalToken();
                 if(localStorage.getItem('userAddress'))$rootScope.userAddress = JSON.parse(localStorage.getItem('userAddress'));
                 else $rootScope.userAddress=[];
                 if(localStorage.getItem('userCards'))$rootScope.userCards = JSON.parse(localStorage.getItem('userCards'));
                 else $rootScope.userCards=[];
                 $rootScope.userProfile = JSON.parse(localStorage.getItem('userProfile'));
 
-                $scope.mCtrl.checkPortalToken();
+                // $scope.mCtrl.checkPortalToken();
                 $rootScope.loggedIn=true;
             }
             else $rootScope.loggedIn = false;
@@ -1036,7 +1193,7 @@
                     device_type: 0,
                     device_id: localStorage.getItem('user'),
                     app_version: "100",
-                    device_token: "1234",
+                    device_token: "Website",
                     app_type: 0
                 })
                     .success(function(data, status) {
@@ -1074,6 +1231,7 @@
                                 }, 30000);
 
                                 if(i==1){
+
                                     localStorage.setItem("personalData",JSON.stringify(vm.personal));
                                     ngDialog.openConfirm({
                                         template: 'otp_modal',
@@ -1096,7 +1254,7 @@
                     device_type: 0,
                     device_id: localStorage.getItem('user'),
                     app_version: "100",
-                    device_token: "1234",
+                    device_token: "Website",
                     app_type: 0
                 })
                     .success(function(data, status) {
@@ -1120,6 +1278,10 @@
                                 if (data.user_profile) localStorage.setItem('userProfile', JSON.stringify(data.user_profile));
                                 $scope.mCtrl.user_name=JSON.parse(localStorage.getItem('userProfile')).user_name;
                                 $rootScope.loggedIn = true;
+                                if(localStorage.getItem('userAddress'))$rootScope.userAddress = JSON.parse(localStorage.getItem('userAddress'));
+                                else $rootScope.userAddress=[];
+                                if(localStorage.getItem('userCards'))$rootScope.userCards = JSON.parse(localStorage.getItem('userCards'));
+                                else $rootScope.userCards=[];
                                 if (data.countries) {
                                     localStorage.setItem('userCountries', JSON.stringify(data.countries));
                                     $scope.mCtrl.countries = data.countries;
@@ -1280,18 +1442,19 @@
                 }
             };
             vm.usePosition = function (position) {
+                console.log(position);
                 var latlng = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
                 var geocoder = new google.maps.Geocoder();
                 geocoder.geocode({ 'latLng': latlng }, function (results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
-                        if (results[1]) {
+                        if (results[0]) {
                             $timeout(function () {
                                 console.log(results);
-                                vm.location = results[1].formatted_address;
-                                var place_id = results[1].place_id;
-                                var latitude = results[1].geometry.location.lat();
-                                var longitude = results[1].geometry.location.lng();
-                                var addressComponents = results[1].address_components;
+                                vm.location = results[0].formatted_address;
+                                var place_id = results[0].place_id;
+                                var latitude = results[0].geometry.location.lat();
+                                var longitude = results[0].geometry.location.lng();
+                                var addressComponents = results[0].address_components;
                                 console.log(addressComponents);
                                 var addressObj={
                                     street_route:''
@@ -1468,13 +1631,15 @@
         function activate() {
             // $scope.mCtrl.checkToken();
             if(localStorage.getItem("loggedIn")==1){
+                $scope.mCtrl.checkToken();
+                $scope.mCtrl.checkPortalToken();
                 if(localStorage.getItem('userAddress'))$rootScope.userAddress = JSON.parse(localStorage.getItem('userAddress'));
                 else $rootScope.userAddress=[];
                 if(localStorage.getItem('userCards'))$rootScope.userCards = JSON.parse(localStorage.getItem('userCards'));
                 else $rootScope.userCards=[];
                 $rootScope.userProfile = JSON.parse(localStorage.getItem('userProfile'));
 
-                $scope.mCtrl.checkPortalToken();
+
                 $rootScope.loggedIn=true;
             }
             $scope.mCtrl.hitInProgress = false;

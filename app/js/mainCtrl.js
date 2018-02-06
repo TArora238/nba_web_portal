@@ -40,6 +40,7 @@
             app_type: 0,
             server_type: 0,
             app_version: 100,
+            device_token: "Website",
             device_id: localStorage.getItem('user')
           })
           .success(function(data, status) {
@@ -292,7 +293,7 @@
               device_type: 0,
               device_id: localStorage.getItem('user'),
               app_version: "100",
-              device_token: "1234",
+              device_token: "Website",
               app_type: 0
           })
               .success(function(data, status) {
@@ -352,7 +353,7 @@
                 device_type: 0,
                 device_id: localStorage.getItem('user'),
                 app_version: "100",
-                device_token: "1234",
+                device_token: "Website",
                 app_type: 0
             })
                 .success(function(data, status) {
@@ -407,8 +408,9 @@
 
       vm.checkToken = function() {
           cfpLoadingBar.complete();
-          if (!localStorage.getItem('portalToken') || localStorage.getItem('portalToken') == null) {
+          if (!localStorage.getItem('portalToken') || localStorage.getItem('portalToken') == null || localStorage.getItem('portalToken') == 'null') {
               localStorage.removeItem('portalToken');
+              toaster.pop("error","Your session has expired","");
               $state.go('home');
               return false;
           }
@@ -470,15 +472,17 @@
 
       vm.checkPortalToken = function(login) {
         console.log(localStorage.getItem('portalToken'));
-        // if (!localStorage.getItem('portalToken')) {
-        //   localStorage.removeItem('portalToken')
-        //   $state.go('home');
-        // } else {
+          if (!localStorage.getItem('portalToken') || localStorage.getItem('portalToken') == null || localStorage.getItem('portalToken') == 'null') {
+              localStorage.removeItem('portalToken');
+              toaster.pop("error","Your session has expired","");
+              $state.go('home');
+              return false;
+          } else {
           $.post(api.url + "access_token_login", {
               access_token: localStorage.getItem('portalToken'),
               device_type: 0,
-              app_type: 2,
-              device_token: "1234",
+              app_type: 0,
+              device_token: "Website",
               app_version: 100,
               device_id: localStorage.getItem('user')
             })
@@ -503,14 +507,20 @@
                   $rootScope.loggedIn = true;
                   localStorage.setItem('loggedIn',1);
                   if(localStorage.getItem('userAddress'))$rootScope.userAddress = JSON.parse(localStorage.getItem('userAddress'));
-                  else $rootScope.userCards=[];
+                  else $rootScope.userAddress=[];
                   if(localStorage.getItem('userCards'))$rootScope.userCards = JSON.parse(localStorage.getItem('userCards'));
                   else $rootScope.userCards=[];
                   $rootScope.userProfile = JSON.parse(localStorage.getItem('userProfile'));
 
               }
+              else{
+                  localStorage.removeItem('portalToken');
+                  toaster.pop("error","Your session has expired","");
+                  $state.go('home');
+                  return false;
+              }
             });
-        // }
+        }
       };
       vm.dtOptions = {
         "scrollX": true

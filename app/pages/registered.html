@@ -1,0 +1,63 @@
+<div class="joinUsDiv" ng-controller="RegisteredController as regArtist">
+    <header class="topnavbar-wrapper">
+        <!-- START Top Navbar-->
+        <nav class="navbar topnavbar scrollHeader"  role="navigation" >
+            <!-- START navbar header-->
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" type="button" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" ui-sref="home">
+                    <div class="brand-logo whiteLogo hidden-xs">
+                        <img class="img-responsive" src="app/img/SVG/logo_white.svg" alt="App Logo" />
+                    </div>
+                    <div class="brand-logo whiteLogo hidden-lg hidden-md hidden-sm">
+                        <img class="img-responsive" src="app/img/SVG/logo_white.svg" alt="App Logo" />
+                    </div>
+                    <div class="brand-logo-collapsed">
+                        <img class="img-responsive" src="app/img/SVG/bar_logo.svg" alt="App Logo" />
+                    </div>
+                </a>
+            </div>
+            <!-- END navbar header-->
+            <!-- START Nav wrapper-->
+            <div class="collapse navbar-collapse" uib-collapse="navCollapsed">
+                <!-- Navbar Menu -->
+                <ul class="nav navbar-nav pull-right" ng-controller="SidebarController" >
+                    <li ><a ui-sref="home"><span>Home</span></a></li>
+                    <li ><a ui-sref="about"><span>About Us</span></a></li>
+                </ul>
+
+                <!-- END Right Navbar-->
+            </div>
+        </nav>
+        <!-- END Top Navbar-->
+    </header>
+    <div class="animated fadeIn">
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 p-0 thanksDivFlex" >
+            <div class="thanksText VHAlign hidden-xs col-sm-6 col-md-6 col-lg-6 text-left pull-left">
+                <div>
+                    <h3 class="m-b-20">Thank You {{artist.profile.artist_name}}!</h3>
+                    <h4 class="m-t-10 m-b-20">Your account has been created</h4>
+                    <label class="m-t-10 m-b-20">Please download the artist app to start accepting bookings</label>
+                    <button class="btn btnDefault w-50 m-t-10" ui-sref="home">Go To Home</button>
+                </div>
+            </div>
+            <div class="thanksText thanksPicMob VHAlign col-xs-12 hidden-lg hidden-md hidden-sm text-left pull-left">
+                <div class="layer">
+                    <div class="p-15">
+                        <h3 class="m-b-20">Thank You!</h3>
+                        <h4 class="m-t-10 m-b-20">Your account has been created</h4>
+                        <label class="m-t-10 m-b-20">Please download the artist app to start accepting bookings</label>
+                        <button class="btn btnDefault w-50 m-t-10" ui-sref="home">Go To Home</button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="hidden-xs col-sm-6 col-md-6 col-lg-6 text-left pull-left thanksPic"></div>
+        </div>
+    </div>
+</div>

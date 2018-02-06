@@ -44,7 +44,8 @@
             'app.utils',
             'ngDialog',
             'toaster',
-            '720kb.datepicker'
+            '720kb.datepicker',
+            'ngImgCrop'
         ]);
     // console.log("inside app");
 })();
@@ -94,7 +95,7 @@
     angular
         .module('portalPanel').constant("api", {
             // Live
-            // "url": "https://apilive.nowbeauty.com:3003/"
+            // "url": "https://apilive.nowbeauty.com:3001/"
             // Dev
             // "url": "http://34.213.160.134:3003/"
             "url": "http://54.218.55.240:3001/"

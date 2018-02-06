@@ -145,7 +145,19 @@
               resolve: helper.resolveFor('modernizr', 'icons','loaders.css','inputmask', 'ngDialog', 'spinkit'),
               templateUrl: 'app/pages/support.html'
           })
-          .state('app', {
+            .state('joinUs', {
+                url: '/joinUs',
+                title: 'Join Us',
+                templateUrl: 'app/views/joinUs.html',
+                resolve:helper.resolveFor('modernizr', 'icons','loaders.css','inputmask', 'ngDialog', 'spinkit','ngImgCrop')
+            })
+            .state('registered', {
+                url: '/registered',
+                title: 'Registered',
+                resolve: helper.resolveFor('modernizr', 'icons','loaders.css','inputmask', 'ngDialog', 'spinkit'),
+                templateUrl: 'app/pages/registered.html'
+            })
+            .state('app', {
               url: '/app',
               abstract: true,
               templateUrl: helper.basepath('app.html'),
@@ -163,12 +175,6 @@
                 title: 'Sign Up',
                 templateUrl: 'app/views/signUp.html',
                 resolve:helper.resolveFor('icons')
-            })
-            .state('app.joinUs', {
-                url: '/joinUs',
-                title: 'Join Us',
-                templateUrl: 'app/views/joinUs.html',
-                resolve:helper.resolveFor('icons','ngImgCrop')
             })
             .state('app.location', {
                 url: '/location',
