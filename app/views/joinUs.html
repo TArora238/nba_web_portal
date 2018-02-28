@@ -1,40 +1,40 @@
 <div class="joinUsDiv" ng-controller="ArtistController as artist">
     <header class="topnavbar-wrapper">
-    <!-- START Top Navbar-->
-    <nav class="navbar topnavbar scrollHeader"  role="navigation" >
-        <!-- START navbar header-->
-        <div class="navbar-header">
-            <button class="navbar-toggle collapsed" type="button" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
+        <!-- START Top Navbar-->
+        <nav class="navbar topnavbar scrollHeader" role="navigation">
+            <!-- START navbar header-->
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" type="button" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" ui-sref="home">
-                <div class="brand-logo whiteLogo hidden-xs">
-                    <img class="img-responsive" src="app/img/SVG/logo_white.svg" alt="App Logo" />
-                </div>
-                <div class="brand-logo whiteLogo hidden-lg hidden-md hidden-sm">
-                    <img class="img-responsive" src="app/img/SVG/logo_white.svg" alt="App Logo" />
-                </div>
-                <div class="brand-logo-collapsed">
-                    <img class="img-responsive" src="app/img/SVG/bar_logo.svg" alt="App Logo" />
-                </div>
-            </a>
-        </div>
-        <!-- END navbar header-->
-        <!-- START Nav wrapper-->
-        <div class="collapse navbar-collapse" uib-collapse="navCollapsed">
-            <!-- Navbar Menu -->
-            <ul class="nav navbar-nav pull-right" ng-controller="SidebarController" >
-                <li ><a ui-sref="home"><span>Home</span></a></li>
-                <li ><a ui-sref="about"><span>About Us</span></a></li>
-            </ul>
+                <a class="navbar-brand" ui-sref="home">
+                    <div class="brand-logo whiteLogo hidden-xs">
+                        <img class="img-responsive" src="app/img/SVG/logo_white.svg" alt="App Logo" />
+                    </div>
+                    <div class="brand-logo whiteLogo hidden-lg hidden-md hidden-sm">
+                        <img class="img-responsive" src="app/img/SVG/logo_white.svg" alt="App Logo" />
+                    </div>
+                    <div class="brand-logo-collapsed">
+                        <img class="img-responsive" src="app/img/SVG/bar_logo.svg" alt="App Logo" />
+                    </div>
+                </a>
+            </div>
+            <!-- END navbar header-->
+            <!-- START Nav wrapper-->
+            <div class="collapse navbar-collapse" uib-collapse="navCollapsed">
+                <!-- Navbar Menu -->
+                <ul class="nav navbar-nav pull-right" ng-controller="SidebarController">
+                    <li><a ui-sref="home"><span>Home</span></a></li>
+                    <li><a ui-sref="about"><span>About Us</span></a></li>
+                </ul>
 
-            <!-- END Right Navbar-->
-        </div>
-    </nav>
-    <!-- END Top Navbar-->
+                <!-- END Right Navbar-->
+            </div>
+        </nav>
+        <!-- END Top Navbar-->
     </header>
     <div class="animated fadeIn">
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
@@ -61,93 +61,89 @@
 
                     <div class="panel col-xs-12 col-sm-12 col-md-12 col-lg-12 pull-right p-20">
                         <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
-                        <h3>Artist Sign Up</h3>
-                        <form enctype="multipart/form-data" name="artist.profileData" ng-submit="artist.profileData.$submitted&&artist.addArtistFn()">
-                            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <label>Name</label>
-                                <input name="artist.userName" maxlength=25 type="text" ng-model="artist.profile.artist_name"  class="form-control" required/>
-                            </div>
-                            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <label>Phone Number</label>
-                                <div class="input-group">
-                                    <div class="input-group-btn dropdown" uib-dropdown="" style="">
-                                        <button class="btn btn-default dropdown-toggle" type="button" uib-dropdown-toggle=""
-                                                aria-haspopup="true" aria-expanded="false">{{mCtrl.code}}
+                            <h3>Artist Sign Up</h3>
+                            <form enctype="multipart/form-data" name="artist.profileData" ng-submit="artist.profileData.$submitted&&artist.addArtistFn()">
+                                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <label>Name</label>
+                                    <input name="artist.userName" maxlength=25 type="text" ng-model="artist.profile.artist_name" class="form-control" required/>
+                                </div>
+                                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <label>Phone Number</label>
+                                    <div class="input-group">
+                                        <div class="input-group-btn dropdown" uib-dropdown="" style="">
+                                            <button class="btn btn-default dropdown-toggle" type="button" uib-dropdown-toggle="" aria-haspopup="true" aria-expanded="false">{{mCtrl.code}}
                                             <span class="caret"></span></button>
-                                        <ul class="dropdown-menu">
-                                            <li ng-repeat="code in mCtrl.codes">
-                                                <a ng-click="mCtrl.chooseCode(code)">{{code}}</a>
-                                            </li>
-                                        </ul>
+                                            <ul class="dropdown-menu">
+                                                <li ng-repeat="code in mCtrl.codes">
+                                                    <a ng-click="mCtrl.chooseCode(code)">{{code}}</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <input type="text" maxlength=15 minlength=9 onkeypress="return isNumberKey(event)" masked="" data-inputmask="'mask': '(999) 999-9999'" ng-model="artist.profile.artist_mobile" class="form-control" required name="artist.userPhone" />
                                     </div>
-                                    <input type="text" maxlength=15 minlength=9 onkeypress="return isNumberKey(event)" masked="" data-inputmask="'mask': '(999) 999-9999'"
-                                           ng-model="artist.profile.artist_mobile" class="form-control" required name="artist.userPhone" />
                                 </div>
-                            </div>
-                            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <label>Email</label>
-                                <input name="artist.userEmail" type="email" ng-model="artist.profile.artist_email" ng-pattern="emailPattern"  class="form-control" required/>
-                            </div>
-                            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <label>Profile Picture</label>
-                                <div>
-                                    <!--<a class="hide" style="margin-top:0px;margin-right:0px;font-size:0;opacity: 1">-->
+                                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <label>Email</label>
+                                    <input name="artist.userEmail" type="email" ng-model="artist.profile.artist_email" ng-pattern="emailPattern" class="form-control" required/>
+                                </div>
+                                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <label>Profile Picture</label>
+                                    <div>
+                                        <!--<a class="hide" style="margin-top:0px;margin-right:0px;font-size:0;opacity: 1">-->
                                         <!--<img style="width: 240px" id="proPic" ng-src="{{artist.profile.profilePic!='' ? artist.profile.profilePic : 'app/img/SVG/avatar.svg'}}" class="img-circle">-->
-                                    <!--</a>-->
-                                    <input type="file" style="display: none;" class="upload profileUpload" name="profilePic" onchange="angular.element(this).scope().profileUpload(this.files)" id="fileInput" data-button-text="Single" uploader="uploader" accept="image/*" />
+                                        <!--</a>-->
+                                        <input type="file" style="display: none;" class="upload profileUpload" name="profilePic" onchange="angular.element(this).scope().profileUpload(this.files)" id="fileInput" data-button-text="Single" uploader="uploader" accept="image/*" />
+                                    </div>
+                                    <a class="btn btn-primary btn-pop m-r-15" ng-click="artist.uploadFile()">Select Profile Picture</a>
+                                    <div class="clearfix"></div>
+                                    <small ng-if="artist.profile.fileName" style="position: absolute">{{artist.profile.fileName}}</small>
                                 </div>
-                                <a class="btn btn-primary btn-pop m-r-15" ng-click="artist.uploadFile()">Select Profile Picture</a>
                                 <div class="clearfix"></div>
-                                <small ng-if="artist.profile.fileName" style="position: absolute">{{artist.profile.fileName}}</small>
-                            </div>
-                            <div class="clearfix"></div>
-                            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <label>Experience (Years)</label>
-                                <select ng-model="artist.profile.experience_type" class="form-control" ng-change="artist.experienceSelect(artist.profile.experience_type);" style="height:40px;">
+                                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <label>Experience (Years)</label>
+                                    <select ng-model="artist.profile.experience_type" class="form-control" ng-change="artist.experienceSelect(artist.profile.experience_type);" style="height:40px;">
                                     <option value="">Select your experience</option>
                                     <option ng-value="experience_type.experience_id" ng-repeat="experience_type in artist.experience_types" ng-selected="{{$index==0}}">{{experience_type.experience}}
                                     </option>
                                 </select>
-                            </div>
-                            <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <label class="col-lg-12 col-xs-12 p-0">Skills</label>
-                                <div class="checkbox c-checkbox col-lg-6 col-xs-12 m-0" ng-repeat="skill in artist.skills" >
-                                    <label class="needsclick">
+                                </div>
+                                <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <label class="col-lg-12 col-xs-12 p-0">Skills</label>
+                                    <div class="checkbox c-checkbox col-lg-6 col-xs-12 m-0" ng-repeat="skill in artist.skills">
+                                        <label class="needsclick">
                                         <input class="needsclick" type="checkbox" name="checkbox" ng-click="artist.toggleMultiple(skill.skill_id);"
                                                ng-model="checkbox" ng-checked="artist.exists(skill.skill_id)" />
                                         <span class="fa fa-check"></span>{{skill.skill}}
                                     </label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="clearfix"></div>
-                            <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <label>Documents</label>
-                                <a class="btn btn-primary btn-pop m-r-15" ng-click="artist.addDoc()">Add</a>
-                                <div class="col-lg-12" ng-repeat="docs in artist.profile.docs">
-                                    <select ng-model="docs.doc_type" class="form-control col-lg-4 m-10" ng-change="artist.selectDocType(docs.doc_type,$index);" style="height:35px;width: 33%">
+                                <div class="clearfix"></div>
+                                <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <label>Documents</label>
+                                    <a class="btn btn-primary btn-pop m-r-15" ng-click="artist.addDoc()">Add</a>
+                                    <div class="col-lg-12" ng-repeat="docs in artist.profile.docs">
+                                        <select ng-model="docs.doc_type" class="form-control col-lg-4 m-10" ng-change="artist.selectDocType(docs.doc_type,$index);" style="height:35px;width: 33%">
                                         <option value="">Select document type</option>
-                                        <option ng-value="doc_type.document_type" ng-repeat="doc_type in artist.document_types">{{doc_type.document_name}}
+                                        <option ng-value="doc_type.document_type" ng-if="document_name!='Profile Pic'" ng-repeat="doc_type in artist.document_types">{{doc_type.document_name}}
                                         </option>
                                     </select>
-                                    <input type="file" style="display: none;" class="upload docUpload" id="doc_upload_{{$index}}" name="doc" onchange="angular.element(this).scope().selectDoc(this.files)"
-                                           data-button-text="Single" uploader="uploader" accept=".pdf,.doc,image/*" />
-                                    <a class="btn btn-primary btn-pop m-10 pull-left" ng-click="artist.selectDocPrompt($index)">Select Document</a>
-                                    <!--<div class="clearfix"></div>-->
-                                    <small class="col-lg-4 m-10">{{docs.doc_name}}</small>
+                                        <input type="file" style="display: none;" class="upload docUpload" id="doc_upload_{{$index}}" name="doc" onchange="angular.element(this).scope().selectDoc(this.files)" data-button-text="Single" uploader="uploader" accept=".pdf,.doc,image/*" />
+                                        <a class="btn btn-primary btn-pop m-10 pull-left" ng-click="artist.selectDocPrompt($index)">Select Document</a>
+                                        <!--<div class="clearfix"></div>-->
+                                        <small class="col-lg-4 m-10">{{docs.doc_name}}</small>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <label>About the artist</label>
-                                <textarea name="artist.userEmail" ng-model="artist.profile.artist_about"  class="form-control form-textarea" required></textarea>
-                            </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <button type="button" ng-click="closeThisDialog('button')"
-                                        class="btn btn-default pull-left btn-cancel">Cancel
+                                <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <label>About the artist</label>
+                                    <textarea name="artist.userEmail" ng-model="artist.profile.artist_about" class="form-control form-textarea" required></textarea>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <button type="button" ng-click="closeThisDialog('button')" class="btn btn-default pull-left btn-cancel">Cancel
                                 </button>
-                                <button type="submit" class="btn btn-primary pull-right btn-pop" style="text-transform:capitalize">Add
+                                    <button type="submit" class="btn btn-primary pull-right btn-pop" style="text-transform:capitalize">Add
                                 </button>
-                            </div>
-                        </form>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
