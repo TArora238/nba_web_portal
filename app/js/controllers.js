@@ -31,7 +31,7 @@
             vm.how = [true, false, false, false];
             $scope.carouselIndex = 0;
             $scope.$watch('carouselIndex', function(newVal) {
-                console.log(newVal);
+                // console.log(newVal);
                 vm.changeSlide(newVal);
             });
             vm.changeSlide = function(a) {
@@ -64,14 +64,67 @@
             };
 
             var user = localStorage.getItem("user");
+            vm.blog = JSON.parse(localStorage.getItem('blog'));
             localStorage.clear();
             localStorage.setItem("user", user);
             localStorage.setItem("loggedIn", 0);
+            localStorage.setItem('blog', JSON.stringify(vm.blog));
+            $.post(api.url + "get_blog")
+                .success(function(data, status) {
+                    // cfpLoadingBar.complete();
+                    if (typeof data === 'string') data = JSON.parse(data);
+
+                    $timeout(function() {
+                        console.log(data);
+                        vm.blogs = data.blogs;
+                    });
+                });
+            vm.blogView = function(blog) {
+                localStorage.setItem('blog', JSON.stringify(blog));
+                $state.go('blog');
+            };
         }
     }
 })();
 
 
+
+
+/**=========================================================
+ * Module: Blog
+ =========================================================*/
+
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.customers')
+        .controller('BlogController', BlogController);
+
+    BlogController.$inject = ['$http', '$state', '$rootScope', 'toaster', '$scope', 'cfpLoadingBar', 'api', '$timeout'];
+
+    function BlogController($http, $state, $rootScope, toaster, $scope, cfpLoadingBar, api, $timeout) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+            var user = localStorage.getItem("user");
+            vm.blog = JSON.parse(localStorage.getItem('blog'));
+            localStorage.clear();
+            localStorage.setItem("user", user);
+            localStorage.setItem("loggedIn", 0);
+            localStorage.setItem('blog', JSON.stringify(vm.blog));
+            console.log(vm.blog);
+            document.getElementById('content').innerHTML = vm.blog.content;
+        }
+    }
+})();
 
 
 /**=========================================================
@@ -289,7 +342,7 @@
                         vm.experience_types = data.experience_types;
                         vm.skills = data.skills;
                         console.log(data)
-                    })
+                    });
                 });
             vm.profile = {};
             vm.profile.docs = [];

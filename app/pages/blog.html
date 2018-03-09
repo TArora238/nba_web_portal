@@ -1,0 +1,27 @@
+<div class="Now_BeautyLogin  ng-zoomBackDown ng-fluid" data-ng-controller="BlogController as blog">
+    <!-- top navbar-->
+    <header style="border-bottom: 1px solid #ee7670;background: #eeeeee;" class="topnavbar-wrapper" ng-include="'app/views/partials/page-navbar.html'"></header>
+    <!-- offsidebar-->
+
+    <section style="padding-top:70px">
+        <div class="row">
+            <h2 class="text-center"></h2>
+        </div>
+        <div class="row">
+            <div class="container">
+                <div class="row">
+                    <div class="m-t-30 m-b-30 text-center p-15 col-sm-8 col-lg-8 col-md-8 col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-12">
+                        <img style="margin:auto;height:400px" ng-src="{{blog.blog.thumb_pic}}">
+                        <h3 class="text-center m-t-30 m-b-30">{{blog.blog.title}}</h3>
+                        <label class="text-left text-capitalize w-100">{{blog.blog.author}}</label>
+                        <label class="text-left w-100">Posted : {{blog.blog.last_modified|date:'MMM dd yyyy, hh:mm a'}}</label>
+                        <div id="content"></div>
+                    </div>
+                </div>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+        <footer ng-include="'app/views/partials/footer.html'"></footer>
+    </section>
+
+</div>

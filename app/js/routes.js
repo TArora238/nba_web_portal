@@ -8,73 +8,74 @@
 
     angular
         .module('app.routes')
-        .provider('RouteHelpers', RouteHelpersProvider)
-        ;
+        .provider('RouteHelpers', RouteHelpersProvider);
 
     RouteHelpersProvider.$inject = ['APP_REQUIRES'];
+
     function RouteHelpersProvider(APP_REQUIRES) {
 
-      /* jshint validthis:true */
-      return {
-        // provider access level
-        basepath: basepath,
-        resolveFor: resolveFor,
-        // controller access level
-        $get: function() {
-          return {
-            basepath: basepath,
-            resolveFor: resolveFor
-          };
-        }
-      };
-
-      // Set here the base of the relative path
-      // for all app views
-      function basepath(uri) {
-        return 'app/views/' + uri;
-      }
-
-      // Generates a resolve object by passing script names
-      // previously configured in constant.APP_REQUIRES
-      function resolveFor() {
-        var _args = arguments;
+        /* jshint validthis:true */
         return {
-          deps: ['$ocLazyLoad','$q', function ($ocLL, $q) {
-            // Creates a promise chain for each argument
-            var promise = $q.when(1); // empty promise
-            for(var i=0, len=_args.length; i < len; i ++){
-              promise = andThen(_args[i]);
+            // provider access level
+            basepath: basepath,
+            resolveFor: resolveFor,
+            // controller access level
+            $get: function() {
+                return {
+                    basepath: basepath,
+                    resolveFor: resolveFor
+                };
             }
-            return promise;
+        };
 
-            // creates promise to chain dynamically
-            function andThen(_arg) {
-              // also support a function that returns a promise
-              if(typeof _arg === 'function')
-                  return promise.then(_arg);
-              else
-                  return promise.then(function() {
-                    // if is a module, pass the name. If not, pass the array
-                    var whatToLoad = getRequired(_arg);
-                    // simple error check
-                    if(!whatToLoad) return $.error('Route resolve: Bad resource name [' + _arg + ']');
-                    // finally, return a promise
-                    return $ocLL.load( whatToLoad );
-                  });
-            }
-            // check and returns required data
-            // analyze module items with the form [name: '', files: []]
-            // and also simple array of script files (for not angular js)
-            function getRequired(name) {
-              if (APP_REQUIRES.modules)
-                  for(var m in APP_REQUIRES.modules)
-                      if(APP_REQUIRES.modules[m].name && APP_REQUIRES.modules[m].name === name)
-                          return APP_REQUIRES.modules[m];
-              return APP_REQUIRES.scripts && APP_REQUIRES.scripts[name];
-            }
+        // Set here the base of the relative path
+        // for all app views
+        function basepath(uri) {
+            return 'app/views/' + uri;
+        }
 
-          }]};
-      } // resolveFor
+        // Generates a resolve object by passing script names
+        // previously configured in constant.APP_REQUIRES
+        function resolveFor() {
+            var _args = arguments;
+            return {
+                deps: ['$ocLazyLoad', '$q', function($ocLL, $q) {
+                    // Creates a promise chain for each argument
+                    var promise = $q.when(1); // empty promise
+                    for (var i = 0, len = _args.length; i < len; i++) {
+                        promise = andThen(_args[i]);
+                    }
+                    return promise;
+
+                    // creates promise to chain dynamically
+                    function andThen(_arg) {
+                        // also support a function that returns a promise
+                        if (typeof _arg === 'function')
+                            return promise.then(_arg);
+                        else
+                            return promise.then(function() {
+                                // if is a module, pass the name. If not, pass the array
+                                var whatToLoad = getRequired(_arg);
+                                // simple error check
+                                if (!whatToLoad) return $.error('Route resolve: Bad resource name [' + _arg + ']');
+                                // finally, return a promise
+                                return $ocLL.load(whatToLoad);
+                            });
+                    }
+                    // check and returns required data
+                    // analyze module items with the form [name: '', files: []]
+                    // and also simple array of script files (for not angular js)
+                    function getRequired(name) {
+                        if (APP_REQUIRES.modules)
+                            for (var m in APP_REQUIRES.modules)
+                                if (APP_REQUIRES.modules[m].name && APP_REQUIRES.modules[m].name === name)
+                                    return APP_REQUIRES.modules[m];
+                        return APP_REQUIRES.scripts && APP_REQUIRES.scripts[name];
+                    }
+
+                }]
+            };
+        } // resolveFor
 
     }
 
@@ -96,7 +97,8 @@
         .config(routesConfig);
 
     routesConfig.$inject = ['$stateProvider', '$locationProvider', '$urlRouterProvider', 'RouteHelpersProvider'];
-    function routesConfig($stateProvider, $locationProvider, $urlRouterProvider, helper){
+
+    function routesConfig($stateProvider, $locationProvider, $urlRouterProvider, helper) {
 
         // Set the following to true to enable the HTML5 Mode
         // You may have to set <base> tag in index and a routing configuration in your server
@@ -109,117 +111,123 @@
         // Application Routes
         // -----------------------------------
         $stateProvider
-          .state('main', {
+            .state('main', {
                 url: '',
                 abstract: true,
-                resolve: helper.resolveFor('modernizr', 'inputmask','icons','moment','ngDialog','toaster'),
+                resolve: helper.resolveFor('modernizr', 'inputmask', 'icons', 'moment', 'ngDialog', 'toaster'),
                 controller: 'mainController'
             })
-          .state('home', {
-              url: '/home',
-              title: 'Home',
-              resolve: helper.resolveFor('modernizr', 'icons','loaders.css','inputmask', 'ngDialog', 'spinkit','angular-carousel'),
-              templateUrl: 'app/pages/home.html'
-          })
-          .state('about', {
-              url: '/about',
-              title: 'About Us',
-              resolve: helper.resolveFor('modernizr', 'icons','loaders.css','inputmask', 'ngDialog', 'spinkit','angular-carousel'),
-              templateUrl: 'app/pages/aboutUs.html'
-          })
-          .state('faq', {
-              url: '/faq',
-              title: 'FAQ',
-              resolve: helper.resolveFor('modernizr', 'icons','loaders.css','inputmask', 'ngDialog', 'spinkit'),
-              templateUrl: 'app/pages/faq.html'
-          })
-          .state('terms', {
-              url: '/terms',
-              title: 'Terms',
-              resolve: helper.resolveFor('modernizr', 'icons','loaders.css','inputmask', 'ngDialog', 'spinkit'),
-              templateUrl: 'app/pages/terms.html'
-          })
-          .state('support', {
-              url: '/support',
-              title: 'Support',
-              resolve: helper.resolveFor('modernizr', 'icons','loaders.css','inputmask', 'ngDialog', 'spinkit'),
-              templateUrl: 'app/pages/support.html'
-          })
+            .state('home', {
+                url: '/home',
+                title: 'Home',
+                resolve: helper.resolveFor('modernizr', 'icons', 'loaders.css', 'inputmask', 'ngDialog', 'spinkit', 'angular-carousel'),
+                templateUrl: 'app/pages/home.html'
+            })
+            .state('blog', {
+                url: '/blog',
+                title: 'Blog',
+                resolve: helper.resolveFor('modernizr', 'icons', 'loaders.css', 'inputmask', 'ngDialog', 'spinkit', 'angular-carousel'),
+                templateUrl: 'app/pages/blog.html'
+            })
+            .state('about', {
+                url: '/about',
+                title: 'About Us',
+                resolve: helper.resolveFor('modernizr', 'icons', 'loaders.css', 'inputmask', 'ngDialog', 'spinkit', 'angular-carousel'),
+                templateUrl: 'app/pages/aboutUs.html'
+            })
+            .state('faq', {
+                url: '/faq',
+                title: 'FAQ',
+                resolve: helper.resolveFor('modernizr', 'icons', 'loaders.css', 'inputmask', 'ngDialog', 'spinkit'),
+                templateUrl: 'app/pages/faq.html'
+            })
+            .state('terms', {
+                url: '/terms',
+                title: 'Terms',
+                resolve: helper.resolveFor('modernizr', 'icons', 'loaders.css', 'inputmask', 'ngDialog', 'spinkit'),
+                templateUrl: 'app/pages/terms.html'
+            })
+            .state('support', {
+                url: '/support',
+                title: 'Support',
+                resolve: helper.resolveFor('modernizr', 'icons', 'loaders.css', 'inputmask', 'ngDialog', 'spinkit'),
+                templateUrl: 'app/pages/support.html'
+            })
             .state('joinUs', {
                 url: '/joinUs',
                 title: 'Join Us',
                 templateUrl: 'app/views/joinUs.html',
-                resolve:helper.resolveFor('modernizr', 'icons','loaders.css','inputmask', 'ngDialog', 'spinkit','ngImgCrop')
+                resolve: helper.resolveFor('modernizr', 'icons', 'loaders.css', 'inputmask', 'ngDialog', 'spinkit', 'ngImgCrop')
             })
             .state('registered', {
                 url: '/registered',
                 title: 'Registered',
-                resolve: helper.resolveFor('modernizr', 'icons','loaders.css','inputmask', 'ngDialog', 'spinkit'),
+                resolve: helper.resolveFor('modernizr', 'icons', 'loaders.css', 'inputmask', 'ngDialog', 'spinkit'),
                 templateUrl: 'app/pages/registered.html'
             })
             .state('app', {
-              url: '/app',
-              abstract: true,
-              templateUrl: helper.basepath('app.html'),
-              resolve: helper.resolveFor( 'modernizr','inputmask', 'ngDialog', 'icons',  'animo',  'toaster', 'loaders.css', 'spinkit','easypiechart')
-              // 'fastclick','screenfull','sparklines', 'slimscroll', 'easypiechart','whirl',
-          })
+                url: '/app',
+                abstract: true,
+                templateUrl: helper.basepath('app.html'),
+                resolve: helper.resolveFor('modernizr', 'inputmask', 'ngDialog', 'icons', 'animo', 'toaster', 'loaders.css', 'spinkit', 'easypiechart')
+                    // 'fastclick','screenfull','sparklines', 'slimscroll', 'easypiechart','whirl',
+            })
             .state('app.signIn', {
                 url: '/signIn',
                 title: 'Sign In',
                 templateUrl: 'app/views/signIn.html',
-                resolve:helper.resolveFor('icons')
+                resolve: helper.resolveFor('icons')
             })
             .state('app.signUp', {
                 url: '/signUp',
                 title: 'Sign Up',
                 templateUrl: 'app/views/signUp.html',
-                resolve:helper.resolveFor('icons')
+                resolve: helper.resolveFor('icons')
             })
             .state('app.location', {
                 url: '/location',
                 title: 'Location',
                 templateUrl: 'app/views/location.html',
-                resolve:helper.resolveFor('icons')
+                resolve: helper.resolveFor('icons')
             })
 
-            .state('app.categories', {
+        .state('app.categories', {
                 url: '/categories',
                 title: 'Categories',
                 templateUrl: 'app/views/categoryList.html',
-                resolve:helper.resolveFor('icons')
+                resolve: helper.resolveFor('icons')
             })
             .state('app.subService', {
                 url: '/subService',
                 title: 'Sub Service',
                 templateUrl: 'app/views/subService.html',
-                resolve:helper.resolveFor('icons')
+                resolve: helper.resolveFor('icons')
             })
             .state('app.bookingTime', {
                 url: '/bookingTime',
                 title: 'Booking Time',
                 templateUrl: 'app/views/bookingTime.html',
-                resolve:helper.resolveFor('modernizr', 'icons','ngDialog','inputmask','loaders.css', 'spinkit')
+                resolve: helper.resolveFor('modernizr', 'icons', 'ngDialog', 'inputmask', 'loaders.css', 'spinkit')
             })
 
-            .state('app.details', {
-                url: '/details',
-                title: 'Details',
-                templateUrl: 'app/views/details.html',
-                resolve:helper.resolveFor('modernizr', 'icons','ngDialog','inputmask','loaders.css', 'spinkit')
-            })
+        .state('app.details', {
+            url: '/details',
+            title: 'Details',
+            templateUrl: 'app/views/details.html',
+            resolve: helper.resolveFor('modernizr', 'icons', 'ngDialog', 'inputmask', 'loaders.css', 'spinkit')
+        })
 
-            .state('app.payment', {
+        .state('app.payment', {
                 url: '/payment',
                 title: 'Payment',
                 templateUrl: 'app/views/payment.html',
-                resolve:helper.resolveFor('modernizr', 'icons','ngDialog','inputmask','loaders.css', 'spinkit')
+                resolve: helper.resolveFor('modernizr', 'icons', 'ngDialog', 'inputmask', 'loaders.css', 'spinkit')
             })
             .state('app.thanks', {
                 url: '/thanks',
                 title: 'Thanks',
                 templateUrl: 'app/views/thanks.html',
-                resolve:helper.resolveFor('modernizr', 'icons','ngDialog','inputmask','loaders.css', 'spinkit')
+                resolve: helper.resolveFor('modernizr', 'icons', 'ngDialog', 'inputmask', 'loaders.css', 'spinkit')
             })
 
 

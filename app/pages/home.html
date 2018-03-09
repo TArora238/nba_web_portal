@@ -190,28 +190,14 @@
             <div class="container">
                 <h3 class="text-center">NowBeauty Blogs</h3>
                 <div class="col-lg-12">
-                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 blogSingleDiv">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 blogSingleDiv" ng-repeat="blog in home.blogs|limitTo : 3">
                         <div class="p-l-0 col-lg-12">
-                            <img src="app/img/PNG/blog_1.jpg" ng-class="{'activeBlog':home.blog[0]}" ng-mouseover="home.blog[0]=true" ng-mouseleave="home.blog[0]=false">
-                            <h4>Lorem ipsum dolor</h4>
-                            <label class="text-center w-100">Lorem ipsum dolor sit amet,
-                                in vix choro viderer invidunt. No has maiestatis</label>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 blogSingleDiv">
-                        <div class="p-l-0 col-lg-12">
-                            <img src="app/img/PNG/blog_2.jpg" ng-class="{'activeBlog':home.blog[1]}" ng-mouseover="home.blog[1]=true" ng-mouseleave="home.blog[1]=false">
-                            <h4>Lorem ipsum dolor</h4>
-                            <label class="text-center w-100">Lorem ipsum dolor sit amet,
-                                in vix choro viderer invidunt. No has maiestatis</label>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 blogSingleDiv">
-                        <div class="p-l-0 col-lg-12">
-                            <img src="app/img/PNG/blog_3.jpg" ng-class="{'activeBlog':home.blog[2]}" ng-mouseover="home.blog[2]=true" ng-mouseleave="home.blog[2]=false">
-                            <h4>Lorem ipsum dolor</h4>
-                            <label class="text-center w-100">Lorem ipsum dolor sit amet,
-                                in vix choro viderer invidunt. No has maiestatis</label>
+                            <div class="w-100" style="height:200px">
+                                <img ng-src="{{blog.thumb_pic}}" style="cursor:pointer" ng-click="home.blogView(blog)">
+                            </div>
+
+                            <h4 style="cursor:pointer" ng-click="home.blogView(blog)">{{blog.title}}</h4>
+                            <label style="cursor:pointer" ng-click="home.blogView(blog)" class="text-center w-100">{{blog.short_desc}}</label>
                         </div>
                     </div>
                 </div>

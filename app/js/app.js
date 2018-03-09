@@ -97,7 +97,7 @@
             // Live
             // "url": "https://apilive.nowbeauty.com:3001/"
             // Dev
-            "url": "http://34.217.130.40:3003/"
+            "url": "http://34.217.130.40:3001/"
         })
         .filter('underscoreless', function() {
             return function(input) {
@@ -707,7 +707,7 @@
                 $rootScope.currentState();
                 // Save the route title
                 $rootScope.currTitle = $state.current.title;
-                console.log(toState);
+                // console.log(toState);
                 var a = toState.name;
                 if (a == 'app.signIn' || a == 'app.signUp') {
 
