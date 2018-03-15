@@ -1187,6 +1187,8 @@ li.bookingStep label {
     text-align: left;
     font-size: 20px;
     color: #000000;
+    min-width: 35%;
+    width: auto;
 }
 
 .whiteHeader {

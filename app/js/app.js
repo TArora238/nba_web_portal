@@ -95,9 +95,9 @@
     angular
         .module('portalPanel').constant("api", {
             // Live
-            // "url": "https://apilive.nowbeauty.com:3001/"
+            // "url": "http://54.186.40.39:4001/"
             // Dev
-            "url": "http://34.217.130.40:3001/"
+            "url": "http://54.186.40.39:4001/"
         })
         .filter('underscoreless', function() {
             return function(input) {

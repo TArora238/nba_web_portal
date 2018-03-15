@@ -332,7 +332,7 @@
 
             };
 
-            $.get("http://34.217.130.40:3002/register_data")
+            $.get("http://54.186.40.39:4002/register_data")
                 .success(function(data, status) {
                     cfpLoadingBar.complete();
                     if (typeof data === 'string') data = JSON.parse(data);
@@ -557,7 +557,7 @@
                     form.append(vm.profile.docs[i].doc_name, vm.profile.docs[i].doc);
                 }
                 $http({
-                        url: 'http://34.217.130.40:3002/register_artist',
+                        url: 'http://54.186.40.39:4002/register_artist',
                         method: 'POST',
                         data: form,
                         transformRequest: false,
@@ -1059,12 +1059,14 @@
                 if (vm.startHours < 2) {
                     vm.invalidDate = true;
                     toaster.pop('error', 'Booking can not start before 2 hours from now', '');
+                    $scope.mCtrl.hitInProgress = false;
                     return false;
                 }
                 //|| !vm.time.period
                 if (!vm.time.hour || !vm.time.minute) {
                     vm.invalidDate = true;
                     toaster.pop('error', 'Choose a time for your booking', '');
+                    $scope.mCtrl.hitInProgress = false;
                     return false;
                 }
 
@@ -1871,7 +1873,7 @@
                 }
                 $scope.mCtrl.hitInProgress = true;
                 vm.coupon = '';
-                $.post("http://34.217.130.40:3003/check_code", {
+                $.post("http://54.186.40.39:4003/check_code", {
                         access_token: localStorage.getItem('portalToken'),
                         coupon: vm.promo
                     })
