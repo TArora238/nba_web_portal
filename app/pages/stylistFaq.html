@@ -1,0 +1,60 @@
+<div class="Now_BeautyLogin  ng-zoomBackDown ng-fluid" data-ng-controller="StylistFAQController as stylistFaq">
+    <nav class="navbar topnavbar" role="navigation">
+        <a ui-sref="home">
+            <img src="app/img/SVG/logo_white.svg" style="padding: 15px 0;" alt="App Logo" width="125px" class="block-center img-responsive img-logo" />
+        </a>
+    </nav>
+    <section class="w-100" style="display:table">
+        <div class="row aboutBG" id="about">
+            <div class="container">
+                <div class="row">
+                    <h2>Stylist FAQs</h2>
+                </div>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+        <div class="row p-30">
+            <div class="container">
+                <div class="col-lg-12 p-0">
+                    <div class="col-lg-12 p-0">
+                        <div class="col-lg-6 col-xs-12">
+                            <uib-accordion close-others="true">
+                                <div class="todo-item m-b-20" uib-accordion-group="uib-accordion-group" ng-repeat="item in stylistFaq.faq" ng-if="$index<9">
+                                    <uib-accordion-heading>
+                                        <span class="todo-title text-left">{{$index+1}}. {{item.question}}</span>
+                                    </uib-accordion-heading>
+                                    <p style="white-space:pre-line">
+                                        {{item.answer}}
+                                    </p>
+                                </div>
+                            </uib-accordion>
+                        </div>
+                        <div class="col-lg-6 col-xs-12">
+                            <uib-accordion close-others="true">
+                                <div class="todo-item m-b-20" uib-accordion-group="uib-accordion-group" ng-repeat="item in stylistFaq.faq" ng-if="$index>8">
+                                    <uib-accordion-heading>
+                                        <span class="todo-title text-left">{{$index+1}}. {{item.question}}</span>
+                                    </uib-accordion-heading>
+                                    <p style="white-space:pre-line">
+                                        {{item.answer}}
+                                    </p>
+                                </div>
+                            </uib-accordion>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer ng-include="'app/views/partials/footer.html'"></footer>
+    </section>
+
+</div>
+<!-- <div class="abs-center ng-scope">
+    <div class="text-center mv-lg">
+        <h1 class="mb-lg"><sup><em class="fa fa-cog fa-2x text-muted fa-spin text-info"></em></sup><em class="fa fa-cog fa-5x text-muted fa-spin text-purple"></em><em class="fa fa-cog fa-lg text-muted fa-spin text-success"></em></h1>
+        <div class="text-bold text-lg mb-lg">PAGE IS UNDER MAINTENANCE</div>
+        <p class="lead m0">It will be online shortly!</p>
+    </div>
+</div> -->

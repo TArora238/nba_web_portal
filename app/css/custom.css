@@ -43,9 +43,9 @@
 
 body,
 html {
-    font-family: 'segoe'!important;
+    font-family: 'segoe' !important;
     font-weight: 400;
-    background-color: #f7f9fb!important;
+    background-color: #f7f9fb !important;
     display: table;
     width: 100%;
     overflow-x: hidden;
@@ -64,20 +64,20 @@ html {
 }
 
 .notfBell:hover {
-    color: #000000!important;
+    color: #000000 !important;
 }
 
 .iconLabel {
-    font-family: 'segoe'!important;
+    font-family: 'segoe' !important;
     font-weight: 400;
     font-size: 12px;
     display: block;
     font-weight: bold;
-    color: #909090!important;
+    color: #909090 !important;
 }
 
 .invalidDate {
-    border-color: rgb(244, 67, 54)!important;
+    border-color: rgb(244, 67, 54) !important;
 }
 
 hr {
@@ -94,17 +94,17 @@ hr {
 .dataTables_filter {
     width: 400px;
     /*position: fixed;*/
-    text-align: left!important;
-    float: left!important;
+    text-align: left !important;
+    float: left !important;
 }
 
 .dataTables_length {
-    text-align: right!important;
-    float: right!important;
+    text-align: right !important;
+    float: right !important;
 }
 
 .dataTables_filter label {
-    width: 80%!important;
+    width: 80% !important;
 }
 
 .dataTables_filter input {
@@ -152,7 +152,7 @@ a:focus {
 .main-menu a:active .sidebar-inner *:hover,
 .sidebar-inner *:focus,
 .sidebar-inner *:active {
-    text-decoration: none!important;
+    text-decoration: none !important;
 }
 
 .btn-block+.btn-block {
@@ -176,8 +176,8 @@ a:focus {
 }
 
 .activeSubBtn {
-    background-image: none!important;
-    background-color: #0d7e9a!important;
+    background-image: none !important;
+    background-color: #0d7e9a !important;
 }
 
 input[type=number]::-webkit-inner-spin-button,
@@ -195,7 +195,7 @@ button,
 input,
 select,
 textarea {
-    font-family: 'segoe'!important;
+    font-family: 'segoe' !important;
     font-weight: 400;
 }
 
@@ -281,7 +281,7 @@ button {
 .btnDefault:visited,
 .btnDefault:focus,
 .btnDefault:active {
-    color: white!important;
+    color: white !important;
     background-color: #ee7670;
 }
 
@@ -323,7 +323,7 @@ button {
     position: absolute;
     right: 0;
     color: #d62a2a;
-    font-family: 'segoe'!important;
+    font-family: 'segoe' !important;
     font-weight: 400;
     font-size: 16px;
     display: block;
@@ -332,7 +332,7 @@ button {
 }
 
 .errorPopSpan {
-    position: static!important;
+    position: static !important;
     margin: -27px 0 0 7px;
     float: right;
     height: 0;
@@ -344,7 +344,7 @@ button {
     right: 0;
     float: right;
     height: 0;
-    font-family: 'segoe'!important;
+    font-family: 'segoe' !important;
     font-weight: 400;
     color: #d62a2a;
     font-size: 16px;
@@ -352,11 +352,11 @@ button {
 
 .profileName {
     color: #fff;
-    font-family: 'segoe'!important;
+    font-family: 'segoe' !important;
     font-weight: 400;
     font-size: 18px;
     padding: 0px 0 0 10px;
-    margin: 2px 0!important;
+    margin: 2px 0 !important;
     max-width: 130px;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -386,26 +386,26 @@ button {
 input:-webkit-autofill,
 textarea:-webkit-autofill,
 select:-webkit-autofill {
-    background-color: transparent!important;
+    background-color: transparent !important;
 }
 
 .smallTD {
-    width: 100px!important;
+    width: 100px !important;
     word-wrap: break-word;
 }
 
 .normalTD {
-    width: 130px!important;
+    width: 130px !important;
     word-wrap: break-word;
 }
 
 .largeTD {
-    width: 160px!important;
+    width: 160px !important;
     word-wrap: break-word;
 }
 
 .largerTD {
-    width: 190px!important;
+    width: 190px !important;
     word-wrap: break-word;
 }
 
@@ -414,7 +414,7 @@ select:-webkit-autofill {
 }
 
 .zipcode label {
-    position: relative!important;
+    position: relative !important;
 }
 
 .noResults {
@@ -435,14 +435,14 @@ select:-webkit-autofill {
 .form-otp-input {
     min-width: 40px;
     min-height: 50px;
-    width: 95%!important;
-    height: 100%!important;
+    width: 95% !important;
+    height: 100% !important;
     max-width: 60px;
     max-height: 80px;
     margin-left: auto;
     margin-right: auto;
     float: none;
-    padding: 2px!important;
+    padding: 2px !important;
     border: 1px solid #dce5eb;
 }
 
@@ -456,7 +456,7 @@ select:-webkit-autofill {
     border-radius: 4px;
     /*background-color: #000000;*/
     background-image: linear-gradient(to right, #000000 0%, #000000 100%);
-    font-family: 'segoe'!important;
+    font-family: 'segoe' !important;
     font-weight: 400;
     color: #ffffff;
     font-size: 16px;
@@ -469,7 +469,7 @@ select:-webkit-autofill {
     border-radius: 4px;
     /*background-color: #000000;*/
     background-image: linear-gradient(to bottom, #ffffff, #f5f5f5);
-    font-family: 'segoe'!important;
+    font-family: 'segoe' !important;
     font-weight: 400;
     color: #505050;
     font-size: 16px;
@@ -510,9 +510,9 @@ select:-webkit-autofill {
 }
 
 .ui-select-match .btn-default {
-    color: #3a3f51!important;
-    background-color: #fff!important;
-    border: 1px solid #dde6e9!important;
+    color: #3a3f51 !important;
+    background-color: #fff !important;
+    border: 1px solid #dde6e9 !important;
 }
 
 .btn-pop,
@@ -547,19 +547,19 @@ select:-webkit-autofill {
 .biggerPop,
 .biggestPop,
 .signUpPop {
-    padding: 0!important;
+    padding: 0 !important;
 }
 
 .bigPop .ngdialog-header,
 .biggerPop .ngdialog-header,
 .biggestPop .ngdialog-header {
-    padding: 25px 35px!important;
+    padding: 25px 35px !important;
 }
 
 .bigPop .ngdialog-body,
 .biggerPop .ngdialog-body,
 .biggestPop .ngdialog-body {
-    padding: 25px 20px!important;
+    padding: 25px 20px !important;
 }
 
 .signUpPop .ngdialog-body {
@@ -568,31 +568,31 @@ select:-webkit-autofill {
 
 .ngdialog-body .btn-cancel,
 .ngdialog-body .btn-pop {
-    margin: 30px 0 0 0!important;
+    margin: 30px 0 0 0 !important;
     padding: 10px 25px;
     max-width: 150px;
-    font-size: 16px!important;
+    font-size: 16px !important;
 }
 
 .smallPop .ngdialog-close {
-    top: 20px!important;
-    right: 15px!important;
+    top: 20px !important;
+    right: 15px !important;
 }
 
 .cardSmallPop .ngdialog-close {
-    top: 20px!important;
-    right: 15px!important;
+    top: 20px !important;
+    right: 15px !important;
 }
 
 .bigPop .ngdialog-close,
 .biggerPop .ngdialog-close,
 .biggestPop .ngdialog-close {
-    top: 20px!important;
-    right: 20px!important;
+    top: 20px !important;
+    right: 20px !important;
 }
 
 .ngdialog-close:before {
-    font-family: 'segoe'!important;
+    font-family: 'segoe' !important;
     font-weight: 400;
 }
 
@@ -637,38 +637,38 @@ select:-webkit-autofill {
 }
 
 .smallPop.ngdialog.ngdialog-theme-default .ngdialog-content {
-    width: 400px!important;
+    width: 400px !important;
 }
 
 .cardSmallPop.ngdialog.ngdialog-theme-default .ngdialog-content {
-    width: 400px!important;
+    width: 400px !important;
 }
 
 .cardSmallPop {
-    padding-top: 0!important;
+    padding-top: 0 !important;
 }
 
 .bigPop.ngdialog.ngdialog-theme-default .ngdialog-content {
-    max-width: 600px!important;
+    max-width: 600px !important;
 }
 
 .biggerPop.ngdialog.ngdialog-theme-default .ngdialog-content,
 .biggerPop .modal-dialog {
-    max-width: 800px!important;
+    max-width: 800px !important;
 }
 
 .signUpPop.ngdialog.ngdialog-theme-default .ngdialog-content,
 .signUpPop .modal-dialog {
-    max-width: 400px!important;
+    max-width: 400px !important;
 }
 
 .biggestPop.ngdialog.ngdialog-theme-default .ngdialog-content,
 .biggestPop .modal-dialog {
-    max-width: 1132px!important;
+    max-width: 1132px !important;
 }
 
 .modal-header {
-    padding: 0!important;
+    padding: 0 !important;
 }
 
 .modal-content {
@@ -684,10 +684,10 @@ select:-webkit-autofill {
     border-radius: 4px;
     margin: 70px auto !important;
     max-width: 93%;
-    width: 95%!important;
-    padding: 0!important;
+    width: 95% !important;
+    padding: 0 !important;
     height: auto;
-    color: #505050!important;
+    color: #505050 !important;
     box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.2);
     overflow: hidden;
 }
@@ -716,21 +716,21 @@ button,
 a,
 input,
 p {
-    font-family: 'segoe'!important;
+    font-family: 'segoe' !important;
 }
 
 .layout-h.layout-fixed .wrapper>section {
-    margin: 70px 0 0!important;
+    margin: 70px 0 0 !important;
     max-width: none
 }
 
 .layout-h.layout-fixed .wrapper>section>.content-wrapper {
-    padding: 0!important;
+    padding: 0 !important;
 }
 
 .noScrollHeader .whiteLogo,
 .scrollHeader .blackLogo {
-    display: none!important;
+    display: none !important;
 }
 
 .navbar-brand {
@@ -742,7 +742,7 @@ p {
 }
 
 .form-group label {
-    color: #909090!important;
+    color: #909090 !important;
     font-size: 14px;
     text-align: left;
 }
@@ -754,18 +754,18 @@ p {
 .joinUs {
     border: 1px solid #aaaaaa;
     border-radius: 4px;
-    padding: 9px 15px!important;
-    margin: 7px!important;
+    padding: 9px 15px !important;
+    margin: 7px !important;
 }
 
 .noScrollHeader {
-    background-color: transparent!important;
-    background-image: none!important;
+    background-color: transparent !important;
+    background-image: none !important;
 }
 
 .noScrollHeader .navbar-nav>li>a,
 .noScrollHeader .navbar-nav>.open>a {
-    color: #000!important;
+    color: #000 !important;
 }
 
 .missionDiv,
@@ -884,7 +884,7 @@ p {
 }
 
 .sectionList {
-    list-style: none!important;
+    list-style: none !important;
 }
 
 .sectionSlide div {
@@ -922,8 +922,8 @@ p {
 .sectionSlide.active h4 a,
 .sectionSlide h4 a:hover {
     opacity: 1;
-    color: #ee7670!important;
-    fill: #ee7670!important;
+    color: #ee7670 !important;
+    fill: #ee7670 !important;
 }
 
 .phone_frame {
@@ -1218,9 +1218,9 @@ li.bookingStep label {
 }
 
 .selectedBox {
-    background-color: #ee7670!important;
-    background-image: none!important;
-    color: white!important;
+    background-color: #ee7670 !important;
+    background-image: none !important;
+    color: white !important;
 }
 
 .verifyDiv {
@@ -1293,4 +1293,8 @@ li.bookingStep label {
     color: #909090;
     font-size: 14px;
     line-height: 16px;
+}
+
+.todo-title {
+    color: #ee7670;
 }

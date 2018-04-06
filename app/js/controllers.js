@@ -193,6 +193,137 @@
 
 
 /**=========================================================
+ * Module: Stylist FAQs
+ =========================================================*/
+
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.customers')
+        .controller('StylistFAQController', StylistFAQController);
+
+    StylistFAQController.$inject = ['$http', '$state', '$rootScope', 'toaster', '$scope', 'cfpLoadingBar', 'api', '$timeout'];
+
+    function StylistFAQController($http, $state, $rootScope, toaster, $scope, cfpLoadingBar, api, $timeout) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+            var user = localStorage.getItem("user");
+            localStorage.clear();
+            localStorage.setItem("user", user);
+            localStorage.setItem("loggedIn", 0);
+            vm.faq = [{
+                question: 'WHAT IS NOWBEAUTY?',
+                answer: "NowBeauty is an on-demand app and website which connects clients with hair and " +
+                    "make-up experts – and launching on 21 April 2018." + '\n' +
+                    "Our mission is to re-define beauty by embracing diversity, " +
+                    "and to empower women with all shades and hair-textures to be their own kind of beautiful." + '\n' +
+                    "From braids to weaves & wigs to blow dries to make-up," +
+                    "clients can browse through our diverse hair and make-up looks, " +
+                    "book a stylist to their door and look their best effortlessly."
+            }, {
+                question: 'WHAT SERVICES DOES NOWBEAUTY OFFER?',
+                answer: "1. Natural hair styling such as braids, plaits, twists and blow-dries.\n" +
+                    "2. Hair extensions installs including weaves and custom wigs." + '\n' +
+                    "3. Make-up.\n\n" +
+                    "We offer basic and premium level services depending on the stylist’s experience.\n" +
+                    "The basic level services are more affordable to clients, and suits stylists who are still" +
+                    "looking to develop their portfolio and increase their skills." +
+                    "The premium level services suits clients who are after a luxury service. This level of " +
+                    "service usually suits stylists who are experienced at working with Celebrities, TV, " +
+                    "Magazines and up-scale events."
+            }, {
+                question: 'HOW DOES NOWBEAUTY WORK?',
+                answer: "There are two apps: Customer app and Stylist app\n\n" +
+                    "Customer app \n" +
+                    "\tDownload app – Enter location – Browse hair &amp; make-up looks – Choose a service– Done!\n\n" +
+                    "Stylist app \n" +
+                    "\tDownload app – choose your skills – reject or accept bookings – view past and future appointments– track your earnings"
+            }, {
+                question: 'HOW DO I BENEFIT FROM NOWBEAUTY?',
+                answer: "We believe in the power of community and the opportunity to learn and grow " +
+                    "collectively.We understand that being a freelancer hairstylist or make-up artists can " +
+                    "sometimes be lonely– therefore we will be organising and informing you about " +
+                    "industry events as this will give you an opportunity to connect with other stylists and " +
+                    "collaborate, and meet new business clients to increase your contacts.\n" +
+                    "Our goal is to recommend the best job to you always and toget your portfolio in the " +
+                    "hands of people that matter for bookings worth your time.Besides connecting you " +
+                    "with more clients, we are working to secure contracts with corporate, events, beauty, " +
+                    "fashion and media companies.\n" +
+                    "Another benefit is the opportunity for repeat bookings by clients.Once a client books " +
+                    "you on NowBeauty, they can re-book you over and over again if they are happy with your services."
+
+            }, {
+                question: 'WHAT DOES PREMIUM LEVEL SERVICE INCLUDE?',
+                answer: "We require all stylists who have accepted a premium service booking to add extra value by advicing the customers on skin-care," +
+                    " hair-care and products in general."
+            }, {
+                question: 'IS IT FREE?',
+                answer: "It is free to get register as a freelancer hair or make-up artist on NowBeauty app."
+            }, {
+                question: 'IS IT SAFE?',
+                answer: "When you start a service, you slide the start and end button on the app to notify us that you have started or ended an appointment. " +
+                    "At all stages, we are tracking the appointment and we have staff on-call should you need our assistance."
+            }, {
+                question: 'COMMISSION',
+                answer: "Stylists are paid 70% commission of the service price." +
+                    " This means that if a client books make-up for about £150, the stylist will keep £105.\n" +
+                    "We take 30% commission off all bookings to cover our marketing costs for securing new clients."
+            }, {
+                question: 'HOW ARE PAYMENTS PROCESSED?',
+                answer: "You get paid after completing a service.\n" +
+                    "Payments are made to you automatically every week through our secured payment gateway – Stripe.\n" +
+                    "Further, the app also generates a revenue report so you can track your earnings based on completed services."
+            }, {
+                question: 'CAN YOU DECIDE WHAT DAYS AND TIMES TO WORK?',
+                answer: "When you get registered on NowBeauty, you submit your days and times you are available to work. This would help us in recommending jobs to you.\n" +
+                    "When the client books a service, the app sends a notification to stylists who specialise in that particular service. You can then choose to accept or reject that booking.\n" +
+                    "If no one accepts or rejects a booking, our admin team will look at your availability and contact you to see if you can make the appointment."
+            }, {
+                question: 'HOW MANY HOURS AM I REQUIRED TO WORK?',
+                answer: "NowBeauty is flexible and suited to full-time and part-time stylists. As a minimum, we require all stylists to commit at least 6 hours a week to take bookings through the app."
+            }, {
+                question: 'WHAT SHOULD I EXPECT AT A CLIENT APPPOINTMENT?',
+                answer: "1.\tClients can cancel an appointment if no stylist accepts the booking at no charge\n" +
+                    "2.\tClients can cancel an appointment within 15 minutes of stylist accepting a booking at no charge.\n" +
+                    "3.\tIf a client cancels appointment after 15 minutes of stylist accepting, we charge clients 30% non-refundable deposit for cancellation or re-scheduling.\n15% deposit is offered to the hairstylist/makeup artist.\n"
+            }, {
+                question: 'WHAT IS NOWBEAUTY LATENESS POLICY?',
+                answer: "We accept that events beyond our control can happen, and we can sometimes be late to appointments. Stylists are given 15 minutes grace period to attend the appointment however, in the event that you would be later than 15 minutes it would be good practice to call the client directly and inform them, or email us immediately at stylists@nowbeautyapp.com\n" +
+                    "If you will be more than 30 minutes late, you must contact us so we can cancel/reschedule the client’s appointment.\n" +
+                    "We want to maintain a high level of professionalism, and in the event of two no-shows at an appointment, the app would no longer recommend services to you."
+            }, {
+                question: 'CAN I CHANGE AN APPOINTMENT AFTER ACCEPTING?',
+                answer: "You will need to contact us at stylists@nowbeautyapp.com to change any appointments."
+            }, {
+                question: 'WHAT ARE NOWBEAUTY HOURS OF OPERATION?',
+                answer: "NowBeauty operates between 7am to 10pm every day.\n" +
+                    "For the first few months when we launch, clients can only book appointments 24 hours in advance. This timing would allow you to review your day and to make any necessary arrangements to accommodate bookings from NowBeauty."
+            }, {
+                question: 'WHAT AREAS DOES NOWBEAUTY COVER?',
+                answer: "We mainly cover London Zones 1 – 6.\n" +
+                    "Our prices do not currently include travel charges. We are looking to test the possibility of adding travel fee to our services within the next few months."
+            }, {
+                question: 'CAN A STYLIST BE REQUESTED BY THE CUSTOMER?',
+                answer: "Not at this time. The app recommends the best stylist who is able to attend the appointment at the customer’s requested time."
+            }, {
+                question: 'GROUP BOOKINGS',
+                answer: "We allow Group Bookings on NowBeauty. However, clients have to contact us.\n" +
+                    "We will then get in contact with you and provide you with more details about the client’s requirements."
+            }];
+        }
+    }
+})();
+
+/**=========================================================
  * Module: FAQs
  =========================================================*/
 
@@ -332,7 +463,7 @@
 
             };
 
-            $.get("http://34.217.130.40:3002/register_data")
+            $.get("https://api.nowbeautyapp.com:4002/register_data")
                 .success(function(data, status) {
                     cfpLoadingBar.complete();
                     if (typeof data === 'string') data = JSON.parse(data);
@@ -557,7 +688,7 @@
                     form.append(vm.profile.docs[i].doc_name, vm.profile.docs[i].doc);
                 }
                 $http({
-                        url: 'http://34.217.130.40:3002/register_artist',
+                        url: 'https://api.nowbeautyapp.com:4002/register_artist',
                         method: 'POST',
                         data: form,
                         transformRequest: false,
@@ -1873,7 +2004,7 @@
                 }
                 $scope.mCtrl.hitInProgress = true;
                 vm.coupon = '';
-                $.post("http://34.217.130.40:3003/check_code", {
+                $.post("https://api.nowbeautyapp.com:4003/check_code", {
                         access_token: localStorage.getItem('portalToken'),
                         coupon: vm.promo
                     })

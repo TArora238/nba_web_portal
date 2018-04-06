@@ -141,6 +141,12 @@
                 resolve: helper.resolveFor('modernizr', 'icons', 'loaders.css', 'inputmask', 'ngDialog', 'spinkit'),
                 templateUrl: 'app/pages/faq.html'
             })
+            .state('stylistFaq', {
+                url: '/stylistFaq',
+                title: 'Stylist FAQ',
+                resolve: helper.resolveFor('modernizr', 'icons', 'loaders.css', 'inputmask', 'ngDialog', 'spinkit'),
+                templateUrl: 'app/pages/stylistFaq.html'
+            })
             .state('terms', {
                 url: '/terms',
                 title: 'Terms',
