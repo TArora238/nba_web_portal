@@ -158,7 +158,6 @@
         }
     }
 })();
-
 /**=========================================================
  * Module: Terms
  =========================================================*/
@@ -191,6 +190,38 @@
     }
 })();
 
+
+/**=========================================================
+ * Module: Terms Stylist
+ =========================================================*/
+
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.customers')
+        .controller('StylistTermsController', StylistTermsController);
+
+    StylistTermsController.$inject = ['$http', '$state', '$rootScope', 'toaster', '$scope', 'cfpLoadingBar', 'api', '$timeout'];
+
+    function StylistTermsController($http, $state, $rootScope, toaster, $scope, cfpLoadingBar, api, $timeout) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+            var user = localStorage.getItem("user");
+            localStorage.clear();
+            localStorage.setItem("user", user);
+            localStorage.setItem("loggedIn", 0);
+        }
+    }
+})();
 
 /**=========================================================
  * Module: Stylist FAQs
@@ -339,6 +370,39 @@
     FAQController.$inject = ['$http', '$state', '$rootScope', 'toaster', '$scope', 'cfpLoadingBar', 'api', '$timeout'];
 
     function FAQController($http, $state, $rootScope, toaster, $scope, cfpLoadingBar, api, $timeout) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+            var user = localStorage.getItem("user");
+            localStorage.clear();
+            localStorage.setItem("user", user);
+            localStorage.setItem("loggedIn", 0);
+        }
+    }
+})();
+
+
+/**=========================================================
+ * Module: Privacy
+ =========================================================*/
+
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.customers')
+        .controller('PrivacyController', PrivacyController);
+
+    PrivacyController.$inject = ['$http', '$state', '$rootScope', 'toaster', '$scope', 'cfpLoadingBar', 'api', '$timeout'];
+
+    function PrivacyController($http, $state, $rootScope, toaster, $scope, cfpLoadingBar, api, $timeout) {
         var vm = this;
 
         activate();

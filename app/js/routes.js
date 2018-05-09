@@ -141,17 +141,29 @@
                 resolve: helper.resolveFor('modernizr', 'icons', 'loaders.css', 'inputmask', 'ngDialog', 'spinkit'),
                 templateUrl: 'app/pages/faq.html'
             })
-            .state('stylistFaq', {
-                url: '/stylistFaq',
+            .state('stylistFAQ', {
+                url: '/stylistFAQ',
                 title: 'Stylist FAQ',
                 resolve: helper.resolveFor('modernizr', 'icons', 'loaders.css', 'inputmask', 'ngDialog', 'spinkit'),
-                templateUrl: 'app/pages/stylistFaq.html'
+                templateUrl: 'app/pages/stylistFAQ.html'
             })
-            .state('terms', {
-                url: '/terms',
-                title: 'Terms',
+            .state('privacy', {
+                url: '/privacy',
+                title: 'Privacy',
+                resolve: helper.resolveFor('modernizr', 'icons', 'loaders.css', 'inputmask', 'ngDialog', 'spinkit'),
+                templateUrl: 'app/pages/privacy.html'
+            })
+            .state('termsAndConditions', {
+                url: '/termsAndConditions',
+                title: 'Terms & Conditions',
                 resolve: helper.resolveFor('modernizr', 'icons', 'loaders.css', 'inputmask', 'ngDialog', 'spinkit'),
                 templateUrl: 'app/pages/terms.html'
+            })
+            .state('stylistTermsAndConditions', {
+                url: '/stylistTermsAndConditions',
+                title: 'Stylist Terms & Conditions',
+                resolve: helper.resolveFor('modernizr', 'icons', 'loaders.css', 'inputmask', 'ngDialog', 'spinkit'),
+                templateUrl: 'app/pages/stylistTerms.html'
             })
             .state('support', {
                 url: '/support',
