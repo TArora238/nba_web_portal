@@ -95,7 +95,7 @@
     angular
         .module('portalPanel').constant("api", {
             // Live
-            "url": "https://apilive.nowbeauty.com:4001/"
+            "url": "https://api.nowbeautyapp.com:4001/"
                 // Dev
                 // "url": "http://34.217.130.40:3001/"
                 // "url": "https://api.nowbeautyapp.com:4001/"

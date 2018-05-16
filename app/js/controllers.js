@@ -747,7 +747,7 @@
                 form.append("device_id", localStorage.getItem('user'));
                 form.append("app_version", "100");
                 form.append("device_token", "Website");
-                form.append("app_type", 0);
+                form.append("app_type", 1);
                 for (var i = 0; i < vm.profile.docs.length; i++) {
                     form.append(vm.profile.docs[i].doc_name, vm.profile.docs[i].doc);
                 }
@@ -887,9 +887,34 @@
             vm.autoDetect = function() {
                 if (navigator.geolocation) {
                     cfpLoadingBar.start();
-                    navigator.geolocation.getCurrentPosition(vm.usePosition);
+                    navigator.geolocation.getCurrentPosition(vm.usePosition, vm.showError);
                 } else {
-                    x.innerHTML = "Geolocation is not supported by this browser.";
+                    vm.errorLog = "Geolocation is not supported by this browser.";
+                }
+            };
+            vm.showError = function(error) {
+                cfpLoadingBar.complete();
+                switch (error.code) {
+                    case error.PERMISSION_DENIED:
+                        vm.errorLog = "User denied the request for Geolocation.";
+                        toaster.pop('warning', 'Please allow location service in the browser settings to continue');
+                        console.log(vm.errorLog);
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        vm.errorLog = "Location information is unavailable.";
+                        toaster.pop('warning', vm.errorLog);
+                        console.log(vm.errorLog);
+                        break;
+                    case error.TIMEOUT:
+                        vm.errorLog = "The request to get user location timed out.";
+                        toaster.pop('warning', vm.errorLog);
+                        console.log(vm.errorLog);
+                        break;
+                    case error.UNKNOWN_ERROR:
+                        vm.errorLog = "An unknown error occurred.";
+                        toaster.pop('warning', vm.errorLog);
+                        console.log(vm.errorLog);
+                        break;
                 }
             };
             vm.usePosition = function(position) {
@@ -1423,7 +1448,7 @@
                         device_id: localStorage.getItem('user'),
                         app_version: "100",
                         device_token: "Website",
-                        app_type: 0
+                        app_type: 1
                     })
                     .success(function(data, status) {
                         if (typeof data === 'string')
@@ -1482,7 +1507,7 @@
                         device_id: localStorage.getItem('user'),
                         app_version: "100",
                         device_token: "Website",
-                        app_type: 0
+                        app_type: 1
                     })
                     .success(function(data, status) {
                         if (typeof data === 'string')
@@ -1657,10 +1682,35 @@
             vm.autoDetect = function() {
                 if (navigator.geolocation) {
                     cfpLoadingBar.start();
-                    navigator.geolocation.getCurrentPosition(vm.usePosition);
+                    navigator.geolocation.getCurrentPosition(vm.usePosition, vm.showError);
                 } else {
                     vm.locationSelected = false;
-                    x.innerHTML = "Geolocation is not supported by this browser.";
+                    vm.errorLog = "Geolocation is not supported by this browser.";
+                }
+            };
+            vm.showError = function(error) {
+                cfpLoadingBar.complete();
+                switch (error.code) {
+                    case error.PERMISSION_DENIED:
+                        vm.errorLog = "User denied the request for Geolocation.";
+                        toaster.pop('warning', 'Please allow location service in the browser settings to continue');
+                        console.log(vm.errorLog);
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        vm.errorLog = "Location information is unavailable.";
+                        toaster.pop('warning', vm.errorLog);
+                        console.log(vm.errorLog);
+                        break;
+                    case error.TIMEOUT:
+                        vm.errorLog = "The request to get user location timed out.";
+                        toaster.pop('warning', vm.errorLog);
+                        console.log(vm.errorLog);
+                        break;
+                    case error.UNKNOWN_ERROR:
+                        vm.errorLog = "An unknown error occurred.";
+                        toaster.pop('warning', vm.errorLog);
+                        console.log(vm.errorLog);
+                        break;
                 }
             };
             vm.usePosition = function(position) {
