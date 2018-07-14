@@ -81,3 +81,14 @@ FileETag None
                                       text/xml
     </IfModule>
 </IfModule>
+<IfModule mod_rewrite.c>
+RewriteEngine On
+# ensure www.
+#RewriteCond %{HTTP_HOST} !^www\. [NC]
+#RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# ensure https
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>

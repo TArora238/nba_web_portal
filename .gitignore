@@ -2,3 +2,8 @@
 .DS_Store
 .gitignore
 .idea/
+.htaccess
+assets/
+	node_modules/
+	package.json
+	portal.js
