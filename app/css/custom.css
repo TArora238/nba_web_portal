@@ -1003,13 +1003,11 @@ p {
 }
 
 .aboutBG {
-    background: url(../img/PNG/bg.jpg);
+    background: url(../img/PNG/about_bg.jpg);
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 60vh;
-    /*padding-top: 200px;*/
-    background-position-x: 60%;
+    height: 80vh;
     display: flex;
     align-items: center;
 }

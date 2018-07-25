@@ -8,11 +8,15 @@
                         <label>Find a stylist near you</label>
                         <form name="loc.locForm" ng-submit="loc.locForm.$submitted&&loc.location&&loc.checkLocation()">
                             <div class="input-group m-t-20 m-b-30">
-                                <span class="input-group-addon"><em class="fa fa-location-arrow"></em></span>
+                                <span class="input-group-addon">
+                                    <em class="fa fa-location-arrow"></em>
+                                </span>
                                 <input googleplace class="form-control" ng-model="loc.location" type="text" placeholder="Enter location here…" required>
                                 <span class="input-group-btn">
                                     <button class="btn btn-default autoDetect" type="button" ng-click="loc.autoDetect()">
-                                        <img src="app/img/SVG/detect-location.svg"> <span class="hidden-xs">Auto Detect</span></button>
+                                        <img src="app/img/SVG/detect-location.svg">
+                                        <span class="hidden-xs">Auto Detect</span>
+                                </button>
                                 </span>
                             </div>
 
