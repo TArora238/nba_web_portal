@@ -25,11 +25,15 @@
         text-align: center;
     }
     .homeBG p {
-        font-size: 12px;
+        font-size: 16px;
         line-height: 18px;
         text-align: center;
-        padding: 0 15px;
-        margin: 0;
+        padding: 0 10%;
+        margin: 20px 0;
+    }
+    .storeLinks {
+        margin: 20px auto;
+        display: block;
     }
     .addServDiv label.serviceName {
         text-align: center;
@@ -101,7 +105,7 @@
     .homeLayer {
         background-color: rgba(0, 0, 0, 0.5);
         justify-content: center;
-        padding: 50vh 0;
+        padding: 20vh 0 0;
         position: absolute;
         top: 0;
         left: 0;
@@ -128,10 +132,13 @@
         padding: 0;
     }
     .aboutBG {
-        background-position-x: 10%;
+        background-position-x: 20%;
+        display: block;
     }
     .aboutBG h2 {
-        color: #fff;
+        /* color: #fff; */
         margin-top: 30vh;
+        text-align: left;
+        margin-left: 15%;
     }
 }
