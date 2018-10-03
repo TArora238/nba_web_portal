@@ -949,9 +949,10 @@ p {
 }
 
 .stylistsDiv {
-    background: url("../img/PNG/nb_stylists.jpg");
+    background: url(../img/PNG/community.png) top right;
     background-color: #000;
-    background-position-x: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
 .stylistsDiv h4 {
@@ -1304,4 +1305,36 @@ li.bookingStep label {
 
 .todo-title {
     color: #ee7670;
+}
+
+.inviteCode {
+    color: #ee7670;
+}
+
+.copyCode {
+    font-weight: 400;
+    color: #ee7670;
+    border: none;
+    padding: 5px 10px;
+    margin: 3px;
+    border-radius: 4px;
+    background-image: linear-gradient(to bottom, #ffffff, #f5f5f5);
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.07);
+    border: solid 1px #cccccc;
+}
+
+.promoDiv {
+    display: flex;
+    width: 100%;
+    border: 2px dashed white;
+    vertical-align: middle;
+    align-items: center;
+}
+
+.promoDiv h3 {
+    color: #ee7670;
+}
+
+.promoPop .ngdialog-content {
+    box-shadow: 0 1px 5px 0px rgba(255, 255, 255, 1)!important;
 }

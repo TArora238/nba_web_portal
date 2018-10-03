@@ -9,9 +9,9 @@
         .module('app.customers')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$http', '$state', '$rootScope', 'toaster', '$scope', 'cfpLoadingBar', 'api', '$timeout', 'anchorSmoothScroll'];
+    HomeController.$inject = ['$http', '$state', '$rootScope', 'toaster', '$scope', 'cfpLoadingBar', 'api', '$timeout', 'anchorSmoothScroll', 'ngDialog'];
 
-    function HomeController($http, $state, $rootScope, toaster, $scope, cfpLoadingBar, api, $timeout, anchorSmoothScroll) {
+    function HomeController($http, $state, $rootScope, toaster, $scope, cfpLoadingBar, api, $timeout, anchorSmoothScroll, ngDialog) {
         var vm = this;
 
         activate();
@@ -29,11 +29,15 @@
             vm.services = [false, false, false, false, false, false];
             vm.why = [false, false, false];
             vm.how = [true, false, false, false];
+            vm.promo_code = "NOW05";
             $scope.carouselIndex = 0;
             $scope.$watch('carouselIndex', function(newVal) {
                 // console.log(newVal);
                 vm.changeSlide(newVal);
             });
+            $timeout(function() {
+                vm.ngDialogPop("promoModal", "bigPop promoPop");
+            }, 5000);
             vm.changeSlide = function(a) {
                 $scope.carouselIndex = a;
                 vm.how = [false, false, false, false];

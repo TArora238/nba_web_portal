@@ -220,5 +220,20 @@
         <footer ng-include="'app/views/partials/footer.html'"></footer>
 
     </section>
+    <script type="text/ng-template" ng-show="visible" id="promoModal">
+        <div class="ngdialog-message logoutpopo m-0">
+            <div class="ngdialog-body p-0" style="padding: 0!important;">
+                <div class="signInImage"></div>
+                <div class="signInUpDiv p-20" style="background:black">
+                    <h4 style="color:white">Get £5 off your first booking!</h4>
+                    <h5 class="inviteCode">Use this promo code at checkout:</h5>
+                    <div class="promoDiv">
+                        <h3 class="m-0 p-15 pull-left col-lg-8 text-center referral_code"><strong>{{home.promo_code}}</strong></h3>
+                        <button class="copyCode pull-right" ng-click-copy="{{home.promo_code}}">Copy Code</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
 
 </div>
