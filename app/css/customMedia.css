@@ -141,4 +141,10 @@
         text-align: left;
         margin-left: 15%;
     }
+    video {
+        width: 185px;
+    }
+    .stylistsDiv {
+        background-size: cover;
+    }
 }
