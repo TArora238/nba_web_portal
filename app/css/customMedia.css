@@ -142,7 +142,7 @@
         margin-left: 15%;
     }
     video {
-        width: 185px;
+        width: 185px!important;
     }
     .stylistsDiv {
         background-size: cover;
